@@ -141,7 +141,7 @@ export const updateProfile = actionPayload => {
       expand: true,
       include: ['profileImage'],
       'fields.image': ['variants.square-small', 'variants.square-small2x'],
-    };
+    };    
 
     return sdk.currentUser
       .updateProfile(actionPayload, queryParams)

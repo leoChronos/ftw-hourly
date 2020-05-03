@@ -1,0 +1,113 @@
+@import '../../marketplace.css';
+
+.content {
+  @media (--viewportMedium) {
+    margin: 32px auto 0 auto;
+    max-width: 564px;
+  }
+
+  @media (--viewportLarge) {
+    margin: 0;
+  }
+}
+
+.desktopTopbar,
+.mobileTopbar {
+  box-shadow: none;
+}
+
+.title {
+  margin-top: 8px;
+  margin-bottom: 19px;
+
+  @media (--viewportMedium) {
+    margin-bottom: 48px;
+  }
+}
+
+.sectionContainer {
+    padding: 0;
+    margin-bottom: 36px;
+  
+    @media (--viewportMedium) {
+      padding: 0;
+      margin-bottom: 56px;
+    }
+}
+
+.sectionTitle {
+    /* Font */
+    color: var(--matterColorAnti);
+  
+    margin-top: 0;
+    margin-bottom: 12px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+  
+    @media (--viewportMedium) {
+      margin-top: 0;
+      margin-bottom: 24px;
+      padding-top: 4px;
+      padding-bottom: 4px;
+    }
+}
+
+.lastSection {
+    margin-bottom: 69px;
+  
+    @media (--viewportMedium) {
+      margin-bottom: 111px;
+  
+      & .sectionTitle {
+        margin-bottom: 16px;
+      }
+    }
+}
+
+.infoLinks {
+  order: 2;
+  flex-basis: 165px;
+  margin-right: 24px;
+  margin-bottom: 24px;
+
+  @media (--viewportMedium) {
+    padding-top: 2px;
+    margin-right: 12px;
+  }
+}
+
+.list {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.listItem {
+  min-height: 24px;
+  margin-bottom: 6px;
+  padding-top: 10px;
+
+  @media (--viewportMedium) {
+    margin-bottom: 0;
+  }
+}
+
+.links {
+  /* Font */
+  @apply --marketplaceBodyFontStyles;
+  color: var(--attentionColor);
+  transition: var(--transitionStyleButton);
+  text-decoration-line: underline;
+
+  margin-top: 0;
+  margin-bottom: 0;
+
+  &:hover {
+    color: var(--marketplaceColor);
+    text-decoration: none;
+  }
+
+  @media (--viewportMedium) {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+}

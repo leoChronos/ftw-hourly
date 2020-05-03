@@ -9,12 +9,12 @@ import { isScrollingDisabled } from '../../ducks/UI.duck';
 import {
   Page,
   UserNav,
-  LayoutSingleColumn,
+  LayoutSideNavigation,
+  LayoutWrapperAccountSettingsSideNav,
   LayoutWrapperTopbar,
   LayoutWrapperMain,
   LayoutWrapperFooter,
-  Footer,
-  NamedLink,
+  Footer,  
 } from '../../components';
 import { ProfileSettingsForm } from '../../forms';
 import { TopbarContainer } from '../../containers';
@@ -46,7 +46,7 @@ export class ProfileSettingsPageComponent extends Component {
     } = this.props;
 
     const handleSubmit = values => {
-      const { firstName, lastName, bio: rawBio } = values;
+      const { firstName, lastName, bio: rawBio, facebook, instagram } = values;      
 
       // Ensure that the optional bio is a string
       const bio = rawBio || '';
@@ -54,7 +54,8 @@ export class ProfileSettingsPageComponent extends Component {
       const profile = {
         firstName: firstName.trim(),
         lastName: lastName.trim(),
-        bio,
+        bio,     
+        publicData: { facebook, instagram }
       };
       const uploadedImage = this.props.image;
 
@@ -69,6 +70,9 @@ export class ProfileSettingsPageComponent extends Component {
 
     const user = ensureCurrentUser(currentUser);
     const { firstName, lastName, bio } = user.attributes.profile;
+    const publicData = user.attributes.profile.publicData || {};
+    const currentFacebook = publicData.facebook || '';
+    const currentInstagram = publicData.instagram || '';
     const profileImageId = user.profileImage ? user.profileImage.id : null;
     const profileImage = image || { imageId: profileImageId };
 
@@ -76,7 +80,7 @@ export class ProfileSettingsPageComponent extends Component {
       <ProfileSettingsForm
         className={css.form}
         currentUser={currentUser}
-        initialValues={{ firstName, lastName, bio, profileImage: user.profileImage }}
+        initialValues={{ firstName, lastName, bio, profileImage: user.profileImage, facebook: currentFacebook, instagram: currentInstagram }}
         profileImage={profileImage}
         onImageUpload={e => onImageUploadHandler(e, onImageUpload)}
         uploadInProgress={uploadInProgress}
@@ -90,37 +94,64 @@ export class ProfileSettingsPageComponent extends Component {
     const title = intl.formatMessage({ id: 'ProfileSettingsPage.title' });
 
     return (
-      <Page className={css.root} title={title} scrollingDisabled={scrollingDisabled}>
-        <LayoutSingleColumn>
+      <Page title={title} scrollingDisabled={scrollingDisabled}>
+        <LayoutSideNavigation>
           <LayoutWrapperTopbar>
-            <TopbarContainer currentPage="ProfileSettingsPage" />
+            <TopbarContainer
+              currentPage="ProfileSettingsPage"
+              desktopClassName={css.desktopTopbar}
+              mobileClassName={css.mobileTopbar}
+            />
             <UserNav selectedPageName="ProfileSettingsPage" listing={currentUserListing} />
           </LayoutWrapperTopbar>
+          <LayoutWrapperAccountSettingsSideNav currentTab="ProfileSettingsPage" />
           <LayoutWrapperMain>
             <div className={css.content}>
-              <div className={css.headingContainer}>
-                <h1 className={css.heading}>
-                  <FormattedMessage id="ProfileSettingsPage.heading" />
-                </h1>
-                {user.id ? (
-                  <NamedLink
-                    className={css.profileLink}
-                    name="ProfilePage"
-                    params={{ id: user.id.uuid }}
-                  >
-                    <FormattedMessage id="ProfileSettingsPage.viewProfileLink" />
-                  </NamedLink>
-                ) : null}
-              </div>
+              <h1 className={css.title}>
+                <FormattedMessage id="ProfileSettingsPage.heading" />
+              </h1>
               {profileSettingsForm}
             </div>
           </LayoutWrapperMain>
           <LayoutWrapperFooter>
             <Footer />
           </LayoutWrapperFooter>
-        </LayoutSingleColumn>
+        </LayoutSideNavigation>
       </Page>
     );
+
+    // return (
+    //   <Page className={css.root} title={title} scrollingDisabled={scrollingDisabled}>
+    //     <LayoutSingleColumn>
+    //       <LayoutWrapperTopbar>
+    //         <TopbarContainer currentPage="ProfileSettingsPage" />
+    //         <UserNav selectedPageName="ProfileSettingsPage" listing={currentUserListing} />
+    //       </LayoutWrapperTopbar>
+    //       <LayoutWrapperMain>
+    //         <div className={css.content}>
+    //           <div className={css.headingContainer}>
+    //             <h1 className={css.heading}>
+    //               <FormattedMessage id="ProfileSettingsPage.heading" />
+    //             </h1>
+    //             {user.id ? (
+    //               <NamedLink
+    //                 className={css.profileLink}
+    //                 name="ProfilePage"
+    //                 params={{ id: user.id.uuid }}
+    //               >
+    //                 <FormattedMessage id="ProfileSettingsPage.viewProfileLink" />
+    //               </NamedLink>
+    //             ) : null}
+    //           </div>
+    //           {profileSettingsForm}
+    //         </div>
+    //       </LayoutWrapperMain>
+    //       <LayoutWrapperFooter>
+    //         <Footer />
+    //       </LayoutWrapperFooter>
+    //     </LayoutSingleColumn>
+    //   </Page>
+    // );
   }
 }
 

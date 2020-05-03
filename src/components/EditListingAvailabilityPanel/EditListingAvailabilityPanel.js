@@ -54,9 +54,8 @@ const Weekday = props => {
         {availabilityPlan && hasEntry
           ? getEntries(availabilityPlan, dayOfWeek).map(e => {
               return (
-                <span className={css.entry} key={`${e.dayOfWeek}${e.startTime}`}>{`${
-                  e.startTime
-                } - ${e.endTime === '00:00' ? '24:00' : e.endTime}`}</span>
+                <span className={css.entry} key={`${e.dayOfWeek}${e.startTime}`}>
+                  {`${e.startTime} - ${e.endTime === '00:00' ? '24:00' : e.endTime} - ${e.seats} spots`}</span>
               );
             })
           : null}
@@ -98,15 +97,15 @@ const createInitialValues = availabilityPlan => {
 
 // Create entries from submit values
 const createEntriesFromSubmitValues = values =>
-  WEEKDAYS.reduce((allEntries, dayOfWeek) => {
+  WEEKDAYS.reduce((allEntries, dayOfWeek) => {    
     const dayValues = values[dayOfWeek] || [];
-    const dayEntries = dayValues.map(dayValue => {
-      const { startTime, endTime } = dayValue;
+    const dayEntries = dayValues.map(dayValue => {       
+      const { startTime, endTime, seats } = dayValue;
       // Note: This template doesn't support seats yet.
       return startTime && endTime
         ? {
             dayOfWeek,
-            seats: 1,
+            seats,
             startTime,
             endTime: endTime === '24:00' ? '00:00' : endTime,
           }

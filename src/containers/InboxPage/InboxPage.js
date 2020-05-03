@@ -35,6 +35,7 @@ import {
   Footer,
   IconSpinner,
   UserDisplayName,
+  UserNav,
 } from '../../components';
 import { TopbarContainer, NotFoundPage } from '../../containers';
 import config from '../../config';
@@ -394,6 +395,7 @@ export const InboxPageComponent = props => {
             desktopClassName={css.desktopTopbar}
             currentPage="InboxPage"
           />
+          <UserNav selectedPageName="InboxPage" listing={currentUserListing} />
         </LayoutWrapperTopbar>
         <LayoutWrapperSideNav className={css.navigation}>
           <h1 className={css.title}>

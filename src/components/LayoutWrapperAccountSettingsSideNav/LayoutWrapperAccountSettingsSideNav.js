@@ -24,7 +24,7 @@ const scrollToTab = currentTab => {
 };
 
 const LayoutWrapperAccountSettingsSideNavComponent = props => {
-  const { currentTab, viewport } = props;
+  const { groupTab, currentTab, viewport } = props;
 
   let hasScrolledToTab = false;
 
@@ -43,6 +43,14 @@ const LayoutWrapperAccountSettingsSideNavComponent = props => {
   }
 
   const tabs = [
+    {
+      text: "Profile",
+      selected: currentTab === 'ProfileSettingsPage',
+      id: 'ProfileSettingsPageTab',
+      linkProps: {
+        name: 'ProfileSettingsPage',
+      },
+    },
     {
       text: <FormattedMessage id="LayoutWrapperAccountSettingsSideNav.contactDetailsTabTitle" />,
       selected: currentTab === 'ContactDetailsPage',
@@ -77,7 +85,22 @@ const LayoutWrapperAccountSettingsSideNavComponent = props => {
     },
   ];
 
-  return <LayoutWrapperSideNav tabs={tabs} />;
+  if(groupTab === null || groupTab === '')
+    return <LayoutWrapperSideNav tabs={tabs} />;
+
+  const emptyTabs = [
+    {
+      text: "",
+      //selected: currentTab === 'ListBusinessPage',
+      id: 'ListBusinessPageTab',
+      linkProps: {
+        name: 'ListBusinessPage',
+      },
+    },
+  ];
+
+  if(groupTab === 'empty')
+    return <LayoutWrapperSideNav tabs={emptyTabs} />;
 };
 
 LayoutWrapperAccountSettingsSideNavComponent.defaultProps = {
@@ -85,6 +108,7 @@ LayoutWrapperAccountSettingsSideNavComponent.defaultProps = {
   rootClassName: null,
   children: null,
   currentTab: null,
+  groupTab: null,
 };
 
 LayoutWrapperAccountSettingsSideNavComponent.propTypes = {
@@ -92,6 +116,7 @@ LayoutWrapperAccountSettingsSideNavComponent.propTypes = {
   className: string,
   rootClassName: string,
   currentTab: string,
+  groupTab: string,
 
   // from withViewport
   viewport: shape({

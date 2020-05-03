@@ -22,6 +22,7 @@ const printHourStrings = h => (h > 9 ? `${h}:00` : `0${h}:00`);
 const HOURS = Array(24).fill();
 const ALL_START_HOURS = [...HOURS].map((v, i) => printHourStrings(i));
 const ALL_END_HOURS = [...HOURS].map((v, i) => printHourStrings(i + 1));
+const MAX_SPOTS = Array(10).fill();
 
 const sortEntries = (defaultCompareReturn = 0) => (a, b) => {
   if (a.startTime && b.startTime) {
@@ -123,7 +124,7 @@ const DailyPlan = props => {
   });
   const endTimePlaceholder = intl.formatMessage({
     id: 'EditListingAvailabilityPlanForm.endTimePlaceholder',
-  });
+  }); 
 
   return (
     <div className={classNames(css.weekDay, hasEntries ? css.hasEntries : null)}>
@@ -182,6 +183,21 @@ const DailyPlan = props => {
                           ))}
                         </FieldSelect>
                       </div>
+                      <span className={css.dashBetweenTimes}> - Spots: </span>
+                      <div className={css.field}>
+                        <FieldSelect
+                          id={`${name}.seats`}
+                          name={`${name}.seats`}
+                          selectClassName={css.fieldSelect}
+                        >
+                          <option disabled value="">
+                            0
+                          </option>
+                          {MAX_SPOTS.map((v, i) => {
+                            return <option value={i+1} key={i}>{i+1}</option>
+                          })}                          
+                        </FieldSelect>
+                      </div>
                     </div>
                     <div
                       className={css.fieldArrayRemove}
@@ -198,7 +214,7 @@ const DailyPlan = props => {
                 <InlineTextButton
                   type="button"
                   className={css.buttonSetHours}
-                  onClick={() => fields.push({ startTime: null, endTime: null })}
+                  onClick={() => fields.push({ startTime: null, endTime: null, seats: null })}
                 >
                   <FormattedMessage id="EditListingAvailabilityPlanForm.setHours" />
                 </InlineTextButton>
@@ -206,7 +222,7 @@ const DailyPlan = props => {
                 <InlineTextButton
                   type="button"
                   className={css.buttonAddNew}
-                  onClick={() => fields.push({ startTime: null, endTime: null })}
+                  onClick={() => fields.push({ startTime: null, endTime: null, seats: null })}
                 >
                   <FormattedMessage id="EditListingAvailabilityPlanForm.addAnother" />
                 </InlineTextButton>
@@ -231,7 +247,7 @@ const submit = (onSubmit, weekdays) => values => {
     },
     { ...values }
   );
-
+  
   onSubmit(sortedValues);
 };
 

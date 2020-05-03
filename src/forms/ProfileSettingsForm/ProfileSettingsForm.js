@@ -63,7 +63,7 @@ class ProfileSettingsFormComponent extends Component {
             values,
           } = fieldRenderProps;
 
-          const user = ensureCurrentUser(currentUser);
+          const user = ensureCurrentUser(currentUser);          
 
           // First name
           const firstNameLabel = intl.formatMessage({
@@ -95,6 +95,22 @@ class ProfileSettingsFormComponent extends Component {
           });
           const bioPlaceholder = intl.formatMessage({
             id: 'ProfileSettingsForm.bioPlaceholder',
+          });
+
+          // Facebook
+          const facebookLabel = intl.formatMessage({
+            id: 'ProfileSettingsForm.facebookLabel'
+          });
+          const facebookPlaceholder = intl.formatMessage({
+            id: 'ProfileSettingsForm.facebookPlaceholder'
+          });
+
+          // Instagram
+          const instagramLabel = intl.formatMessage({
+            id: 'ProfileSettingsForm.instagramLabel'
+          });
+          const instagramPlaceholder = intl.formatMessage({
+            id: 'ProfileSettingsForm.instagramPlaceholder'
           });
 
           const uploadingOverlay =
@@ -253,9 +269,9 @@ class ProfileSettingsFormComponent extends Component {
                 </div>
               </div>
               <div className={css.sectionContainer}>
-                <h3 className={css.sectionTitle}>
+                {/* <h3 className={css.sectionTitle}>
                   <FormattedMessage id="ProfileSettingsForm.yourName" />
-                </h3>
+                </h3> */}
                 <div className={css.nameContainer}>
                   <FieldTextInput
                     className={css.firstName}
@@ -277,10 +293,10 @@ class ProfileSettingsFormComponent extends Component {
                   />
                 </div>
               </div>
-              <div className={classNames(css.sectionContainer, css.lastSection)}>
-                <h3 className={css.sectionTitle}>
+              <div className={css.sectionContainer}>
+                {/* <h3 className={css.sectionTitle}>
                   <FormattedMessage id="ProfileSettingsForm.bioHeading" />
-                </h3>
+                </h3> */}
                 <FieldTextInput
                   type="textarea"
                   id="bio"
@@ -288,9 +304,27 @@ class ProfileSettingsFormComponent extends Component {
                   label={bioLabel}
                   placeholder={bioPlaceholder}
                 />
-                <p className={css.bioInfo}>
+                {/* <p className={css.bioInfo}>
                   <FormattedMessage id="ProfileSettingsForm.bioInfo" />
-                </p>
+                </p> */}
+              </div>
+              <div className={css.sectionContainer}>
+                <FieldTextInput
+                  type="textarea"
+                  id="facebook"
+                  name="facebook"
+                  label={facebookLabel}
+                  placeholder={facebookPlaceholder}
+                />                
+              </div>
+              <div className={classNames(css.sectionContainer, css.lastSection)}>                
+                <FieldTextInput
+                  type="textarea"
+                  id="instagram"
+                  name="instagram"
+                  label={instagramLabel}
+                  placeholder={instagramPlaceholder}
+                />                
               </div>
               {submitError}
               <Button

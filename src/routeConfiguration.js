@@ -9,6 +9,7 @@ import {
   InboxPage,
   LandingPage,
   ListingPage,
+  ManageListingsPage,
   NotFoundPage,
   PasswordChangePage,
   PasswordRecoveryPage,
@@ -22,6 +23,7 @@ import {
   StyleguidePage,
   TermsOfServicePage,
   TransactionPage,
+  ListBusinessPage,
 } from './containers';
 
 // routeConfiguration needs to initialize containers first
@@ -30,6 +32,7 @@ import {
 import { NamedRedirect } from './components';
 
 export const ACCOUNT_SETTINGS_PAGES = [
+  'ProfileSettingsPage',
   'ContactDetailsPage',
   'PasswordChangePage',
   'StripePayoutPage',
@@ -127,7 +130,7 @@ const routeConfiguration = () => {
       path: '/l/:slug/:id/:type/:tab',
       name: 'EditListingPage',
       auth: true,
-      component: props => <EditListingPage {...props} allowOnlyOneListing />,
+      component: props => <EditListingPage {...props} />,
       loadData: EditListingPage.loadData,
     },
     {
@@ -157,13 +160,13 @@ const routeConfiguration = () => {
       component: props => <ProfilePage {...props} />,
       loadData: ProfilePage.loadData,
     },
-    {
-      path: '/profile-settings',
-      name: 'ProfileSettingsPage',
-      auth: true,
-      authPage: 'LoginPage',
-      component: props => <ProfileSettingsPage {...props} />,
-    },
+    // {
+    //   path: '/profile-settings',
+    //   name: 'ProfileSettingsPage',
+    //   auth: true,
+    //   authPage: 'LoginPage',
+    //   component: props => <ProfileSettingsPage {...props} />,
+    // },
     {
       path: '/login',
       name: 'LoginPage',
@@ -226,11 +229,34 @@ const routeConfiguration = () => {
       loadData: params => TransactionPage.loadData({ ...params, transactionRole: 'provider' }),
     },
     {
+      path: '/list-your-business',      
+      name: 'ListBusinessPage',
+      auth: true,
+      authPage: 'LoginPage',
+      component: props => <ListBusinessPage {...props} />,
+      loadData: ListBusinessPage.loadData,
+    },
+    {
+      path: '/listings',
+      name: 'ManageListingsPage',      
+      auth: true,
+      authPage: 'LoginPage',      
+      component: props => <ManageListingsPage {...props} />,
+      loadData: ManageListingsPage.loadData,
+    },
+    {
+      path: '/account/profile-settings',
+      name: 'ProfileSettingsPage',
+      auth: true,
+      authPage: 'LoginPage',
+      component: props => <ProfileSettingsPage {...props} />,
+    },
+    {
       path: '/account',
       name: 'AccountSettingsPage',
       auth: true,
       authPage: 'LoginPage',
-      component: () => <NamedRedirect name="ContactDetailsPage" />,
+      component: () => <NamedRedirect name="ProfileSettingsPage" />,
     },
     {
       path: '/account/contact-details',

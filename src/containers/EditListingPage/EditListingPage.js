@@ -7,8 +7,7 @@ import { connect } from 'react-redux';
 import { types as sdkTypes } from '../../util/sdkLoader';
 import {
   LISTING_PAGE_PARAM_TYPE_DRAFT,
-  LISTING_PAGE_PARAM_TYPE_NEW,
-  LISTING_PAGE_PARAM_TYPE_EDIT,
+  LISTING_PAGE_PARAM_TYPE_NEW,  
   LISTING_PAGE_PARAM_TYPES,
   LISTING_PAGE_PENDING_APPROVAL_VARIANT,
   createSlug,
@@ -52,9 +51,7 @@ const { UUID } = sdkTypes;
 // N.B. All the presentational content needs to be extracted to their own components
 export const EditListingPageComponent = props => {
   const {
-    currentUser,
-    currentUserListing,
-    currentUserListingFetched,
+    currentUser,    
     createStripeAccountError,
     fetchInProgress,
     fetchStripeAccountError,
@@ -78,8 +75,7 @@ export const EditListingPageComponent = props => {
     onChange,
     page,
     params,
-    scrollingDisabled,
-    allowOnlyOneListing,
+    scrollingDisabled,    
     stripeAccountFetched,
     stripeAccount,
     updateStripeAccountError,
@@ -89,7 +85,7 @@ export const EditListingPageComponent = props => {
   const isNewURI = type === LISTING_PAGE_PARAM_TYPE_NEW;
   const isDraftURI = type === LISTING_PAGE_PARAM_TYPE_DRAFT;
   const isNewListingFlow = isNewURI || isDraftURI;
-
+  
   const listingId = page.submittedListingId || (id ? new UUID(id) : null);
   const listing = getOwnListing(listingId);
   const currentListing = ensureOwnListing(listing);
@@ -126,20 +122,7 @@ export const EditListingPageComponent = props => {
           },
         };
 
-    return <NamedRedirect {...redirectProps} />;
-  } else if (allowOnlyOneListing && isNewURI && currentUserListingFetched && currentUserListing) {
-    // If we allow only one listing per provider, we need to redirect to correct listing.
-    return (
-      <NamedRedirect
-        name="EditListingPage"
-        params={{
-          id: currentUserListing.id.uuid,
-          slug: createSlug(currentUserListing.attributes.title),
-          type: LISTING_PAGE_PARAM_TYPE_EDIT,
-          tab: 'description',
-        }}
-      />
-    );
+    return <NamedRedirect {...redirectProps} />;  
   } else if (showForm) {
     const {
       createListingDraftError = null,
@@ -279,9 +262,7 @@ EditListingPageComponent.defaultProps = {
   listing: null,
   listingDraft: null,
   notificationCount: 0,
-  sendVerificationEmailError: null,
-  currentUserListing: null,
-  currentUserListingFetched: false,
+  sendVerificationEmailError: null,  
 };
 
 EditListingPageComponent.propTypes = {
@@ -291,9 +272,7 @@ EditListingPageComponent.propTypes = {
   getAccountLinkInProgress: bool,
   updateStripeAccountError: propTypes.error,
   currentUser: propTypes.currentUser,
-  getOwnListing: func.isRequired,
-  currentUserListing: propTypes.ownListing,
-  currentUserListingFetched: bool,
+  getOwnListing: func.isRequired,  
   onAddAvailabilityException: func.isRequired,
   onDeleteAvailabilityException: func.isRequired,
   onGetStripeConnectAccountLink: func.isRequired,
@@ -342,7 +321,7 @@ const mapStateToProps = state => {
     stripeAccountFetched,
   } = state.stripeConnectAccount;
 
-  const { currentUser, currentUserListing, currentUserListingFetched } = state.user;
+  const { currentUser } = state.user;
 
   const fetchInProgress = createStripeAccountInProgress;
 
@@ -359,9 +338,7 @@ const mapStateToProps = state => {
     fetchStripeAccountError,
     stripeAccount,
     stripeAccountFetched,
-    currentUser,
-    currentUserListing,
-    currentUserListingFetched,
+    currentUser,    
     fetchInProgress,
     getOwnListing,
     page,
