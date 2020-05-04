@@ -44,7 +44,7 @@ const LayoutWrapperAccountSettingsSideNavComponent = props => {
 
   const tabs = [
     {
-      text: "Profile",
+      text: <FormattedMessage id="LayoutWrapperAccountSettingsSideNav.profileTabTitle" />,
       selected: currentTab === 'ProfileSettingsPage',
       id: 'ProfileSettingsPageTab',
       linkProps: {
@@ -66,15 +66,7 @@ const LayoutWrapperAccountSettingsSideNavComponent = props => {
       linkProps: {
         name: 'PasswordChangePage',
       },
-    },
-    {
-      text: <FormattedMessage id="LayoutWrapperAccountSettingsSideNav.paymentsTabTitle" />,
-      selected: currentTab === 'StripePayoutPage',
-      id: 'StripePayoutPageTab',
-      linkProps: {
-        name: 'StripePayoutPage',
-      },
-    },
+    },    
     {
       text: <FormattedMessage id="LayoutWrapperAccountSettingsSideNav.paymentMethodsTabTitle" />,
       selected: currentTab === 'PaymentMethodsPage',
@@ -91,7 +83,6 @@ const LayoutWrapperAccountSettingsSideNavComponent = props => {
   const emptyTabs = [
     {
       text: "",
-      //selected: currentTab === 'ListBusinessPage',
       id: 'ListBusinessPageTab',
       linkProps: {
         name: 'ListBusinessPage',
@@ -101,6 +92,44 @@ const LayoutWrapperAccountSettingsSideNavComponent = props => {
 
   if(groupTab === 'empty')
     return <LayoutWrapperSideNav tabs={emptyTabs} />;
+
+  const listingTabs = [
+    {
+      text: <FormattedMessage id="LayoutWrapperAccountSettingsSideNav.yourListingTabTitle" />,
+      selected: currentTab === 'ManageListingsPage',
+      id: 'ManageListingsPageTab',
+      linkProps: {
+        name: 'ManageListingsPage',
+      },
+    },
+    // {
+    //   text: <FormattedMessage id="LayoutWrapperAccountSettingsSideNav.yourSpotsTabTitle" />,
+    //   selected: currentTab === 'ManageListingsPage',
+    //   id: 'ManageListingsPageTab',
+    //   linkProps: {
+    //     name: 'ManageListingsPage',
+    //   },
+    // },
+    // {
+    //   text: <FormattedMessage id="LayoutWrapperAccountSettingsSideNav.spotsClaimedTabTitle" />,
+    //   selected: currentTab === 'ManageListingsPage',
+    //   id: 'ManageListingsPageTab',
+    //   linkProps: {
+    //     name: 'ManageListingsPage',
+    //   },
+    // },
+    {
+      text: <FormattedMessage id="LayoutWrapperAccountSettingsSideNav.paymentsTabTitle" />,
+      selected: currentTab === 'StripePayoutPage',
+      id: 'StripePayoutPageTab',
+      linkProps: {
+        name: 'StripePayoutPage',
+      },
+    },
+  ];
+
+  if(groupTab === 'listing')
+    return <LayoutWrapperSideNav tabs={listingTabs} />;
 };
 
 LayoutWrapperAccountSettingsSideNavComponent.defaultProps = {

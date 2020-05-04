@@ -4,9 +4,6 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { FormattedMessage, injectIntl, intlShape } from '../../util/reactIntl';
 import classNames from 'classnames';
-import { propTypes } from '../../util/types';
-import { ensureCurrentUser } from '../../util/data';
-import { fetchCurrentUser } from '../../ducks/user.duck';
 import { isScrollingDisabled } from '../../ducks/UI.duck';
 
 import {    
@@ -15,10 +12,10 @@ import {
     LayoutWrapperTopbar,
     LayoutWrapperMain,
     LayoutWrapperFooter,
-    Footer,    
-    NamedRedirect,
     LayoutWrapperAccountSettingsSideNav,
     LayoutSideNavigation,
+    Footer,    
+    NamedRedirect,    
     NamedLink,
   } from '../../components';
   import { TopbarContainer } from '../../containers';
@@ -27,20 +24,16 @@ import {
 
 
   export class ListBusinessPageComponent extends Component {
-    constructor(props) {
-      super(props);
-    }
+    // constructor(props) {
+    //   super(props);
+    // }
 
     render() {
       const {       
-        currentUser,                         
+        isBusiness,                         
         scrollingDisabled,     
         intl,   
-      } = this.props;
-
-      const user = ensureCurrentUser(currentUser);
-      const privateData = user.attributes.profile.privateData || {};
-      const isBusiness = privateData.isBusiness || false;      
+      } = this.props;      
 
       if (isBusiness) {
         return <NamedRedirect name="ManageListingsPage"/>;
@@ -57,7 +50,7 @@ import {
                         desktopClassName={css.desktopTopbar}
                         mobileClassName={css.mobileTopbar}
                     />
-                    <UserNav selectedPageName="ListBusinessPage" />
+                    <UserNav selectedPageName="ListBusinessPage" isBusiness={isBusiness} />
                 </LayoutWrapperTopbar>
                 <LayoutWrapperAccountSettingsSideNav groupTab="empty" currentTab="ListBusinessPage" />
                 <LayoutWrapperMain>
@@ -107,18 +100,16 @@ ListBusinessPageComponent.defaultProps = {
 const bool = PropTypes;
 
 ListBusinessPageComponent.propTypes = {
-    currentUser: propTypes.currentUser,
+    isBusiness: bool.isRequired,
     scrollingDisabled: bool.isRequired,
     // from injectIntl
     intl: intlShape.isRequired,
 };
 
 const mapStateToProps = state => { 
-    const {
-        currentUser,        
-      } = state.user;
+    const { isBusiness } = state.user;
     return {      
-        currentUser,
+        isBusiness,
         scrollingDisabled: isScrollingDisabled(state),      
     };
   };
@@ -127,9 +118,5 @@ const ListBusinessPage = compose(
     connect(mapStateToProps),
     injectIntl
 )(ListBusinessPageComponent);
-
-ListBusinessPage.loadData = () => {
-    return fetchCurrentUser();
-};  
 
 export default ListBusinessPage;

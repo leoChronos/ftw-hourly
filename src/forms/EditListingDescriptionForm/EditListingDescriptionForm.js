@@ -6,7 +6,7 @@ import { intlShape, injectIntl, FormattedMessage } from '../../util/reactIntl';
 import classNames from 'classnames';
 import { propTypes } from '../../util/types';
 import { maxLength, required, composeValidators } from '../../util/validators';
-import { Form, Button, FieldTextInput } from '../../components';
+import { Form, Button, FieldTextInput, FieldSelect } from '../../components';
 import CustomCertificateSelectFieldMaybe from './CustomCertificateSelectFieldMaybe';
 
 import css from './EditListingDescriptionForm.css';
@@ -18,7 +18,7 @@ const EditListingDescriptionFormComponent = props => (
     {...props}
     render={formRenderProps => {
       const {
-        certificate,
+        businessCategory,
         className,
         disabled,
         ready,
@@ -55,6 +55,10 @@ const EditListingDescriptionFormComponent = props => (
       const maxLength60Message = maxLength(maxLengthMessage, TITLE_MAX_LENGTH);
       const descriptionRequiredMessage = intl.formatMessage({
         id: 'EditListingDescriptionForm.descriptionRequired',
+      });
+
+      const certificateLabel = intl.formatMessage({
+        id: 'EditListingDescriptionForm.certificateLabel',
       });
 
       const { updateListingError, createListingDraftError, showListingsError } = fetchErrors || {};
@@ -97,7 +101,19 @@ const EditListingDescriptionFormComponent = props => (
             maxLength={TITLE_MAX_LENGTH}
             validate={composeValidators(required(titleRequiredMessage), maxLength60Message)}
             autoFocus
-          />
+          />          
+
+          <FieldSelect             
+            id="businessCategory"
+            name="businessCategory" 
+            className={css.certificate} 
+            label={certificateLabel}>
+            {businessCategory.map(c => (
+              <option key={c.key} value={c.key}>
+                {c.label}
+              </option>
+            ))}
+          </FieldSelect>
 
           <FieldTextInput
             id="description"
@@ -107,13 +123,6 @@ const EditListingDescriptionFormComponent = props => (
             label={descriptionMessage}
             placeholder={descriptionPlaceholderMessage}
             validate={composeValidators(required(descriptionRequiredMessage))}
-          />
-
-          <CustomCertificateSelectFieldMaybe
-            id="certificate"
-            name="certificate"
-            certificate={certificate}
-            intl={intl}
           />
 
           <Button
@@ -147,7 +156,7 @@ EditListingDescriptionFormComponent.propTypes = {
     showListingsError: propTypes.error,
     updateListingError: propTypes.error,
   }),
-  certificate: arrayOf(
+  businessCategory: arrayOf(
     shape({
       key: string.isRequired,
       label: string.isRequired,

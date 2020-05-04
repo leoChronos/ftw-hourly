@@ -14,6 +14,9 @@ export const CURRENT_USER_SHOW_ERROR = 'app/user/CURRENT_USER_SHOW_ERROR';
 
 export const CLEAR_CURRENT_USER = 'app/user/CLEAR_CURRENT_USER';
 
+export const FETCH_CURRENT_USER_IS_BUSINESS_SUCCESS =
+  'app/user/FETCH_CURRENT_USER_IS_BUSINESS_SUCCESS';
+
 export const FETCH_CURRENT_USER_HAS_LISTINGS_REQUEST =
   'app/user/FETCH_CURRENT_USER_HAS_LISTINGS_REQUEST';
 export const FETCH_CURRENT_USER_HAS_LISTINGS_SUCCESS =
@@ -67,6 +70,7 @@ const initialState = {
   sendVerificationEmailError: null,
   currentUserListing: null,
   currentUserListingFetched: false,
+  isBusiness: false,
 };
 
 export default function reducer(state = initialState, action = {}) {
@@ -74,7 +78,7 @@ export default function reducer(state = initialState, action = {}) {
   switch (type) {
     case CURRENT_USER_SHOW_REQUEST:
       return { ...state, currentUserShowError: null };
-    case CURRENT_USER_SHOW_SUCCESS:
+    case CURRENT_USER_SHOW_SUCCESS:      
       return { ...state, currentUser: mergeCurrentUser(state.currentUser, payload) };
     case CURRENT_USER_SHOW_ERROR:
       // eslint-disable-next-line no-console
@@ -92,7 +96,11 @@ export default function reducer(state = initialState, action = {}) {
         currentUserNotificationCountError: null,
         currentUserListing: null,
         currentUserListingFetched: false,
+        isBusiness: false,
       };
+
+    case FETCH_CURRENT_USER_IS_BUSINESS_SUCCESS:
+      return  { ...state, isBusiness: payload };
 
     case FETCH_CURRENT_USER_HAS_LISTINGS_REQUEST:
       return { ...state, currentUserHasListingsError: null };
@@ -178,6 +186,11 @@ export const currentUserShowError = e => ({
 });
 
 export const clearCurrentUser = () => ({ type: CLEAR_CURRENT_USER });
+
+export const fetchCurrentUserIsBusinessSuccess = isBusiness => ({
+  type: FETCH_CURRENT_USER_IS_BUSINESS_SUCCESS,
+  payload: isBusiness,
+});
 
 const fetchCurrentUserHasListingsRequest = () => ({
   type: FETCH_CURRENT_USER_HAS_LISTINGS_REQUEST,
@@ -338,6 +351,12 @@ export const fetchCurrentUser = (params = null) => (dispatch, getState, sdk) => 
         throw new Error('Expected a resource in the sdk.currentUser.show response');
       }
       const currentUser = entities[0];
+      const privateData = currentUser.attributes.profile.privateData || {};
+      
+      // Define if user is Business or not
+      //const isBusiness = privateData.isBusiness || false;
+      const isBusiness = true;
+      dispatch(fetchCurrentUserIsBusinessSuccess(isBusiness));
 
       // Save stripeAccount to store.stripe.stripeAccount if it exists
       if (currentUser.stripeAccount) {

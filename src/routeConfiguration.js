@@ -34,9 +34,13 @@ import { NamedRedirect } from './components';
 export const ACCOUNT_SETTINGS_PAGES = [
   'ProfileSettingsPage',
   'ContactDetailsPage',
-  'PasswordChangePage',
-  'StripePayoutPage',
+  'PasswordChangePage',  
   'PaymentMethodsPage',
+];
+
+export const LISTING_SETTINGS_PAGES = [
+  'ManageListingsPage',
+  'StripePayoutPage',
 ];
 
 // https://en.wikipedia.org/wiki/Universally_unique_identifier#Nil_UUID
@@ -233,8 +237,7 @@ const routeConfiguration = () => {
       name: 'ListBusinessPage',
       auth: true,
       authPage: 'LoginPage',
-      component: props => <ListBusinessPage {...props} />,
-      loadData: ListBusinessPage.loadData,
+      component: props => <ListBusinessPage {...props} />,      
     },
     {
       path: '/listings',

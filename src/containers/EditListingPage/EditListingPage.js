@@ -52,6 +52,7 @@ const { UUID } = sdkTypes;
 export const EditListingPageComponent = props => {
   const {
     currentUser,    
+    isBusiness,
     createStripeAccountError,
     fetchInProgress,
     fetchStripeAccountError,
@@ -180,7 +181,7 @@ export const EditListingPageComponent = props => {
         />
         <UserNav
           selectedPageName={listing ? 'EditListingPage' : 'NewListingPage'}
-          listing={listing}
+          isBusiness={isBusiness}
         />
         <EditListingWizard
           id="EditListingWizard"
@@ -241,7 +242,7 @@ export const EditListingPageComponent = props => {
         />
         <UserNav
           selectedPageName={listing ? 'EditListingPage' : 'NewListingPage'}
-          listing={listing}
+          isBusiness={isBusiness}
         />
         <div className={css.placeholderWhileLoading} />
         <Footer />
@@ -257,6 +258,7 @@ EditListingPageComponent.defaultProps = {
   getAccountLinkInProgress: null,
   stripeAccountFetched: null,
   currentUser: null,
+  isBusiness: false,
   stripeAccount: null,
   currentUserHasOrders: null,
   listing: null,
@@ -272,6 +274,7 @@ EditListingPageComponent.propTypes = {
   getAccountLinkInProgress: bool,
   updateStripeAccountError: propTypes.error,
   currentUser: propTypes.currentUser,
+  isBusiness : bool.isRequired,
   getOwnListing: func.isRequired,  
   onAddAvailabilityException: func.isRequired,
   onDeleteAvailabilityException: func.isRequired,
@@ -321,7 +324,7 @@ const mapStateToProps = state => {
     stripeAccountFetched,
   } = state.stripeConnectAccount;
 
-  const { currentUser } = state.user;
+  const { currentUser, isBusiness } = state.user;
 
   const fetchInProgress = createStripeAccountInProgress;
 
@@ -338,7 +341,8 @@ const mapStateToProps = state => {
     fetchStripeAccountError,
     stripeAccount,
     stripeAccountFetched,
-    currentUser,    
+    currentUser,   
+    isBusiness, 
     fetchInProgress,
     getOwnListing,
     page,

@@ -36,6 +36,7 @@ import {
   IconSpinner,
   UserDisplayName,
   UserNav,
+  NamedRedirect,
 } from '../../components';
 import { TopbarContainer, NotFoundPage } from '../../containers';
 import config from '../../config';
@@ -286,8 +287,8 @@ InboxItem.propTypes = {
 export const InboxPageComponent = props => {
   const {
     unitType,
-    currentUser,
-    currentUserListing,
+    currentUser, 
+    isBusiness,   
     fetchInProgress,
     fetchOrdersOrSalesError,
     intl,
@@ -298,7 +299,8 @@ export const InboxPageComponent = props => {
     transactions,
   } = props;
   const { tab } = params;
-  const ensuredCurrentUser = ensureCurrentUser(currentUser);
+
+  const ensuredCurrentUser = ensureCurrentUser(currentUser);  
 
   const validTab = tab === 'orders' || tab === 'sales';
   if (!validTab) {
@@ -306,6 +308,9 @@ export const InboxPageComponent = props => {
   }
 
   const isOrders = tab === 'orders';
+
+  if(!isBusiness && !isOrders)
+    return <NamedRedirect name="InboxPage" params={{ tab: 'orders' }}/>;
 
   const ordersTitle = intl.formatMessage({ id: 'InboxPage.ordersTitle' });
   const salesTitle = intl.formatMessage({ id: 'InboxPage.salesTitle' });
@@ -383,6 +388,7 @@ export const InboxPageComponent = props => {
       },
     },
   ];
+
   const nav = <TabNav rootClassName={css.tabs} tabRootClassName={css.tab} tabs={tabs} />;
 
   return (
@@ -395,13 +401,13 @@ export const InboxPageComponent = props => {
             desktopClassName={css.desktopTopbar}
             currentPage="InboxPage"
           />
-          <UserNav selectedPageName="InboxPage" listing={currentUserListing} />
+          <UserNav selectedPageName="InboxPage" isBusiness={isBusiness} />
         </LayoutWrapperTopbar>
         <LayoutWrapperSideNav className={css.navigation}>
           <h1 className={css.title}>
             <FormattedMessage id="InboxPage.title" />
           </h1>
-          {currentUserListing ? nav : <div className={css.navPlaceholder} />}
+          {isBusiness ? nav : <div className={css.navPlaceholder} />}
         </LayoutWrapperSideNav>
         <LayoutWrapperMain>
           {error}
@@ -427,13 +433,13 @@ export const InboxPageComponent = props => {
 
 InboxPageComponent.defaultProps = {
   unitType: config.bookingUnitType,
-  currentUser: null,
-  currentUserListing: null,
+  currentUser: null,  
   currentUserHasOrders: null,
   fetchOrdersOrSalesError: null,
   pagination: null,
   providerNotificationCount: 0,
   sendVerificationEmailError: null,
+  isBusiness: false,
 };
 
 InboxPageComponent.propTypes = {
@@ -442,14 +448,14 @@ InboxPageComponent.propTypes = {
   }).isRequired,
 
   unitType: propTypes.bookingUnitType,
-  currentUser: propTypes.currentUser,
-  currentUserListing: propTypes.ownListing,
+  currentUser: propTypes.currentUser,  
   fetchInProgress: bool.isRequired,
   fetchOrdersOrSalesError: propTypes.error,
   pagination: propTypes.pagination,
   providerNotificationCount: number,
   scrollingDisabled: bool.isRequired,
   transactions: arrayOf(propTypes.transaction).isRequired,
+  isBusiness: bool.isRequired,
 
   // from injectIntl
   intl: intlShape.isRequired,
@@ -458,13 +464,13 @@ InboxPageComponent.propTypes = {
 const mapStateToProps = state => {
   const { fetchInProgress, fetchOrdersOrSalesError, pagination, transactionRefs } = state.InboxPage;
   const {
-    currentUser,
-    currentUserListing,
+    currentUser,    
     currentUserNotificationCount: providerNotificationCount,
+    isBusiness,
   } = state.user;
   return {
-    currentUser,
-    currentUserListing,
+    isBusiness,
+    currentUser,    
     fetchInProgress,
     fetchOrdersOrSalesError,
     pagination,

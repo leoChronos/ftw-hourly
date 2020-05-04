@@ -32,8 +32,8 @@ const onImageUploadHandler = (values, fn) => {
 export class ProfileSettingsPageComponent extends Component {
   render() {
     const {
-      currentUser,
-      currentUserListing,
+      currentUser,     
+      isBusiness, 
       image,
       onImageUpload,
       onUpdateProfile,
@@ -102,7 +102,7 @@ export class ProfileSettingsPageComponent extends Component {
               desktopClassName={css.desktopTopbar}
               mobileClassName={css.mobileTopbar}
             />
-            <UserNav selectedPageName="ProfileSettingsPage" listing={currentUserListing} />
+            <UserNav selectedPageName="ProfileSettingsPage" isBusiness={isBusiness} />
           </LayoutWrapperTopbar>
           <LayoutWrapperAccountSettingsSideNav currentTab="ProfileSettingsPage" />
           <LayoutWrapperMain>
@@ -118,54 +118,21 @@ export class ProfileSettingsPageComponent extends Component {
           </LayoutWrapperFooter>
         </LayoutSideNavigation>
       </Page>
-    );
-
-    // return (
-    //   <Page className={css.root} title={title} scrollingDisabled={scrollingDisabled}>
-    //     <LayoutSingleColumn>
-    //       <LayoutWrapperTopbar>
-    //         <TopbarContainer currentPage="ProfileSettingsPage" />
-    //         <UserNav selectedPageName="ProfileSettingsPage" listing={currentUserListing} />
-    //       </LayoutWrapperTopbar>
-    //       <LayoutWrapperMain>
-    //         <div className={css.content}>
-    //           <div className={css.headingContainer}>
-    //             <h1 className={css.heading}>
-    //               <FormattedMessage id="ProfileSettingsPage.heading" />
-    //             </h1>
-    //             {user.id ? (
-    //               <NamedLink
-    //                 className={css.profileLink}
-    //                 name="ProfilePage"
-    //                 params={{ id: user.id.uuid }}
-    //               >
-    //                 <FormattedMessage id="ProfileSettingsPage.viewProfileLink" />
-    //               </NamedLink>
-    //             ) : null}
-    //           </div>
-    //           {profileSettingsForm}
-    //         </div>
-    //       </LayoutWrapperMain>
-    //       <LayoutWrapperFooter>
-    //         <Footer />
-    //       </LayoutWrapperFooter>
-    //     </LayoutSingleColumn>
-    //   </Page>
-    // );
+    );    
   }
 }
 
 ProfileSettingsPageComponent.defaultProps = {
-  currentUser: null,
-  currentUserListing: null,
+  currentUser: null,  
+  isBusiness: false,
   uploadImageError: null,
   updateProfileError: null,
   image: null,
 };
 
 ProfileSettingsPageComponent.propTypes = {
-  currentUser: propTypes.currentUser,
-  currentUserListing: propTypes.ownListing,
+  currentUser: propTypes.currentUser,  
+  isBusiness: bool.isRequired,
   image: shape({
     id: string,
     imageId: propTypes.uuid,
@@ -185,7 +152,7 @@ ProfileSettingsPageComponent.propTypes = {
 };
 
 const mapStateToProps = state => {
-  const { currentUser, currentUserListing } = state.user;
+  const { currentUser, isBusiness } = state.user;
   const {
     image,
     uploadImageError,
@@ -194,8 +161,8 @@ const mapStateToProps = state => {
     updateProfileError,
   } = state.ProfileSettingsPage;
   return {
-    currentUser,
-    currentUserListing,
+    currentUser,    
+    isBusiness,
     image,
     scrollingDisabled: isScrollingDisabled(state),
     updateInProgress,

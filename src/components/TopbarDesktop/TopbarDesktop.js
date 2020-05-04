@@ -26,10 +26,7 @@ const TopbarDesktop = props => {
     currentUser,
     currentPage,
     rootClassName,
-    currentUserHasListings,
-    //currentUserListing,
-    //currentUserListingFetched,
-    //notificationCount,
+    isBusiness,    
     intl,
     isAuthenticated,
     onLogout,
@@ -54,22 +51,7 @@ const TopbarDesktop = props => {
       onSubmit={onSearchSubmit}
       initialValues={initialSearchFormValues}
     />
-  );
-
-  // const notificationDot = notificationCount > 0 ? <div className={css.notificationDot} /> : null;
-
-  // const inboxLink = authenticatedOnClientSide ? (
-  //   <NamedLink
-  //     className={css.inboxLink}
-  //     name="InboxPage"
-  //     params={{ tab: currentUserHasListings ? 'sales' : 'orders' }}
-  //   >
-  //     <span className={css.inbox}>
-  //       <FormattedMessage id="TopbarDesktop.inbox" />
-  //       {notificationDot}
-  //     </span>
-  //   </NamedLink>
-  // ) : null;
+  );  
 
   const currentPageClass = page => {
     const isAccountSettingsPage =
@@ -87,7 +69,7 @@ const TopbarDesktop = props => {
           <NamedLink
               className={classNames(css.profileSettingsLink, currentPageClass('InboxPage'))}
               name="InboxPage"
-              params={{ tab: currentUserHasListings ? 'sales' : 'orders' }}
+              params={{ tab: isBusiness ? 'sales' : 'orders' }}
           >
             <span className={css.menuItemBorder} />
             <FormattedMessage id="TopbarDesktop.inbox" />            
@@ -101,41 +83,16 @@ const TopbarDesktop = props => {
             <span className={css.menuItemBorder} />
             <FormattedMessage id="TopbarDesktop.profileSettingsLink" />
           </NamedLink>
-        </MenuItem>
-        <MenuItem key="ManageListingsPage">
+        </MenuItem>        
+        <MenuItem key={isBusiness ? "ManageListingsPage" : "ListBusinessPage"}>
           <NamedLink
-            className={classNames(css.yourListingsLink, currentPageClass('ManageListingsPage'))}
-            name="ManageListingsPage"
+            className={classNames(css.yourListingsLink, currentPageClass(isBusiness ? 'ManageListingsPage': 'ListBusinessPage'))}
+            name={isBusiness ? "ManageListingsPage" : "ListBusinessPage"}
           >
             <span className={css.menuItemBorder} />
             <FormattedMessage id="TopbarDesktop.yourListingsLink" />
           </NamedLink>
-        </MenuItem>
-        {/* <MenuItem key="EditListingPage">
-          <OwnListingLink
-            listing={currentUserListing}
-            listingFetched={currentUserListingFetched}
-            className={css.yourListingsLink}
-          >
-            <div>
-              <span className={css.menuItemBorder} />
-              {currentUserListing ? (
-                <FormattedMessage id="TopbarDesktop.editYourListingLink" />
-              ) : (
-                <FormattedMessage id="TopbarDesktop.addYourListingLink" />
-              )}
-            </div>
-          </OwnListingLink>
-        </MenuItem>         */}
-        {/* <MenuItem key="AccountSettingsPage">
-          <NamedLink
-            className={classNames(css.yourListingsLink, currentPageClass('AccountSettingsPage'))}
-            name="AccountSettingsPage"
-          >
-            <span className={css.menuItemBorder} />
-            <FormattedMessage id="TopbarDesktop.accountSettingsLink" />
-          </NamedLink>
-        </MenuItem> */}
+        </MenuItem>    
         <MenuItem key="logout">
           <InlineTextButton rootClassName={css.logoutButton} onClick={onLogout}>
             <span className={css.menuItemBorder} />
@@ -162,28 +119,6 @@ const TopbarDesktop = props => {
     </NamedLink>
   );
 
-  // const listingLink =
-  //   authenticatedOnClientSide && currentUserListingFetched && currentUserListing ? (
-  //     <ListingLink
-  //       className={css.createListingLink}
-  //       listing={currentUserListing}
-  //       children={
-  //         <span className={css.createListing}>
-  //           <FormattedMessage id="TopbarDesktop.viewListing" />
-  //         </span>
-  //       }
-  //     />
-  //   ) : null;
-
-  // const createListingLink =
-  //   isAuthenticatedOrJustHydrated && !(currentUserListingFetched && !currentUserListing) ? null : (
-  //     <NamedLink className={css.createListingLink} name="NewListingPage">
-  //       <span className={css.createListing}>
-  //         <FormattedMessage id="TopbarDesktop.createListing" />
-  //       </span>
-  //     </NamedLink>
-  //   );
-
   return (
     <nav className={classes}>
       <NamedLink className={css.logoLink} name="LandingPage">
@@ -193,10 +128,7 @@ const TopbarDesktop = props => {
           alt={intl.formatMessage({ id: 'TopbarDesktop.logo' })}
         />
       </NamedLink>
-      {search}
-      {/* {listingLink}
-      {createListingLink} */}
-      {/* {inboxLink} */}
+      {search}      
       {profileMenu}
       {signupLink}
       {loginLink}
@@ -213,12 +145,13 @@ TopbarDesktop.defaultProps = {
   initialSearchFormValues: {},
   currentUserListing: null,
   currentUserListingFetched: false,
+  isBusiness: false,
 };
 
 TopbarDesktop.propTypes = {
   rootClassName: string,
   className: string,
-  currentUserHasListings: bool.isRequired,
+  isBusiness: bool.isRequired,
   currentUserListing: propTypes.ownListing,
   currentUserListingFetched: bool,
   currentUser: propTypes.currentUser,

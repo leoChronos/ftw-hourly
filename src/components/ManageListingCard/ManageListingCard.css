@@ -374,7 +374,7 @@
 
 .manageLink {
   text-decoration: none;
-  color: var(--matterColor);
+  color: var(--marketplaceColorLight);
   white-space: pre;
 
   &:hover {

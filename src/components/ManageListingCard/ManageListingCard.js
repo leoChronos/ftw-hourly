@@ -295,7 +295,7 @@ export const ManageListingCardComponent = props => {
       </div>
 
       <div className={css.info}>
-        <div className={css.price}>
+        {/* <div className={css.price}>
           {formattedPrice ? (
             <React.Fragment>
               <div className={css.priceValue} title={priceTitle}>
@@ -310,7 +310,7 @@ export const ManageListingCardComponent = props => {
               <FormattedMessage id="ManageListingCard.priceNotSet" />
             </div>
           )}
-        </div>
+        </div> */}
 
         <div className={css.mainInfo}>
           <div className={css.titleWrapper}>
@@ -336,7 +336,7 @@ export const ManageListingCardComponent = props => {
             <FormattedMessage id="ManageListingCard.editListing" />
           </NamedLink>
 
-          {availabilityEnabled ? (
+          {/* {availabilityEnabled ? (
             <React.Fragment>
               <span className={css.manageLinksSeparator}>{' • '}</span>
 
@@ -348,7 +348,7 @@ export const ManageListingCardComponent = props => {
                 <FormattedMessage id="ManageListingCard.manageAvailability" />
               </NamedLink>
             </React.Fragment>
-          ) : null}
+          ) : null} */}
         </div>
       </div>
     </div>

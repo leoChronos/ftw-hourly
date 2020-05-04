@@ -15,6 +15,7 @@ export const TopbarContainerComponent = props => {
     currentPage,
     currentSearchParams,
     currentUser,
+    isBusiness,
     currentUserHasListings,
     currentUserListing,
     currentUserListingFetched,
@@ -39,6 +40,7 @@ export const TopbarContainerComponent = props => {
       currentPage={currentPage}
       currentSearchParams={currentSearchParams}
       currentUser={currentUser}
+      isBusiness={isBusiness}
       currentUserHasListings={currentUserHasListings}
       currentUserListing={currentUserListing}
       currentUserListingFetched={currentUserListingFetched}
@@ -75,6 +77,7 @@ TopbarContainerComponent.propTypes = {
   currentPage: string,
   currentSearchParams: object,
   currentUser: propTypes.currentUser,
+  isBusiness: bool.isRequired,
   currentUserHasListings: bool.isRequired,
   currentUserListingFetched: bool.isRequired,
   currentUserListing: propTypes.ownListing,
@@ -109,11 +112,13 @@ const mapStateToProps = state => {
     currentUserNotificationCount: notificationCount,
     sendVerificationEmailInProgress,
     sendVerificationEmailError,
+    isBusiness,
   } = state.user;
   const hasGenericError = !!(logoutError || hasCurrentUserErrors(state));
   return {
     authInProgress: authenticationInProgress(state),
     currentUser,
+    isBusiness,
     currentUserHasListings,
     currentUserListing,
     currentUserListingFetched,

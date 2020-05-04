@@ -136,6 +136,7 @@ class TopbarComponent extends Component {
       authScopes,
       authInProgress,
       currentUser,
+      isBusiness,
       currentUserHasListings,
       currentUserListing,
       currentUserListingFetched,
@@ -227,15 +228,12 @@ class TopbarComponent extends Component {
         <div className={css.desktop}>
           <TopbarDesktop
             className={desktopClassName}
-            currentUserHasListings={currentUserHasListings}
-            currentUserListing={currentUserListing}
-            currentUserListingFetched={currentUserListingFetched}
+            isBusiness={isBusiness}
             currentUser={currentUser}
             currentPage={currentPage}
             initialSearchFormValues={initialSearchFormValues}
             intl={intl}
-            isAuthenticated={isAuthenticated}
-            notificationCount={notificationCount}
+            isAuthenticated={isAuthenticated}            
             onLogout={this.handleLogout}
             onSearchSubmit={this.handleSubmit}
           />
@@ -299,6 +297,7 @@ TopbarComponent.defaultProps = {
   currentPage: null,
   sendVerificationEmailError: null,
   authScopes: [],
+  isBusiness: false,
 };
 
 TopbarComponent.propTypes = {
@@ -311,6 +310,7 @@ TopbarComponent.propTypes = {
   authScopes: array,
   authInProgress: bool.isRequired,
   currentUser: propTypes.currentUser,
+  isBusiness: bool.isRequired,
   currentUserHasListings: bool.isRequired,
   currentUserHasOrders: bool,
   currentPage: string,
