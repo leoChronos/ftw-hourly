@@ -28,8 +28,8 @@ export const ContactDetailsPageComponent = props => {
     saveEmailError,
     savePhoneNumberError,
     saveContactDetailsInProgress,
-    currentUser,
-    currentUserListing,
+    isBusiness,
+    currentUser,    
     contactDetailsChanged,
     onChange,
     scrollingDisabled,
@@ -40,7 +40,7 @@ export const ContactDetailsPageComponent = props => {
     intl,
   } = props;
 
-  const user = ensureCurrentUser(currentUser);
+  const user = ensureCurrentUser(currentUser);  
   const currentEmail = user.attributes.email || '';
   const protectedData = user.attributes.profile.protectedData || {};
   const currentPhoneNumber = protectedData.phoneNumber || '';
@@ -72,7 +72,7 @@ export const ContactDetailsPageComponent = props => {
             desktopClassName={css.desktopTopbar}
             mobileClassName={css.mobileTopbar}
           />
-          <UserNav selectedPageName="ContactDetailsPage" listing={currentUserListing} />
+          <UserNav selectedPageName="ContactDetailsPage" isBusiness={isBusiness}/>
         </LayoutWrapperTopbar>
         <LayoutWrapperAccountSettingsSideNav currentTab="ContactDetailsPage" />
         <LayoutWrapperMain>
@@ -95,6 +95,7 @@ ContactDetailsPageComponent.defaultProps = {
   saveEmailError: null,
   savePhoneNumberError: null,
   currentUser: null,
+  isBusiness: false,
   sendVerificationEmailError: null,
 };
 
@@ -102,8 +103,8 @@ ContactDetailsPageComponent.propTypes = {
   saveEmailError: propTypes.error,
   savePhoneNumberError: propTypes.error,
   saveContactDetailsInProgress: bool.isRequired,
-  currentUser: propTypes.currentUser,
-  currentUserListing: propTypes.ownListing,
+  isBusiness: bool.isRequired,
+  currentUser: propTypes.currentUser,  
   contactDetailsChanged: bool.isRequired,
   onChange: func.isRequired,
   onSubmitContactDetails: func.isRequired,
@@ -119,8 +120,8 @@ ContactDetailsPageComponent.propTypes = {
 const mapStateToProps = state => {
   // Topbar needs user info.
   const {
-    currentUser,
-    currentUserListing,
+    currentUser,    
+    isBusiness,
     sendVerificationEmailInProgress,
     sendVerificationEmailError,
   } = state.user;
@@ -134,8 +135,8 @@ const mapStateToProps = state => {
     saveEmailError,
     savePhoneNumberError,
     saveContactDetailsInProgress,
-    currentUser,
-    currentUserListing,
+    isBusiness,
+    currentUser,    
     contactDetailsChanged,
     scrollingDisabled: isScrollingDisabled(state),
     sendVerificationEmailInProgress,

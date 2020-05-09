@@ -26,6 +26,7 @@ export const PasswordChangePageComponent = props => {
     changePasswordError,
     changePasswordInProgress,
     currentUser,
+    isBusiness,
     onChange,
     onSubmitChangePassword,
     passwordChanged,
@@ -57,7 +58,7 @@ export const PasswordChangePageComponent = props => {
             desktopClassName={css.desktopTopbar}
             mobileClassName={css.mobileTopbar}
           />
-          <UserNav selectedPageName="PasswordChangePage" />
+          <UserNav selectedPageName="PasswordChangePage" isBusiness={isBusiness}/>
         </LayoutWrapperTopbar>
         <LayoutWrapperAccountSettingsSideNav currentTab="PasswordChangePage" />
         <LayoutWrapperMain>

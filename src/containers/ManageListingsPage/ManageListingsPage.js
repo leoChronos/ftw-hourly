@@ -10,13 +10,15 @@ import {
   ManageListingCard,
   Page,
   PaginationLinks,
-  UserNav,
-  LayoutSingleColumn,
+  UserNav,    
   LayoutWrapperTopbar,
   LayoutWrapperMain,
   LayoutWrapperFooter,
+  LayoutWrapperAccountSettingsSideNav,
+  LayoutSideNavigation,
   Footer,
-  NamedLink
+  NamedLink,
+  NamedRedirect
 } from '../../components';
 import { TopbarContainer } from '../../containers';
 
@@ -60,7 +62,12 @@ export class ManageListingsPageComponent extends Component {
       queryParams,
       scrollingDisabled,
       intl,
+      isBusiness,
     } = this.props;
+
+    if (!isBusiness) {
+       return <NamedRedirect name="ListBusinessPage"/>;
+    }
 
     const hasPaginationInfo = !!pagination && pagination.totalItems != null;
     const listingsAreLoaded = !queryInProgress && hasPaginationInfo;
@@ -131,41 +138,48 @@ export class ManageListingsPageComponent extends Component {
 
     return (
       <Page title={title} scrollingDisabled={scrollingDisabled}>
-        <LayoutSingleColumn>
+        <LayoutSideNavigation>
           <LayoutWrapperTopbar>
-            <TopbarContainer currentPage="ManageListingsPage" />
-            <UserNav selectedPageName="ManageListingsPage" />
+            <TopbarContainer 
+              currentPage="ManageListingsPage" 
+              desktopClassName={css.desktopTopbar}
+              mobileClassName={css.mobileTopbar} 
+            />
+            <UserNav selectedPageName="ManageListingsPage" isBusiness={isBusiness}/>
           </LayoutWrapperTopbar>
+          <LayoutWrapperAccountSettingsSideNav groupTab="listing" currentTab="ManageListingsPage" />
           <LayoutWrapperMain>
-            {queryInProgress ? loadingResults : null}
-            {queryListingsError ? queryError : null}
-            <div className={css.listingPanel}>
-              {heading}
-              {createListingLink}
-              <div className={css.listingCards}>
-                {listings.map(l => (
-                  <ManageListingCard
-                    className={css.listingCard}
-                    key={l.id.uuid}
-                    listing={l}
-                    isMenuOpen={!!listingMenuOpen && listingMenuOpen.id.uuid === l.id.uuid}
-                    actionsInProgressListingId={openingListing || closingListing}
-                    onToggleMenu={this.onToggleMenu}
-                    onCloseListing={onCloseListing}
-                    onOpenListing={onOpenListing}
-                    hasOpeningError={openingErrorListingId.uuid === l.id.uuid}
-                    hasClosingError={closingErrorListingId.uuid === l.id.uuid}
-                    renderSizes={renderSizes}
-                  />
-                ))}
+            <div className={css.content}>
+              {heading}              
+              {queryInProgress ? loadingResults : null}
+              {queryListingsError ? queryError : null}
+              {queryInProgress ? null : createListingLink}
+              <div className={css.listingPanel}>                                
+                <div className={css.listingCards}>
+                  {listings.map(l => (
+                    <ManageListingCard
+                      className={css.listingCard}
+                      key={l.id.uuid}
+                      listing={l}
+                      isMenuOpen={!!listingMenuOpen && listingMenuOpen.id.uuid === l.id.uuid}
+                      actionsInProgressListingId={openingListing || closingListing}
+                      onToggleMenu={this.onToggleMenu}
+                      onCloseListing={onCloseListing}
+                      onOpenListing={onOpenListing}
+                      hasOpeningError={openingErrorListingId.uuid === l.id.uuid}
+                      hasClosingError={closingErrorListingId.uuid === l.id.uuid}
+                      renderSizes={renderSizes}
+                    />
+                  ))}
+                </div>
+                {paginationLinks}
               </div>
-              {paginationLinks}
             </div>
           </LayoutWrapperMain>
           <LayoutWrapperFooter>
             <Footer />
           </LayoutWrapperFooter>
-        </LayoutSingleColumn>
+        </LayoutSideNavigation>
       </Page>
     );
   }
@@ -180,6 +194,8 @@ ManageListingsPageComponent.defaultProps = {
   closingListingError: null,
   openingListing: null,
   openingListingError: null,
+  currentUser: null,
+  isBusiness: false,
 };
 
 const { arrayOf, bool, func, object, shape, string } = PropTypes;
@@ -206,9 +222,11 @@ ManageListingsPageComponent.propTypes = {
 
   // from injectIntl
   intl: intlShape.isRequired,
+  isBusiness: bool.isRequired,
 };
 
 const mapStateToProps = state => {
+  const { isBusiness } = state.user;
   const {
     currentPageResultIds,
     pagination,
@@ -219,10 +237,11 @@ const mapStateToProps = state => {
     openingListingError,
     closingListing,
     closingListingError,
-  } = state.ManageListingsPage;
+  } = state.ManageListingsPage;  
   const listings = getOwnListingsById(state, currentPageResultIds);
   return {
     currentPageResultIds,
+    isBusiness,
     listings,
     pagination,
     queryInProgress,

@@ -6,8 +6,7 @@ import { intlShape, injectIntl, FormattedMessage } from '../../util/reactIntl';
 import classNames from 'classnames';
 import { propTypes } from '../../util/types';
 import { maxLength, required, composeValidators } from '../../util/validators';
-import { Form, Button, FieldTextInput } from '../../components';
-import CustomCertificateSelectFieldMaybe from './CustomCertificateSelectFieldMaybe';
+import { Form, Button, FieldTextInput, FieldSelect, NamedLink } from '../../components';
 
 import css from './EditListingDescriptionForm.css';
 
@@ -18,7 +17,7 @@ const EditListingDescriptionFormComponent = props => (
     {...props}
     render={formRenderProps => {
       const {
-        certificate,
+        businessCategory,
         className,
         disabled,
         ready,
@@ -28,7 +27,7 @@ const EditListingDescriptionFormComponent = props => (
         pristine,
         saveActionMsg,
         updated,
-        updateInProgress,
+        updateInProgress,        
         fetchErrors,
       } = formRenderProps;
 
@@ -46,15 +45,60 @@ const EditListingDescriptionFormComponent = props => (
         }
       );
 
-      const descriptionMessage = intl.formatMessage({
-        id: 'EditListingDescriptionForm.description',
+      const maxLength60Message = maxLength(maxLengthMessage, TITLE_MAX_LENGTH);  
+      
+      const businessCategoryLabel = intl.formatMessage({
+        id: 'EditListingDescriptionForm.businessCategoryLabel',
       });
-      const descriptionPlaceholderMessage = intl.formatMessage({
-        id: 'EditListingDescriptionForm.descriptionPlaceholder',
+
+      const aboutLabel = intl.formatMessage({
+        id: 'EditListingDescriptionForm.aboutLabel',
       });
-      const maxLength60Message = maxLength(maxLengthMessage, TITLE_MAX_LENGTH);
-      const descriptionRequiredMessage = intl.formatMessage({
-        id: 'EditListingDescriptionForm.descriptionRequired',
+      const aboutPlaceholder = intl.formatMessage({
+        id: 'EditListingDescriptionForm.aboutPlaceholder',
+      });  
+
+      const aboutRequiredMessage = intl.formatMessage({
+        id: 'EditListingDescriptionForm.aboutRequiredMessage',
+      });      
+      
+      const keyInformationLabel = intl.formatMessage({
+        id: 'EditListingDescriptionForm.keyInformationLabel',
+      });
+      const keyInformationPlaceholder = intl.formatMessage({
+        id: 'EditListingDescriptionForm.keyInformationPlaceholder',
+      });
+
+      const keyInformationRequiredMessage = intl.formatMessage({
+        id: 'EditListingDescriptionForm.keyInformationRequiredMessage',
+      });      
+
+      const webSiteLabel = intl.formatMessage({
+        id: 'EditListingDescriptionForm.webSiteLabel',
+      });
+      const webSitePlaceholder = intl.formatMessage({
+        id: 'EditListingDescriptionForm.webSitePlaceholder',
+      });
+
+      const facebookLabel = intl.formatMessage({
+        id: 'EditListingDescriptionForm.facebookLabel',
+      });
+      const facebookPlaceholder = intl.formatMessage({
+        id: 'EditListingDescriptionForm.facebookPlaceholder',
+      });
+
+      const instagramLabel = intl.formatMessage({
+        id: 'EditListingDescriptionForm.instagramLabel',
+      });
+      const instagramPlaceholder = intl.formatMessage({
+        id: 'EditListingDescriptionForm.instagramPlaceholder',
+      });
+
+      const twitterLabel = intl.formatMessage({
+        id: 'EditListingDescriptionForm.twitterLabel',
+      });
+      const twitterPlaceholder = intl.formatMessage({
+        id: 'EditListingDescriptionForm.twitterPlaceholder',
       });
 
       const { updateListingError, createListingDraftError, showListingsError } = fetchErrors || {};
@@ -97,23 +141,79 @@ const EditListingDescriptionFormComponent = props => (
             maxLength={TITLE_MAX_LENGTH}
             validate={composeValidators(required(titleRequiredMessage), maxLength60Message)}
             autoFocus
-          />
+          />          
+
+          <FieldSelect             
+            id="businessCategory"
+            name="businessCategory" 
+            className={css.selectField} 
+            label={businessCategoryLabel}>
+            {businessCategory.map(c => (
+              <option key={c.key} value={c.key}>
+                {c.label}
+              </option>
+            ))}
+          </FieldSelect>         
+
+          <NamedLink name="ListBusinessPage" className={css.links}>
+              What is this
+              {/* <FormattedMessage id="ListBusinessPage.GoodSpootForBusiness" /> */}
+          </NamedLink>  
 
           <FieldTextInput
             id="description"
             name="description"
-            className={css.description}
+            className={css.textArea}
             type="textarea"
-            label={descriptionMessage}
-            placeholder={descriptionPlaceholderMessage}
-            validate={composeValidators(required(descriptionRequiredMessage))}
+            label={aboutLabel}
+            placeholder={aboutPlaceholder}
+            validate={composeValidators(required(aboutRequiredMessage))}
           />
 
-          <CustomCertificateSelectFieldMaybe
-            id="certificate"
-            name="certificate"
-            certificate={certificate}
-            intl={intl}
+          <FieldTextInput
+            id="keyInformation"
+            name="keyInformation"
+            className={css.textField}
+            type="text"
+            label={keyInformationLabel}
+            placeholder={keyInformationPlaceholder}
+            validate={composeValidators(required(keyInformationRequiredMessage))}
+          />
+
+          <FieldTextInput
+            id="social.website"
+            name="social.website"
+            className={css.textField}
+            type="text"
+            label={webSiteLabel}
+            placeholder={webSitePlaceholder}
+          />
+
+          <FieldTextInput
+            id="social.facebook"
+            name="social.facebook"
+            className={css.textField}
+            type="text"
+            label={facebookLabel}
+            placeholder={facebookPlaceholder}            
+          />
+
+          <FieldTextInput
+            id="social.instagram"
+            name="social.instagram"
+            className={css.textField}
+            type="text"
+            label={instagramLabel}
+            placeholder={instagramPlaceholder}            
+          />
+
+          <FieldTextInput
+            id="social.twitter"
+            name="social.twitter"
+            className={css.textField}
+            type="text"
+            label={twitterLabel}
+            placeholder={twitterPlaceholder}            
           />
 
           <Button
@@ -131,7 +231,10 @@ const EditListingDescriptionFormComponent = props => (
   />
 );
 
-EditListingDescriptionFormComponent.defaultProps = { className: null, fetchErrors: null };
+EditListingDescriptionFormComponent.defaultProps = { 
+  className: null, 
+  fetchErrors: null,  
+};
 
 EditListingDescriptionFormComponent.propTypes = {
   className: string,
@@ -140,14 +243,14 @@ EditListingDescriptionFormComponent.propTypes = {
   saveActionMsg: string.isRequired,
   disabled: bool.isRequired,
   ready: bool.isRequired,
-  updated: bool.isRequired,
-  updateInProgress: bool.isRequired,
+  updated: bool.isRequired,  
+  updateInProgress: bool.isRequired,  
   fetchErrors: shape({
     createListingDraftError: propTypes.error,
     showListingsError: propTypes.error,
     updateListingError: propTypes.error,
   }),
-  certificate: arrayOf(
+  businessCategory: arrayOf(
     shape({
       key: string.isRequired,
       label: string.isRequired,

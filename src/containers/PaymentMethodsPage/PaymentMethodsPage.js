@@ -31,6 +31,7 @@ const PaymentMethodsPageComponent = props => {
 
   const {
     currentUser,
+    isBusiness,
     addPaymentMethodError,
     deletePaymentMethodError,
     createStripeCustomerError,
@@ -45,7 +46,7 @@ const PaymentMethodsPageComponent = props => {
     onManageDisableScrolling,
     intl,
     stripeCustomerFetched,
-  } = props;
+  } = props;    
 
   const getClientSecret = setupIntent => {
     return setupIntent && setupIntent.attributes ? setupIntent.attributes.clientSecret : null;
@@ -153,7 +154,7 @@ const PaymentMethodsPageComponent = props => {
             desktopClassName={css.desktopTopbar}
             mobileClassName={css.mobileTopbar}
           />
-          <UserNav selectedPageName="PaymentMethodsPage" />
+          <UserNav selectedPageName="PaymentMethodsPage" isBusiness={isBusiness}/>
         </LayoutWrapperTopbar>
         <LayoutWrapperAccountSettingsSideNav currentTab="PaymentMethodsPage" />
         <LayoutWrapperMain>
@@ -201,6 +202,7 @@ const PaymentMethodsPageComponent = props => {
 
 PaymentMethodsPageComponent.defaultProps = {
   currentUser: null,
+  isBusiness: false,
   addPaymentMethodError: null,
   deletePaymentMethodError: null,
   createStripeCustomerError: null,
@@ -209,6 +211,7 @@ PaymentMethodsPageComponent.defaultProps = {
 
 PaymentMethodsPageComponent.propTypes = {
   currentUser: propTypes.currentUser,
+  isBusiness: bool.isRequired,
   scrollingDisabled: bool.isRequired,
   addPaymentMethodError: object,
   deletePaymentMethodError: object,
@@ -225,7 +228,7 @@ PaymentMethodsPageComponent.propTypes = {
 };
 
 const mapStateToProps = state => {
-  const { currentUser } = state.user;
+  const { currentUser, isBusiness } = state.user;
 
   const {
     deletePaymentMethodInProgress,
@@ -239,6 +242,7 @@ const mapStateToProps = state => {
   const { handleCardSetupError } = state.stripe;
   return {
     currentUser,
+    isBusiness,
     scrollingDisabled: isScrollingDisabled(state),
     deletePaymentMethodInProgress,
     addPaymentMethodError,

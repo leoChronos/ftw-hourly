@@ -78,6 +78,7 @@ const handleGetStripeConnectAccountLinkFn = (getLinkFn, commonParams) => type =>
 export const StripePayoutPageComponent = props => {
   const {
     currentUser,
+    isBusiness,
     scrollingDisabled,
     getAccountLinkInProgress,
     getAccountLinkError,
@@ -147,13 +148,13 @@ export const StripePayoutPageComponent = props => {
       <LayoutSideNavigation>
         <LayoutWrapperTopbar>
           <TopbarContainer
-            currentPage="StripePayoutPage"
+            currentPage="ManageListingsPage"
             desktopClassName={css.desktopTopbar}
             mobileClassName={css.mobileTopbar}
           />
-          <UserNav selectedPageName="StripePayoutPage" />
+          <UserNav selectedPageName="ManageListingsPage" isBusiness={isBusiness}/>
         </LayoutWrapperTopbar>
-        <LayoutWrapperAccountSettingsSideNav currentTab="StripePayoutPage" />
+        <LayoutWrapperAccountSettingsSideNav groupTab="listing" currentTab="StripePayoutPage" />
         <LayoutWrapperMain>
           <div className={css.content}>
             <h1 className={css.title}>
@@ -216,6 +217,7 @@ export const StripePayoutPageComponent = props => {
 
 StripePayoutPageComponent.defaultProps = {
   currentUser: null,
+  isBusiness: false,
   createStripeAccountError: null,
   updateStripeAccountError: null,
   fetchStripeAccountError: null,
@@ -228,6 +230,7 @@ StripePayoutPageComponent.defaultProps = {
 
 StripePayoutPageComponent.propTypes = {
   currentUser: propTypes.currentUser,
+  isBusiness: bool.isRequired,
   scrollingDisabled: bool.isRequired,
   getAccountLinkInProgress: bool.isRequired,
   payoutDetailsSaveInProgress: bool.isRequired,
@@ -260,10 +263,11 @@ const mapStateToProps = state => {
     stripeAccount,
     stripeAccountFetched,
   } = state.stripeConnectAccount;
-  const { currentUser } = state.user;
+  const { currentUser, isBusiness } = state.user;
   const { payoutDetailsSaveInProgress, payoutDetailsSaved } = state.StripePayoutPage;
   return {
     currentUser,
+    isBusiness,
     getAccountLinkInProgress,
     getAccountLinkError,
     createStripeAccountError,

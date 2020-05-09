@@ -17,6 +17,13 @@ export const certificate = [
   { key: '500h', label: 'Registered yoga teacher 500h' },
 ];
 
+export const businessCategory = [
+  { key: 'none', label: 'None', hideFromFilters: true, hideFromListingInfo: true },
+  { key: '1', label: 'Finance' },
+  { key: '2', label: 'Food' },
+  { key: '3', label: 'Service' },
+]
+
 // Price filter configuration
 // Note: unlike most prices this is not handled in subunits
 export const priceFilterConfig = {

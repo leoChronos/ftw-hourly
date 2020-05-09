@@ -16,7 +16,7 @@ import {
   EditListingFeaturesPanel,
   EditListingLocationPanel,
   EditListingPhotosPanel,
-  EditListingPoliciesPanel,
+  //EditListingPoliciesPanel,
   EditListingPricingPanel,
 } from '../../components';
 
@@ -25,7 +25,7 @@ import css from './EditListingWizard.css';
 export const AVAILABILITY = 'availability';
 export const DESCRIPTION = 'description';
 export const FEATURES = 'features';
-export const POLICY = 'policy';
+//export const POLICY = 'policy';
 export const LOCATION = 'location';
 export const PRICING = 'pricing';
 export const PHOTOS = 'photos';
@@ -34,7 +34,7 @@ export const PHOTOS = 'photos';
 export const SUPPORTED_TABS = [
   DESCRIPTION,
   FEATURES,
-  POLICY,
+  //POLICY,
   LOCATION,
   PRICING,
   AVAILABILITY,
@@ -106,17 +106,34 @@ const EditListingWizardTab = props => {
   const isDraftURI = type === LISTING_PAGE_PARAM_TYPE_DRAFT;
   const isNewListingFlow = isNewURI || isDraftURI;
 
-  const currentListing = ensureListing(listing);
+  const currentListing = ensureListing(listing);  
+  const { publicData } = currentListing.attributes;
+  const { businessLogoImageId} = publicData;
+
+  //Set image logo for display
+  images.forEach(image => {    
+      if(!image.file)
+        image.isLogo =  ((image.id.uuid || image.imageId.uuid) === businessLogoImageId);
+  });
+
   const imageIds = images => {
     return images ? images.map(img => img.imageId || img.id) : null;
-  };
+  };  
 
   const onCompleteEditListingWizardTab = (tab, updateValues, passThrownErrors = false) => {
     // Normalize images for API call
-    const { images: updatedImages, ...otherValues } = updateValues;
+    const { images: updatedImages, ...otherValues } = updateValues;    
+
+    const imageLogo = updatedImages ? updatedImages.filter(img => img.isLogo) : null;
+
+    const otherValuesLogo = 
+        imageLogo && imageLogo.length === 1 
+        ? { publicData: { businessLogoImageId : (imageLogo[0].id.uuid || imageLogo[0].imageId.uuid ) } } 
+        : { publicData: { businessLogoImageId : "" }};
+
     const imageProperty =
       typeof updatedImages !== 'undefined' ? { images: imageIds(updatedImages) } : {};
-    const updateValuesWithImages = { ...otherValues, ...imageProperty };
+    const updateValuesWithImages = { ...otherValues, ...imageProperty, ...otherValuesLogo };
 
     if (isNewListingFlow) {
       const onUpsertListingDraft = isNewURI
@@ -173,7 +190,7 @@ const EditListingWizardTab = props => {
         : 'EditListingWizard.saveEditDescription';
       return (
         <EditListingDescriptionPanel
-          {...panelProps(DESCRIPTION)}
+          {...panelProps(DESCRIPTION)}          
           submitButtonText={intl.formatMessage({ id: submitButtonTranslationKey })}
           onSubmit={values => {
             onCompleteEditListingWizardTab(tab, values);
@@ -195,20 +212,20 @@ const EditListingWizardTab = props => {
         />
       );
     }
-    case POLICY: {
-      const submitButtonTranslationKey = isNewListingFlow
-        ? 'EditListingWizard.saveNewPolicies'
-        : 'EditListingWizard.saveEditPolicies';
-      return (
-        <EditListingPoliciesPanel
-          {...panelProps(POLICY)}
-          submitButtonText={intl.formatMessage({ id: submitButtonTranslationKey })}
-          onSubmit={values => {
-            onCompleteEditListingWizardTab(tab, values);
-          }}
-        />
-      );
-    }
+    // case POLICY: {
+    //   const submitButtonTranslationKey = isNewListingFlow
+    //     ? 'EditListingWizard.saveNewPolicies'
+    //     : 'EditListingWizard.saveEditPolicies';
+    //   return (
+    //     <EditListingPoliciesPanel
+    //       {...panelProps(POLICY)}
+    //       submitButtonText={intl.formatMessage({ id: submitButtonTranslationKey })}
+    //       onSubmit={values => {
+    //         onCompleteEditListingWizardTab(tab, values);
+    //       }}
+    //     />
+    //   );
+    // }
     case LOCATION: {
       const submitButtonTranslationKey = isNewListingFlow
         ? 'EditListingWizard.saveNewLocation'
