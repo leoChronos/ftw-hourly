@@ -6,8 +6,7 @@ import arrayMutators from 'final-form-arrays';
 import { FormattedMessage } from '../../util/reactIntl';
 
 import { propTypes } from '../../util/types';
-import config from '../../config';
-import { Button, FieldCheckboxGroup, Form } from '../../components';
+import { Button, FieldTextInput, Form } from '../../components';
 
 import css from './EditListingFeaturesForm.css';
 
@@ -20,8 +19,7 @@ const EditListingFeaturesFormComponent = props => (
         disabled,
         ready,
         rootClassName,
-        className,
-        name,
+        className,        
         handleSubmit,
         pristine,
         saveActionMsg,
@@ -53,12 +51,29 @@ const EditListingFeaturesFormComponent = props => (
           {errorMessage}
           {errorMessageShowListing}
 
-          <FieldCheckboxGroup
-            className={css.features}
-            id={name}
-            name={name}
-            options={config.custom.yogaStyles}
-          />
+          <FieldTextInput
+            id="services.info"
+            name="services.info"
+            className={css.title}
+            type="text"
+            label="Business service"
+            placeholder="Information on services and what you offer."
+            // maxLength={TITLE_MAX_LENGTH}
+            // validate={composeValidators(required(titleRequiredMessage), maxLength60Message)}
+            autoFocus
+          />          
+
+          <FieldTextInput
+            id="services.website"
+            name="services.website"
+            className={css.title}
+            type="text"
+            label="Website Link"
+            placeholder="Your service webpage: http://wwww.example.com/services"
+            // maxLength={TITLE_MAX_LENGTH}
+            // validate={composeValidators(required(titleRequiredMessage), maxLength60Message)}
+            autoFocus
+          />          
 
           <Button
             className={css.submitButton}

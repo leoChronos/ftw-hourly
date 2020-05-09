@@ -14,17 +14,24 @@ import { ImageFromFile, ResponsiveImage, IconSpinner } from '../../components';
 
 import css from './AddImages.css';
 import RemoveImageButton from './RemoveImageButton';
+import DefineImageAsLogoButton from './DefineImageAsLogoButton'
 
 const ThumbnailWrapper = props => {
-  const { className, image, savedImageAltText, onRemoveImage } = props;
+  const { className, image, savedImageAltText, onRemoveImage, onDefineLogo } = props;
   const handleRemoveClick = e => {
-    e.stopPropagation();
+    e.stopPropagation();    
     onRemoveImage(image.id);
+  };
+  const handleDefineLogoClick = e =>{
+    e.stopPropagation();
+    //e.preventDefault();
+    onDefineLogo(image);    
   };
 
   if (image.file) {
     // Add remove button only when the image has been uploaded and can be removed
     const removeButton = image.imageId ? <RemoveImageButton onClick={handleRemoveClick} /> : null;
+    const defineLogo = image.imageId ? <DefineImageAsLogoButton onClick={handleDefineLogoClick} isLogo={image.isLogo}/> : null;
 
     // While image is uploading we show overlay on top of thumbnail
     const uploadingOverlay = !image.imageId ? (
@@ -40,7 +47,8 @@ const ThumbnailWrapper = props => {
         rootClassName={css.thumbnail}
         file={image.file}
       >
-        {removeButton}
+        {removeButton} 
+        {defineLogo}
         {uploadingOverlay}
       </ImageFromFile>
     );
@@ -58,6 +66,8 @@ const ThumbnailWrapper = props => {
             />
           </div>
           <RemoveImageButton onClick={handleRemoveClick} />
+          <DefineImageAsLogoButton onClick={handleDefineLogoClick} isLogo={image.isLogo}/>
+          <label>Logo</label>
         </div>
       </div>
     );
@@ -70,9 +80,10 @@ const { array, func, node, string, object } = PropTypes;
 
 ThumbnailWrapper.propTypes = {
   className: string,
-  image: object.isRequired,
+  image: object.isRequired,  
   savedImageAltText: string.isRequired,
   onRemoveImage: func.isRequired,
+  onDefineLogo: func.isRequired,
 };
 
 const AddImages = props => {
@@ -80,26 +91,39 @@ const AddImages = props => {
     children,
     className,
     thumbnailClassName,
-    images,
+    images,    
     savedImageAltText,
-    onRemoveImage,
+    onRemoveImage,    
   } = props;
+  
   const classes = classNames(css.root, className);
-  return (
-    <div className={classes}>
+
+  const onDefineLogoHandler = (image) =>{
+    images.forEach(element => {
+      if((element.id.uuid || element.imageId.uuid) !== (image.id.uuid || image.imageId.uuid) )
+        element.isLogo = false;
+    });    
+
+    image.isLogo = !image.isLogo;
+  }
+  
+  return (    
+    <div className={classes}>      
+      {/* {images.filter(image => !image.isLogo).map((image, index) => { */}
       {images.map((image, index) => {
         return (
           <ThumbnailWrapper
             image={image}
             index={index}
-            key={image.id.uuid || image.id}
+            key={image.id.uuid || image.id}            
             className={thumbnailClassName}
             savedImageAltText={savedImageAltText}
             onRemoveImage={onRemoveImage}
+            onDefineLogo={onDefineLogoHandler}
           />
         );
       })}
-      {children}
+      {children}      
     </div>
   );
 };
@@ -107,12 +131,12 @@ const AddImages = props => {
 AddImages.defaultProps = { className: null, thumbnailClassName: null, images: [] };
 
 AddImages.propTypes = {
-  images: array,
+  images: array,  
   children: node.isRequired,
   className: string,
   thumbnailClassName: string,
   savedImageAltText: string.isRequired,
-  onRemoveImage: func.isRequired,
+  onRemoveImage: func.isRequired  
 };
 
 export default AddImages;

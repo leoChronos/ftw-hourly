@@ -128,7 +128,7 @@ class ProfileSettingsFormComponent extends Component {
           // Ensure that file exists if imageFromFile is used
           const fileExists = !!profileImage.file;
           const fileUploadInProgress = uploadInProgress && fileExists;
-          const delayAfterUpload = profileImage.imageId && this.state.uploadDelay;
+          const delayAfterUpload = profileImage.imageId && this.state.uploadDelay;          
           const imageFromFile =
             fileExists && (fileUploadInProgress || delayAfterUpload) ? (
               <ImageFromFile

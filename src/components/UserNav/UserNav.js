@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from '../../util/reactIntl';
 import classNames from 'classnames';
-import { ACCOUNT_SETTINGS_PAGES } from '../../routeConfiguration';
+import { ACCOUNT_SETTINGS_PAGES, LISTING_SETTINGS_PAGES } from '../../routeConfiguration';
 import { LinkTabNavHorizontal } from '../../components';
 
 import css from './UserNav.css';
@@ -30,7 +30,7 @@ const UserNav = props => {
     },
     {
       text: <FormattedMessage id="ManageListingsPage.yourListings" />,
-      selected: isBusiness ? selectedPageName === 'ManageListingsPage' : selectedPageName === 'ListBusinessPage',
+      selected: isBusiness ? LISTING_SETTINGS_PAGES.includes(selectedPageName) : selectedPageName === 'ListBusinessPage',
       linkProps: {
         name: isBusiness ? 'ManageListingsPage' : 'ListBusinessPage',
       },

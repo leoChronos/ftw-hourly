@@ -21,13 +21,15 @@ const EditListingDescriptionPanel = props => {
     onChange,
     submitButtonText,
     panelUpdated,
-    updateInProgress,
+    updateInProgress,    
     errors,
   } = props;
 
   const classes = classNames(rootClassName || css.root, className);
   const currentListing = ensureOwnListing(listing);
   const { description, title, publicData } = currentListing.attributes;
+  const { social, keyInformation, businessCategory } = publicData;
+
 
   const isPublished = currentListing.id && currentListing.attributes.state !== LISTING_STATE_DRAFT;
   const panelTitle = isPublished ? (
@@ -50,15 +52,26 @@ const EditListingDescriptionPanel = props => {
       <h1 className={css.title}>{panelTitle}</h1>
       <EditListingDescriptionForm
         className={css.form}
-        initialValues={{ title, description, businessCategory: publicData.businessCategory }}
+        initialValues={{ 
+          title, 
+          description,           
+          businessCategory,           
+          keyInformation, 
+          social,          
+        }}
         saveActionMsg={submitButtonText}
         onSubmit={values => {
-          const { title, description, businessCategory } = values;
+          const { title, description, businessCategory, keyInformation, social } = values;
           const updateValues = {
             title: title.trim(),
             description,
-            publicData: { businessCategory },
-          };
+            pricing: 20,
+            publicData: { 
+              businessCategory,
+              keyInformation,
+              social,              
+            },
+          };          
 
           onSubmit(updateValues);
         }}
@@ -95,7 +108,7 @@ EditListingDescriptionPanel.propTypes = {
   submitButtonText: string.isRequired,
   panelUpdated: bool.isRequired,
   updateInProgress: bool.isRequired,
-  errors: object.isRequired,
+  errors: object.isRequired,  
 };
 
 export default EditListingDescriptionPanel;

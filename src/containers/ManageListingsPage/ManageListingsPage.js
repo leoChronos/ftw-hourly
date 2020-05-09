@@ -147,7 +147,7 @@ export class ManageListingsPageComponent extends Component {
             />
             <UserNav selectedPageName="ManageListingsPage" isBusiness={isBusiness}/>
           </LayoutWrapperTopbar>
-          <LayoutWrapperAccountSettingsSideNav groupTab="listing" currentTab="ListBusinessPage" />
+          <LayoutWrapperAccountSettingsSideNav groupTab="listing" currentTab="ManageListingsPage" />
           <LayoutWrapperMain>
             <div className={css.content}>
               {heading}              

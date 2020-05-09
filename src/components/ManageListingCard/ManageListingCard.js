@@ -5,15 +5,12 @@ import { withRouter } from 'react-router-dom';
 import { FormattedMessage, intlShape, injectIntl } from '../../util/reactIntl';
 import classNames from 'classnames';
 import routeConfiguration from '../../routeConfiguration';
-import {
-  LINE_ITEM_NIGHT,
-  LINE_ITEM_DAY,
+import {  
   LISTING_STATE_PENDING_APPROVAL,
   LISTING_STATE_CLOSED,
   LISTING_STATE_DRAFT,
   propTypes,
 } from '../../util/types';
-import { formatMoney } from '../../util/currency';
 import { ensureOwnListing } from '../../util/data';
 import {
   LISTING_PAGE_PENDING_APPROVAL_VARIANT,
@@ -23,7 +20,6 @@ import {
   createSlug,
 } from '../../util/urlHelpers';
 import { createResourceLocatorString } from '../../util/routes';
-import config from '../../config';
 import {
   InlineTextButton,
   Menu,
@@ -42,25 +38,6 @@ import css from './ManageListingCard.css';
 // Menu content needs the same padding
 const MENU_CONTENT_OFFSET = -12;
 const MAX_LENGTH_FOR_WORDS_IN_TITLE = 7;
-
-const priceData = (price, intl) => {
-  if (price && price.currency === config.currency) {
-    const formattedPrice = formatMoney(intl, price);
-    return { formattedPrice, priceTitle: formattedPrice };
-  } else if (price) {
-    return {
-      formattedPrice: intl.formatMessage(
-        { id: 'ManageListingCard.unsupportedPrice' },
-        { currency: price.currency }
-      ),
-      priceTitle: intl.formatMessage(
-        { id: 'ManageListingCard.unsupportedPriceTitle' },
-        { currency: price.currency }
-      ),
-    };
-  }
-  return {};
-};
 
 const createListingURL = (routes, listing) => {
   const id = listing.id.uuid;
@@ -122,13 +99,12 @@ export const ManageListingCardComponent = props => {
     onCloseListing,
     onOpenListing,
     onToggleMenu,
-    renderSizes,
-    availabilityEnabled,
+    renderSizes,    
   } = props;
   const classes = classNames(rootClassName || css.root, className);
   const currentListing = ensureOwnListing(listing);
   const id = currentListing.id.uuid;
-  const { title = '', price, state } = currentListing.attributes;
+  const { title = '', state } = currentListing.attributes;
   const slug = createSlug(title);
   const isPendingApproval = state === LISTING_STATE_PENDING_APPROVAL;
   const isClosed = state === LISTING_STATE_CLOSED;
@@ -139,8 +115,6 @@ export const ManageListingCardComponent = props => {
   const menuItemClasses = classNames(css.menuItem, {
     [css.menuItemDisabled]: !!actionsInProgressListingId,
   });
-
-  const { formattedPrice, priceTitle } = priceData(price, intl);
 
   const hasError = hasOpeningError || hasClosingError;
   const thisListingInProgress =
@@ -153,17 +127,7 @@ export const ManageListingCardComponent = props => {
 
   const editListingLinkType = isDraft
     ? LISTING_PAGE_PARAM_TYPE_DRAFT
-    : LISTING_PAGE_PARAM_TYPE_EDIT;
-
-  const unitType = config.bookingUnitType;
-  const isNightly = unitType === LINE_ITEM_NIGHT;
-  const isDaily = unitType === LINE_ITEM_DAY;
-
-  const unitTranslationKey = isNightly
-    ? 'ManageListingCard.perNight'
-    : isDaily
-    ? 'ManageListingCard.perDay'
-    : 'ManageListingCard.perUnit';
+    : LISTING_PAGE_PARAM_TYPE_EDIT;      
 
   return (
     <div className={classes}>
@@ -359,8 +323,7 @@ ManageListingCardComponent.defaultProps = {
   className: null,
   rootClassName: null,
   actionsInProgressListingId: null,
-  renderSizes: null,
-  availabilityEnabled: config.enableAvailability,
+  renderSizes: null,  
 };
 
 const { bool, func, shape, string } = PropTypes;
@@ -376,8 +339,7 @@ ManageListingCardComponent.propTypes = {
   actionsInProgressListingId: shape({ uuid: string.isRequired }),
   onCloseListing: func.isRequired,
   onOpenListing: func.isRequired,
-  onToggleMenu: func.isRequired,
-  availabilityEnabled: bool,
+  onToggleMenu: func.isRequired,  
 
   // Responsive image sizes hint
   renderSizes: string,

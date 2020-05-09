@@ -18,7 +18,7 @@ export class EditListingPhotosFormComponent extends Component {
   constructor(props) {
     super(props);
     this.state = { imageUploadRequested: false };
-    this.onImageUploadHandler = this.onImageUploadHandler.bind(this);
+    this.onImageUploadHandler = this.onImageUploadHandler.bind(this);    
     this.submittedImages = [];
   }
 
@@ -34,13 +34,13 @@ export class EditListingPhotosFormComponent extends Component {
           this.setState({ imageUploadRequested: false });
         });
     }
-  }
+  }  
 
   render() {
     return (
       <FinalForm
         {...this.props}
-        onImageUploadHandler={this.onImageUploadHandler}
+        onImageUploadHandler={this.onImageUploadHandler}        
         imageUploadRequested={this.state.imageUploadRequested}
         initialValues={{ images: this.props.images }}
         render={formRenderProps => {
@@ -49,11 +49,11 @@ export class EditListingPhotosFormComponent extends Component {
             className,
             fetchErrors,
             handleSubmit,
-            images,
+            images,              
             imageUploadRequested,
             intl,
             invalid,
-            onImageUploadHandler,
+            onImageUploadHandler,            
             onRemoveImage,
             disabled,
             ready,
@@ -130,7 +130,7 @@ export class EditListingPhotosFormComponent extends Component {
           return (
             <Form
               className={classes}
-              onSubmit={e => {
+              onSubmit={e => {                
                 this.submittedImages = images;
                 handleSubmit(e);
               }}
@@ -142,12 +142,12 @@ export class EditListingPhotosFormComponent extends Component {
               ) : null}
               <AddImages
                 className={css.imagesField}
-                images={images}
+                images={images}                       
                 thumbnailClassName={css.thumbnail}
                 savedImageAltText={intl.formatMessage({
                   id: 'EditListingPhotosForm.savedImageAltText',
                 })}
-                onRemoveImage={onRemoveImage}
+                onRemoveImage={onRemoveImage}                
               >
                 <Field
                   id="addImage"
@@ -161,7 +161,7 @@ export class EditListingPhotosFormComponent extends Component {
                   {fieldprops => {
                     const { accept, input, label, disabled: fieldDisabled } = fieldprops;
                     const { name, type } = input;
-                    const onChange = e => {
+                    const onChange = e => {                      
                       const file = e.target.files[0];
                       form.change(`addImage`, file);
                       form.blur(`addImage`);
@@ -232,7 +232,7 @@ EditListingPhotosFormComponent.propTypes = {
     uploadImageError: propTypes.error,
     updateListingError: propTypes.error,
   }),
-  images: array,
+  images: array,  
   intl: intlShape.isRequired,
   onImageUpload: func.isRequired,
   onUpdateImageOrder: func.isRequired,

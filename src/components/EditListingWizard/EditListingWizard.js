@@ -22,7 +22,7 @@ import EditListingWizardTab, {
   AVAILABILITY,
   DESCRIPTION,
   FEATURES,
-  POLICY,
+  //POLICY,
   LOCATION,
   PRICING,
   PHOTOS,
@@ -60,8 +60,8 @@ const tabLabel = (intl, tab) => {
     key = 'EditListingWizard.tabLabelDescription';
   } else if (tab === FEATURES) {
     key = 'EditListingWizard.tabLabelFeatures';
-  } else if (tab === POLICY) {
-    key = 'EditListingWizard.tabLabelPolicy';
+  // } else if (tab === POLICY) {
+  //   key = 'EditListingWizard.tabLabelPolicy';
   } else if (tab === LOCATION) {
     key = 'EditListingWizard.tabLabelLocation';
   } else if (tab === PRICING) {
@@ -92,15 +92,15 @@ const tabCompleted = (tab, listing) => {
     title,
     publicData,
   } = listing.attributes;
-  const images = listing.images;
+  const images = listing.images;  
 
   switch (tab) {
     case DESCRIPTION:
       return !!(description && title);
     case FEATURES:
-      return !!(publicData && publicData.yogaStyles);
-    case POLICY:
-      return !!(publicData && typeof publicData.rules !== 'undefined');
+      return !!(publicData && publicData.services);
+    // case POLICY:
+    //   return !!(publicData && typeof publicData.rules !== 'undefined');
     case LOCATION:
       return !!(geolocation && publicData && publicData.location && publicData.location.address);
     case PRICING:

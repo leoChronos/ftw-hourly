@@ -44,12 +44,16 @@
   @apply --EditListingDescriptionForm_formMargins;
 }
 
-.description {
+.textField {
+  @apply --EditListingDescriptionForm_formMargins;
+}
+
+.textArea {
   @apply --EditListingDescriptionForm_formMargins;
   flex-shrink: 0;
 }
 
-.certificate {
+.selectField {
   @apply --EditListingDescriptionForm_formMargins;
 }
 

@@ -354,8 +354,8 @@ export const fetchCurrentUser = (params = null) => (dispatch, getState, sdk) => 
       const privateData = currentUser.attributes.profile.privateData || {};
       
       // Define if user is Business or not
-      //const isBusiness = privateData.isBusiness || false;
-      const isBusiness = true;
+      const isBusiness = privateData.isBusiness || false;
+      //const isBusiness = true;
       dispatch(fetchCurrentUserIsBusinessSuccess(isBusiness));
 
       // Save stripeAccount to store.stripe.stripeAccount if it exists
