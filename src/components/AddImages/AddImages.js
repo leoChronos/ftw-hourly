@@ -66,8 +66,7 @@ const ThumbnailWrapper = props => {
             />
           </div>
           <RemoveImageButton onClick={handleRemoveClick} />
-          <DefineImageAsLogoButton onClick={handleDefineLogoClick} isLogo={image.isLogo}/>
-          <label>Logo</label>
+          <DefineImageAsLogoButton onClick={handleDefineLogoClick} isLogo={image.isLogo}/>          
         </div>
       </div>
     );

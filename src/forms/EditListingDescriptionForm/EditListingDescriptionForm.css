@@ -36,6 +36,27 @@
   }
 }
 
+.links {
+  /* Font */
+  @apply --marketplaceH5FontStyles;
+  color: var(--attentionColor);
+  transition: var(--transitionStyleButton);
+  text-decoration-line: underline;  
+
+  margin-top: 0;
+  margin-bottom: 24px;
+
+  &:hover {
+    color: var(--marketplaceColor);
+    text-decoration: none;
+  }
+
+  @media (--viewportMedium) {
+    margin-top: 0;
+    margin-bottom: 36px;
+  }
+}
+
 .error {
   color: var(--failColor);
 }
@@ -55,6 +76,8 @@
 
 .selectField {
   @apply --EditListingDescriptionForm_formMargins;
+
+  margin-bottom: 10px;
 }
 
 .submitButton {

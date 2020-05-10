@@ -19,8 +19,14 @@ import {
   //EditListingPoliciesPanel,
   EditListingPricingPanel,
 } from '../../components';
+import { types as sdkTypes } from '../../util/sdkLoader';
+import {  
+  unitDivisor,
+  convertUnitToSubUnit,  
+} from '../../util/currency';
 
 import css from './EditListingWizard.css';
+import config from '../../config';
 
 export const AVAILABILITY = 'availability';
 export const DESCRIPTION = 'description';
@@ -120,6 +126,24 @@ const EditListingWizardTab = props => {
     return images ? images.map(img => img.imageId || img.id) : null;
   };  
 
+  const { Money } = sdkTypes;
+  const listingPrice = 10;
+  
+  // Convert unformatted value (e.g. 10,00) to Money (or null)
+  const getPrice = (unformattedValue, currencyConfig) => {
+    const isEmptyString = unformattedValue === '';
+    try {
+      return isEmptyString
+        ? null
+        : new Money(
+            convertUnitToSubUnit(unformattedValue, unitDivisor(currencyConfig.currency)),
+            currencyConfig.currency
+          );
+    } catch (e) {
+      return null;
+    }
+  };
+
   const onCompleteEditListingWizardTab = (tab, updateValues, passThrownErrors = false) => {
     // Normalize images for API call
     const { images: updatedImages, ...otherValues } = updateValues;    
@@ -129,11 +153,13 @@ const EditListingWizardTab = props => {
     const otherValuesLogo = 
         imageLogo && imageLogo.length === 1 
         ? { publicData: { businessLogoImageId : (imageLogo[0].id.uuid || imageLogo[0].imageId.uuid ) } } 
-        : { publicData: { businessLogoImageId : "" }};
+        : tab === PHOTOS ? { publicData: { businessLogoImageId : "" }} : {};
+
+    //if (tab === FEATURES) otherValues.pricing = getPrice(listingPrice, config.currencyConfig);
 
     const imageProperty =
       typeof updatedImages !== 'undefined' ? { images: imageIds(updatedImages) } : {};
-    const updateValuesWithImages = { ...otherValues, ...imageProperty, ...otherValuesLogo };
+    const updateValuesWithImages = { ...imageProperty, ...otherValuesLogo, ...otherValues };
 
     if (isNewListingFlow) {
       const onUpsertListingDraft = isNewURI

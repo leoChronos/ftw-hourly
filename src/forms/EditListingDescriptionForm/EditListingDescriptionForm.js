@@ -144,7 +144,7 @@ const EditListingDescriptionFormComponent = props => (
           />          
 
           <FieldSelect             
-            id="businessCategory"
+            id="businessCategory"            
             name="businessCategory" 
             className={css.selectField} 
             label={businessCategoryLabel}>

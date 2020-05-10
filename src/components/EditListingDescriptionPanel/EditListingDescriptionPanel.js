@@ -30,7 +30,6 @@ const EditListingDescriptionPanel = props => {
   const { description, title, publicData } = currentListing.attributes;
   const { social, keyInformation, businessCategory } = publicData;
 
-
   const isPublished = currentListing.id && currentListing.attributes.state !== LISTING_STATE_DRAFT;
   const panelTitle = isPublished ? (
     <FormattedMessage
@@ -64,8 +63,7 @@ const EditListingDescriptionPanel = props => {
           const { title, description, businessCategory, keyInformation, social } = values;
           const updateValues = {
             title: title.trim(),
-            description,
-            pricing: 20,
+            description: description.trim(),            
             publicData: { 
               businessCategory,
               keyInformation,
