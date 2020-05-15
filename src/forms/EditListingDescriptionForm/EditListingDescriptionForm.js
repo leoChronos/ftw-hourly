@@ -153,7 +153,7 @@ const EditListingDescriptionFormComponent = props => (
                 {c.label}
               </option>
             ))}
-          </FieldSelect>         
+          </FieldSelect>
 
           <NamedLink name="ListBusinessPage" className={css.links}>
               What is this

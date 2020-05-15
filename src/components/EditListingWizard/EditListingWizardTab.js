@@ -17,7 +17,7 @@ import {
   EditListingLocationPanel,
   EditListingPhotosPanel,
   //EditListingPoliciesPanel,
-  EditListingPricingPanel,
+  //EditListingPricingPanel,
 } from '../../components';
 import { types as sdkTypes } from '../../util/sdkLoader';
 import {  
@@ -33,7 +33,7 @@ export const DESCRIPTION = 'description';
 export const FEATURES = 'features';
 //export const POLICY = 'policy';
 export const LOCATION = 'location';
-export const PRICING = 'pricing';
+//export const PRICING = 'pricing';
 export const PHOTOS = 'photos';
 
 // EditListingWizardTab component supports these tabs
@@ -42,7 +42,7 @@ export const SUPPORTED_TABS = [
   FEATURES,
   //POLICY,
   LOCATION,
-  PRICING,
+  //PRICING,
   AVAILABILITY,
   PHOTOS,
 ];
@@ -155,7 +155,7 @@ const EditListingWizardTab = props => {
         ? { publicData: { businessLogoImageId : (imageLogo[0].id.uuid || imageLogo[0].imageId.uuid ) } } 
         : tab === PHOTOS ? { publicData: { businessLogoImageId : "" }} : {};
 
-    //if (tab === FEATURES) otherValues.pricing = getPrice(listingPrice, config.currencyConfig);
+    if (tab === DESCRIPTION) otherValues.price = getPrice(listingPrice, config.currencyConfig);
 
     const imageProperty =
       typeof updatedImages !== 'undefined' ? { images: imageIds(updatedImages) } : {};
@@ -266,20 +266,20 @@ const EditListingWizardTab = props => {
         />
       );
     }
-    case PRICING: {
-      const submitButtonTranslationKey = isNewListingFlow
-        ? 'EditListingWizard.saveNewPricing'
-        : 'EditListingWizard.saveEditPricing';
-      return (
-        <EditListingPricingPanel
-          {...panelProps(PRICING)}
-          submitButtonText={intl.formatMessage({ id: submitButtonTranslationKey })}
-          onSubmit={values => {
-            onCompleteEditListingWizardTab(tab, values);
-          }}
-        />
-      );
-    }
+    // case PRICING: {
+    //   const submitButtonTranslationKey = isNewListingFlow
+    //     ? 'EditListingWizard.saveNewPricing'
+    //     : 'EditListingWizard.saveEditPricing';
+    //   return (
+    //     <EditListingPricingPanel
+    //       {...panelProps(PRICING)}
+    //       submitButtonText={intl.formatMessage({ id: submitButtonTranslationKey })}
+    //       onSubmit={values => {
+    //         onCompleteEditListingWizardTab(tab, values);
+    //       }}
+    //     />
+    //   );
+    // }
     case AVAILABILITY: {
       const submitButtonTranslationKey = isNewListingFlow
         ? 'EditListingWizard.saveNewAvailability'

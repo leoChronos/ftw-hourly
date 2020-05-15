@@ -1,0 +1,95 @@
+@import '../../marketplace.css';
+
+:root {
+  /*
+    These variables are available in global scope through ":root"
+    element (<html> tag). Variables with the same names are going to
+    overwrite each other if CSS Properties' (PostCSS plugin)
+    configuration "preserve: true" is used - meaning that variables
+    are left to CSS bundle. We are planning to enable it in the future
+    since browsers support CSS Properties already.
+ */
+
+  --EditListingDescriptionForm_formMargins: {
+    margin-bottom: 24px;
+
+    @media (--viewportMedium) {
+      margin-bottom: 32px;
+    }
+  }
+}
+
+.root {
+  /* Dimensions */
+  width: 100%;
+  height: auto;
+
+  /* Layout */
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+
+  padding: 0px 50px;
+
+  @media (--viewportMedium) {
+    
+  }
+}
+
+.links {
+  /* Font */
+  @apply --marketplaceH5FontStyles;
+  color: var(--attentionColor);
+  transition: var(--transitionStyleButton);
+  text-decoration-line: underline;  
+
+  margin-top: 0;
+  margin-bottom: 24px;
+
+  &:hover {
+    color: var(--marketplaceColor);
+    text-decoration: none;
+  }
+
+  @media (--viewportMedium) {
+    margin-top: 0;
+    margin-bottom: 36px;
+  }
+}
+
+.error {
+  color: var(--failColor);
+}
+
+.title {
+  @apply --EditListingDescriptionForm_formMargins;
+}
+
+.textField {
+  @apply --EditListingDescriptionForm_formMargins;
+}
+
+.textArea {
+  @apply --EditListingDescriptionForm_formMargins;
+  flex-shrink: 0;
+}
+
+.titleTermsAndConditions{
+  @apply --EditListingDescriptionForm_formMargins;
+}
+
+.selectField {
+  @apply --EditListingDescriptionForm_formMargins;  
+}
+
+.submitButton {
+  margin-top: auto;
+  margin-bottom: 24px;
+  flex-shrink: 0;
+
+  @media (--viewportLarge) {
+    display: inline-block;
+    width: 241px;
+    margin-top: 100px;
+  }
+}

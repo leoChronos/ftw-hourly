@@ -112,7 +112,7 @@ const getEntryBoundaries = (values, dayOfWeek, intl, findStartHours) => index =>
   }, []);
 };
 
-const DailyPlan = props => {
+const DailyPlan = props => {  
   const { dayOfWeek, values, intl } = props;
   const getEntryStartTimes = getEntryBoundaries(values, dayOfWeek, intl, true);
   const getEntryEndTimes = getEntryBoundaries(values, dayOfWeek, intl, false);
@@ -273,6 +273,7 @@ const EditListingAvailabilityPlanFormComponent = props => {
           fetchErrors,
           values,
         } = fieldRenderProps;
+        
 
         const classes = classNames(rootClassName || css.root, className);
         const submitInProgress = inProgress;

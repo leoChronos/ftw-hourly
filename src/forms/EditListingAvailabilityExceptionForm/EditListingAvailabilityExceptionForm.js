@@ -506,12 +506,13 @@ const EditListingAvailabilityExceptionForm = props => {
             className={classes}
             onSubmit={e => {
               handleSubmit(e).then(() => {
-                form.initialize({
-                  exceptionStartDate: null,
-                  exceptionStartTime: null,
-                  exceptionEndDate: null,
-                  exceptionEndTime: null,
-                });
+                form.reset();
+                // form.initialize({
+                //   exceptionStartDate: null,
+                //   exceptionStartTime: null,
+                //   exceptionEndDate: null,
+                //   exceptionEndTime: null,
+                // });
               });
             }}
           >

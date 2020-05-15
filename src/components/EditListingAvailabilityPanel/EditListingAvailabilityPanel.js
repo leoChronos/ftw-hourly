@@ -7,15 +7,15 @@ import { getDefaultTimeZoneOnBrowser, timestampToDate } from '../../util/dates';
 import { LISTING_STATE_DRAFT, DATE_TYPE_DATETIME, propTypes } from '../../util/types';
 import {
   Button,
-  IconClose,
-  IconEdit,
+  IconClose,  
+  IconAdd,
   IconSpinner,
   InlineTextButton,
   ListingLink,
   Modal,
   TimeRange,
 } from '../../components';
-import { EditListingAvailabilityPlanForm, EditListingAvailabilityExceptionForm } from '../../forms';
+import { EditListingAvailabilityPlanEntryForm, EditListingAvailabilityExceptionForm } from '../../forms';
 
 import css from './EditListingAvailabilityPanel.css';
 
@@ -28,6 +28,65 @@ const MAX_EXCEPTIONS_COUNT = 100;
 const defaultTimeZone = () =>
   typeof window !== 'undefined' ? getDefaultTimeZoneOnBrowser() : 'Etc/UTC';
 
+///////////
+// Entry //
+///////////  
+
+const Entry = props => {
+  const { entry, initialValues, dayOfWeek, onManageDisableScrolling, onSubmit, updateInProgress, fetchErrors } = props;
+  // Hooks
+  const [isEditEntryModalOpen, setIsEditEntryModalOpen] = useState(false);
+
+  return (
+    <div className={css.weekDay}>
+      <div className={css.dayOfWeek}>
+        <FormattedMessage id={`EditListingAvailabilityPanel.dayOfWeek.${dayOfWeek}`} />
+      </div>
+      <div className={css.entries} >
+        <span className={css.entry}>
+          {`${entry.startTime}, ${entry.extendedData.discount}% discount`}
+        </span>
+        <span className={css.entry}>
+          {`${entry.seats} spots`}
+        </span>
+      </div>
+      <div className={css.entryEditButton}>
+        <InlineTextButton
+          className={css.editPlanButton}
+          onClick={() => setIsEditEntryModalOpen(true)}
+          >          
+          <FormattedMessage id="EditListingAvailabilityPanel.edit" />
+        </InlineTextButton>
+        <InlineTextButton
+          className={css.editPlanButton}
+          onClick={() => alert('Remove')}
+          >          
+          <FormattedMessage id="EditListingAvailabilityPanel.remove" />
+        </InlineTextButton>
+      </div>
+      {onManageDisableScrolling ? (
+        <Modal
+          id="EditAvailabilityPlanEntry"
+          isOpen={isEditEntryModalOpen}
+          onClose={() => setIsEditEntryModalOpen(false)}
+          onManageDisableScrolling={onManageDisableScrolling}
+          containerClassName={css.modalContainer}
+          usePortal
+        >
+          <EditListingAvailabilityPlanEntryForm
+            formId="EditAvailabilityPlanEntryForm"            
+            initialValues={entry}            
+            availabilityPlan={initialValues}
+            onSubmit={onSubmit}
+            updateInProgress={updateInProgress}
+            fetchErrors={fetchErrors}            
+          />
+        </Modal>
+  ) : null}
+    </div>
+  );
+};
+
 /////////////
 // Weekday //
 /////////////
@@ -38,29 +97,27 @@ const getEntries = (availabilityPlan, dayOfWeek) =>
   availabilityPlan.entries.filter(d => d.dayOfWeek === dayOfWeek);
 
 const Weekday = props => {
-  const { availabilityPlan, dayOfWeek, openEditModal } = props;
-  const hasEntry = findEntry(availabilityPlan, dayOfWeek);
+  const { initialValues, dayOfWeek, onManageDisableScrolling, onSubmit, updateInProgress, fetchErrors } = props;
+  const hasEntry = findEntry(initialValues, dayOfWeek);  
+
+  if (!initialValues && !hasEntry)
+    return (null);  
 
   return (
-    <div
-      className={classNames(css.weekDay, { [css.blockedWeekDay]: !hasEntry })}
-      onClick={() => openEditModal(true)}
-      role="button"
-    >
-      <div className={css.dayOfWeek}>
-        <FormattedMessage id={`EditListingAvailabilityPanel.dayOfWeek.${dayOfWeek}`} />
-      </div>
-      <div className={css.entries}>
-        {availabilityPlan && hasEntry
-          ? getEntries(availabilityPlan, dayOfWeek).map(e => {
-              return (
-                <span className={css.entry} key={`${e.dayOfWeek}${e.startTime}`}>
-                  {`${e.startTime} - ${e.endTime === '00:00' ? '24:00' : e.endTime} - ${e.seats} spots`}</span>
-              );
-            })
-          : null}
-      </div>
-    </div>
+    getEntries(initialValues, dayOfWeek).map(e => {    
+      return (
+        <Entry
+          key={`${e.dayOfWeek}${e.startTime}`}          
+          initialValues={initialValues}
+          dayOfWeek={dayOfWeek}
+          entry={e}
+          onManageDisableScrolling={onManageDisableScrolling}
+          updateInProgress={updateInProgress}
+          onSubmit={onSubmit}
+          fetchErrors={fetchErrors}
+        />
+      );
+    })              
   );
 };
 
@@ -68,61 +125,51 @@ const Weekday = props => {
 // EditListingAvailabilityExceptionPanel - utils //
 ///////////////////////////////////////////////////
 
-// Create initial entry mapping for form's initial values
-const createEntryDayGroups = (entries = {}) =>
-  entries.reduce((groupedEntries, entry) => {
-    const { startTime, endTime: endHour, dayOfWeek } = entry;
-    const dayGroup = groupedEntries[dayOfWeek] || [];
-    return {
-      ...groupedEntries,
-      [dayOfWeek]: [
-        ...dayGroup,
-        {
-          startTime,
-          endTime: endHour === '00:00' ? '24:00' : endHour,
-        },
-      ],
-    };
-  }, {});
-
 // Create initial values
-const createInitialValues = availabilityPlan => {
-  const { timezone, entries } = availabilityPlan || {};
-  const tz = timezone || defaultTimeZone();
-  return {
-    timezone: tz,
-    ...createEntryDayGroups(entries),
+const createInitialValues = (availabilityPlan, reocurringExtendedData) => {
+  const reocurringPlan = {
+    type: availabilityPlan.type,
+    timezone: availabilityPlan.timezone,
+    entries: [...availabilityPlan.entries]
   };
+
+  reocurringPlan.entries.forEach(element => {    
+    element.extendedData = getAvailabilityPlanExtendedData(reocurringExtendedData, element);
+  });
+
+  return reocurringPlan;
 };
 
-// Create entries from submit values
-const createEntriesFromSubmitValues = values =>
-  WEEKDAYS.reduce((allEntries, dayOfWeek) => {    
-    const dayValues = values[dayOfWeek] || [];
-    const dayEntries = dayValues.map(dayValue => {       
-      const { startTime, endTime, seats } = dayValue;
-      // Note: This template doesn't support seats yet.
-      return startTime && endTime
-        ? {
-            dayOfWeek,
-            seats,
-            startTime,
-            endTime: endTime === '24:00' ? '00:00' : endTime,
-          }
-        : null;
-    });
+const getAvailabilityPlanExtendedData = (reocurringExtendedData, element) => {
+  return reocurringExtendedData.length > 0
+    ? reocurringExtendedData.find(x => x.key === `${element.dayOfWeek}_${element.startTime}`) || {}
+    : {};
+}
 
-    return allEntries.concat(dayEntries.filter(e => !!e));
-  }, []);
+// Create reocuring plan with extended data
+const createReocurringPlan = (values) => {
+  const updatedValues = {    
+    availabilityPlan: {
+      entries: [],
+      timezone: values.timezone,
+      type: values.type
+    },
+    publicData: { reocurringExtendedData: [] }
+  };
 
-// Create availabilityPlan from submit values
-const createAvailabilityPlan = values => ({
-  availabilityPlan: {
-    type: 'availability-plan/time',
-    timezone: values.timezone,
-    entries: createEntriesFromSubmitValues(values),
-  },
-});
+  values.entries.forEach(element => {
+    updatedValues.availabilityPlan.entries.push({
+        dayOfWeek: element.dayOfWeek,
+        startTime: element.startTime,
+        endTime: element.endTime,
+        seats: Number.parseInt(element.seats)
+      });
+
+      updatedValues.publicData.reocurringExtendedData.push(element.extendedData);
+  });  
+
+  return updatedValues;
+};
 
 // Ensure that the AvailabilityExceptions are in sensible order.
 //
@@ -156,7 +203,7 @@ const EditListingAvailabilityPanel = props => {
   // Hooks
   const [isEditPlanModalOpen, setIsEditPlanModalOpen] = useState(false);
   const [isEditExceptionsModalOpen, setIsEditExceptionsModalOpen] = useState(false);
-  const [valuesFromLastSubmit, setValuesFromLastSubmit] = useState(null);
+  const [valuesFromLastSubmit, setValuesFromLastSubmit] = useState(null);  
 
   const classes = classNames(rootClassName || css.root, className);
   const currentListing = ensureOwnListing(listing);
@@ -176,16 +223,18 @@ const EditListingAvailabilityPanel = props => {
     ],
   };
   const availabilityPlan = currentListing.attributes.availabilityPlan || defaultAvailabilityPlan;
+  const publicData = currentListing.attributes.publicData || {};
+  const reocurringExtendedData = publicData.reocurringExtendedData || [];
+
   const initialValues = valuesFromLastSubmit
     ? valuesFromLastSubmit
-    : createInitialValues(availabilityPlan);
+    : createInitialValues(availabilityPlan, reocurringExtendedData);
 
   const handleSubmit = values => {
-    setValuesFromLastSubmit(values);
-
     // Final Form can wait for Promises to return.
-    return onSubmit(createAvailabilityPlan(values))
+    return onSubmit(createReocurringPlan(values))
       .then(() => {
+        setValuesFromLastSubmit(values);
         setIsEditPlanModalOpen(false);
       })
       .catch(e => {
@@ -215,7 +264,7 @@ const EditListingAvailabilityPanel = props => {
       .catch(e => {
         // Don't close modal if there was an error
       });
-  };
+  }; 
 
   return (
     <main className={classes}>
@@ -245,17 +294,20 @@ const EditListingAvailabilityPanel = props => {
             className={css.editPlanButton}
             onClick={() => setIsEditPlanModalOpen(true)}
           >
-            <IconEdit className={css.editPlanIcon} />{' '}
-            <FormattedMessage id="EditListingAvailabilityPanel.edit" />
-          </InlineTextButton>
+            <IconAdd className={css.editPlanIcon} />{' '}
+            <FormattedMessage id="EditListingAvailabilityPanel.add" />
+          </InlineTextButton>          
         </header>
         <div className={css.week}>
           {WEEKDAYS.map(w => (
             <Weekday
               dayOfWeek={w}
-              key={w}
-              availabilityPlan={availabilityPlan}
-              openEditModal={setIsEditPlanModalOpen}
+              key={w}              
+              initialValues={initialValues}
+              onManageDisableScrolling={onManageDisableScrolling}
+              updateInProgress={updateInProgress}
+              onSubmit={handleSubmit}
+              fetchErrors={errors}
             />
           ))}
         </div>
@@ -349,25 +401,22 @@ const EditListingAvailabilityPanel = props => {
         >
           {submitButtonText}
         </Button>
-      ) : null}
+      ) : null}    
       {onManageDisableScrolling ? (
         <Modal
-          id="EditAvailabilityPlan"
+          id="EditAvailabilityPlanEntry"
           isOpen={isEditPlanModalOpen}
           onClose={() => setIsEditPlanModalOpen(false)}
           onManageDisableScrolling={onManageDisableScrolling}
           containerClassName={css.modalContainer}
           usePortal
         >
-          <EditListingAvailabilityPlanForm
-            formId="EditListingAvailabilityPlanForm"
-            listingTitle={currentListing.attributes.title}
-            availabilityPlan={availabilityPlan}
-            weekdays={WEEKDAYS}
+          <EditListingAvailabilityPlanEntryForm
+            formId="InsertAvailabilityPlanEntryForm"
+            availabilityPlan={initialValues}
             onSubmit={handleSubmit}
-            initialValues={initialValues}
-            inProgress={updateInProgress}
-            fetchErrors={errors}
+            updateInProgress={updateInProgress}
+            fetchErrors={errors}            
           />
         </Modal>
       ) : null}

@@ -24,7 +24,7 @@ import EditListingWizardTab, {
   FEATURES,
   //POLICY,
   LOCATION,
-  PRICING,
+  //PRICING,
   PHOTOS,
 } from './EditListingWizardTab';
 import css from './EditListingWizard.css';
@@ -43,7 +43,7 @@ export const TABS = [
   FEATURES,
   //POLICY,
   LOCATION,
-  PRICING,
+  //PRICING,
   ...availabilityMaybe,
   PHOTOS,
 ];
@@ -64,8 +64,8 @@ const tabLabel = (intl, tab) => {
   //   key = 'EditListingWizard.tabLabelPolicy';
   } else if (tab === LOCATION) {
     key = 'EditListingWizard.tabLabelLocation';
-  } else if (tab === PRICING) {
-    key = 'EditListingWizard.tabLabelPricing';
+  // } else if (tab === PRICING) {
+  //   key = 'EditListingWizard.tabLabelPricing';
   } else if (tab === AVAILABILITY) {
     key = 'EditListingWizard.tabLabelAvailability';
   } else if (tab === PHOTOS) {
@@ -88,7 +88,7 @@ const tabCompleted = (tab, listing) => {
     availabilityPlan,
     description,
     geolocation,
-    price,
+    //price,
     title,
     publicData,
   } = listing.attributes;
@@ -103,8 +103,8 @@ const tabCompleted = (tab, listing) => {
     //   return !!(publicData && typeof publicData.rules !== 'undefined');
     case LOCATION:
       return !!(geolocation && publicData && publicData.location && publicData.location.address);
-    case PRICING:
-      return !!price;
+    // case PRICING:
+    //   return !!price;
     case AVAILABILITY:
       return !!availabilityPlan;
     case PHOTOS:

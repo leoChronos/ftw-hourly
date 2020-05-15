@@ -31,7 +31,7 @@
 .editPlanButton {
   @apply --marketplaceH5FontStyles;
   margin: 0;
-  padding-top: 5px;
+  padding: 5px;
 }
 
 .editPlanIcon {
@@ -41,14 +41,15 @@
 .week {
   display: flex;
   flex-direction: column;
-  border-top: solid 1px var(--matterColorNegative);
+  /* border-top: solid 1px var(--matterColorNegative);
   border-right: solid 1px var(--matterColorNegative);
   border-left: solid 1px var(--matterColorNegative);
-  border-radius: 4px;
+  border-radius: 4px; */
   margin-bottom: 23px;
 
   & > .weekDay {
-    border-bottom: solid 1px var(--matterColorNegative);
+    border: solid 1px var(--matterColorNegative);
+    margin: 5px 0px;
   }
 }
 
@@ -74,11 +75,21 @@
   }
 }
 
-.entries {
+.entries {    
+  padding-right: 10px;
+
+  @media (--viewportLarge) {
+    padding-right: 0px;
+    width: 55%;
+  }
 }
 
-.entry {
-  display: block;
+.entry {  
+  padding-right: 10px;
+
+  @media (--viewportLarge) {
+    padding-right: 100px;
+  }
 }
 
 .exceptionsLoading {
