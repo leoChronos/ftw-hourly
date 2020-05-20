@@ -10,6 +10,7 @@ const SectionImages = props => {
     title,
     listing,
     isOwnListing,
+    businessLogoImageId,
     editParams,
     handleViewPhotosClick,
     imageCarouselOpen,
@@ -17,8 +18,9 @@ const SectionImages = props => {
     onManageDisableScrolling,
   } = props;
 
-  const hasImages = listing.images && listing.images.length > 0;
-  const firstImage = hasImages ? listing.images[0] : null;
+  const noSpecialImages = listing.images.filter(x => x.id.uuid !== businessLogoImageId);
+  const hasImages = noSpecialImages && noSpecialImages.length > 0;
+  const firstImage = hasImages ? noSpecialImages[0] : null;
 
   // Action bar is wrapped with a div that prevents the click events
   // to the parent that would otherwise open the image carousel
@@ -66,7 +68,7 @@ const SectionImages = props => {
         usePortal
         onManageDisableScrolling={onManageDisableScrolling}
       >
-        <ImageCarousel images={listing.images} />
+        <ImageCarousel images={noSpecialImages} />
       </Modal>
     </div>
   );

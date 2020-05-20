@@ -120,6 +120,7 @@ export { default as ActivityFeed } from './ActivityFeed/ActivityFeed';
 export { default as AddImages } from './AddImages/AddImages';
 export { default as ThumbnailWrapper } from './ThumbnailWrapper/ThumbnailWrapper'
 export { default as Avatar, AvatarMedium, AvatarLarge } from './Avatar/Avatar';
+export { default as AvatarBusiness, AvatarBusinessMedium, AvatarBusinessLarge } from './AvatarBusiness/AvatarBusiness';
 export { default as BookingBreakdown } from './BookingBreakdown/BookingBreakdown';
 export { default as BookingDateRangeFilter } from './BookingDateRangeFilter/BookingDateRangeFilter';
 export { default as BookingDateRangeLengthFilter } from './BookingDateRangeLengthFilter/BookingDateRangeLengthFilter';

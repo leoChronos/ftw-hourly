@@ -237,7 +237,7 @@ export class ListingPageComponent extends Component {
       price = null,
       title = '',
       publicData,
-    } = currentListing.attributes;
+    } = currentListing.attributes;   
 
     const richTitle = (
       <span>
@@ -361,6 +361,10 @@ export class ListingPageComponent extends Component {
       { title, price: formattedPrice, siteTitle }
     );
 
+    // business Logo Id
+    const { businessLogoImageId } = publicData;
+    const businessLogoImage = currentListing.images.find(x => x.id.uuid === businessLogoImageId);
+
     const hostLink = (
       <NamedLink
         className={css.authorNameLink}
@@ -396,6 +400,7 @@ export class ListingPageComponent extends Component {
                 title={title}
                 listing={currentListing}
                 isOwnListing={isOwnListing}
+                businessLogoImageId={businessLogoImageId}
                 editParams={{
                   id: listingId.uuid,
                   slug: listingSlug,
@@ -408,7 +413,7 @@ export class ListingPageComponent extends Component {
                 onManageDisableScrolling={onManageDisableScrolling}
               />
               <div className={css.contentContainer}>
-                <SectionAvatar user={currentAuthor} params={params} />
+                <SectionAvatar user={currentAuthor} businessLogoImage={businessLogoImage} businessName={title} params={params} />
                 <div className={css.mainContent}>
                   <SectionHeading
                     priceTitle={priceTitle}
