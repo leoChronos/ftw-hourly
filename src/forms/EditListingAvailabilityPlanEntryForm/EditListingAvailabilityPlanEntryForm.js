@@ -62,7 +62,9 @@ const EditListingAvailabilityPlanEntryFormComponent = props => {
     // Hooks
     const [isTermEndCondAccepted, setTermEndCondAccepted] = useState(false);  
 
-    const submit = (onSubmit, availabilityPlan, initialValues) => values => {    
+    const isInsert = props.initialValues === undefined || props.initialValues === {};
+
+    const submit = (onSubmit, availabilityPlan, initialValues) => values => {
         setEntryKey(values);
         setEndTime(values);
     
@@ -76,7 +78,7 @@ const EditListingAvailabilityPlanEntryFormComponent = props => {
         entry.seats = Number.parseInt(seats);
         availabilityPlan.entries.push(entry);
         
-        onSubmit(availabilityPlan);
+        onSubmit(availabilityPlan, isInsert);
     };
 
     return (
@@ -98,6 +100,7 @@ const EditListingAvailabilityPlanEntryFormComponent = props => {
                 ready,
                 updateInProgress,
                 fetchErrors,
+                errorLocation,
                 availabilityPlan,
                 values,
                 submitSucceeded
@@ -107,7 +110,7 @@ const EditListingAvailabilityPlanEntryFormComponent = props => {
 
             const idPrefix = `${formId}` || insertFormId;
 
-            if(submitSucceeded && !updateInProgress && idPrefix === insertFormId && (!fetchErrors || !fetchErrors.updateListingError)){
+            if(submitSucceeded && !updateInProgress && isInsert && (!fetchErrors || !fetchErrors.updateListingError)){
                 setTermEndCondAccepted(false);
                 form.reset();
             }
@@ -133,23 +136,44 @@ const EditListingAvailabilityPlanEntryFormComponent = props => {
 
             const { updateListingError } = fetchErrors || {};
 
+            const insertError = isInsert && errorLocation && errorLocation.isInsertReocurError && updateListingError;
+
+            const editError = isInsert && errorLocation && errorLocation.isEditReocurError && updateListingError;
+
             const submitReady = (updated && pristine) || ready;
             const submitInProgress = updateInProgress;            
             const submitDisabled = invalid || disabled || submitInProgress || !isTermEndCondAccepted;
 
+            const formTitle = idPrefix === insertFormId 
+                ? intl.formatMessage({ id: 'EditListingAvailabilityPlanEntryForm.create' })
+                : intl.formatMessage({ id: 'EditListingAvailabilityPlanEntryForm.edit' });
+
+            const termsLink = (
+                <span
+                  key={`${idPrefix}.termsLink`}
+                  className={css.termsLink}
+                  //onClick={onOpenTermsOfService}
+                  role="button"
+                  tabIndex="0"
+                  //onKeyUp={handleTermsKeyUp}
+                >
+                  <FormattedMessage id="EditListingAvailabilityPlanEntryForm.agreeTermsMessageTermsLink" />
+                </span>
+              );
+
             return (
                 <Form id={idPrefix} className={classes} onSubmit={handleSubmit}>
-                    <h2 className={css.heading}>Create/Edit Spot</h2>
+                    <h2 className={css.heading}>{formTitle}</h2>
 
                     <FieldSelect             
                         id={`${idPrefix}.extendedData.discount`}
                         name="extendedData.discount" 
                         className={css.selectField} 
-                        label="Discount Amount"
+                        label={intl.formatMessage({ id: 'EditListingAvailabilityPlanEntryForm.discountLabel' })}
                         validate={required("Required")}
                         >
                         <option disabled value="">
-                            Choose your discounted amount
+                            {intl.formatMessage({ id: 'EditListingAvailabilityPlanEntryForm.discountPlaceHolder' })}
                         </option>
                         {getDiscountList().map(d => (
                             <option key={d} value={d}>
@@ -163,8 +187,8 @@ const EditListingAvailabilityPlanEntryFormComponent = props => {
                         name="extendedData.spotDetails"
                         className={css.textArea}
                         type="textarea"
-                        label="Spot Details"
-                        placeholder="What are the offer details your customer needs to know?"
+                        label={intl.formatMessage({ id: 'EditListingAvailabilityPlanEntryForm.detailsLabel' })}
+                        placeholder={intl.formatMessage({ id: 'EditListingAvailabilityPlanEntryForm.detailsPlaceHolder' })}
                         validate={composeValidators(required("Required"), maxLength("Max", 60))}                    
                     />
 
@@ -172,11 +196,11 @@ const EditListingAvailabilityPlanEntryFormComponent = props => {
                         id={`${idPrefix}.dayOfWeek`}
                         name="dayOfWeek" 
                         className={css.selectField} 
-                        label="Day"
+                        label={intl.formatMessage({ id: 'EditListingAvailabilityPlanEntryForm.dayLabel' })}
                         validate={required("Required")}
                         >
-                        <option disabled value="">
-                            Choose the day this spot will reoccur on
+                        <option disabled value="">                            
+                            {intl.formatMessage({ id: 'EditListingAvailabilityPlanEntryForm.dayPlaceHolder' })}
                         </option>
                         {getWeekDays().map(wd => (                            
                             <option key={wd.key} value={wd.key}>
@@ -189,11 +213,11 @@ const EditListingAvailabilityPlanEntryFormComponent = props => {
                         id={`${idPrefix}.startTime`}
                         name="startTime"
                         className={css.selectField}
-                        label="Spot start time"
+                        label={intl.formatMessage({ id: 'EditListingAvailabilityPlanEntryForm.startTimeLabel' })}
                         validate={required("Required")}
                         >                            
                         <option disabled value="">
-                            Choose the time of the spot booking
+                            {intl.formatMessage({ id: 'EditListingAvailabilityPlanEntryForm.startTimePlaceHolder' })}
                         </option>
                         {filterStartHours(availabilityPlan.entries, values).map(
                             s => (
@@ -208,11 +232,11 @@ const EditListingAvailabilityPlanEntryFormComponent = props => {
                         id={`${idPrefix}.seats`}
                         name="seats"
                         className={css.selectField}
-                        label="Number of spots available to be claimed"
+                        label={intl.formatMessage({ id: 'EditListingAvailabilityPlanEntryForm.numberSpotsLabel' })}
                         validate={required("Required")}
                         >
                         <option disabled value="">
-                            Choose how many people can claim this spot
+                            {intl.formatMessage({ id: 'EditListingAvailabilityPlanEntryForm.numberSpotsPlaceHolder' })}
                         </option>
                         {MAX_SPOTS.map((v, i) => {
                             return <option value={i+1} key={i}>{i+1}</option>
@@ -220,23 +244,39 @@ const EditListingAvailabilityPlanEntryFormComponent = props => {
                     </FieldSelect>
 
                     <label htmlFor="termsAndConditions">
-                        Please confirm
+                        {intl.formatMessage({ id: 'EditListingAvailabilityPlanEntryForm.agreeTermsLabel' })}
                     </label>
 
-                    <FieldCheckbox
-                        id={`${idPrefix}.termsAndConditions`}
-                        name="termsAndConditions"
-                        className={css.textField}
-                        value=""
-                        label="You have read and agree to the Good Spot terms of business"
-                        useSuccessColor
-                        onClick={handleTermAndCondChange}
-                        >
-                    </FieldCheckbox>
+                    {
+                        isInsert ? (
+                            <FieldCheckbox
+                                id={`${idPrefix}.termsAndConditions.insert`}
+                                name="termsAndConditions"
+                                className={css.textField}
+                                value=""
+                                label={intl.formatMessage({ id: 'EditListingAvailabilityPlanEntryForm.agreeTermsMessage'}, { termsLink : termsLink})}
+                                useSuccessColor
+                                onClick={handleTermAndCondChange}
+                            >
+                            </FieldCheckbox>        
+                        ) :
+                        (
+                            <FieldCheckbox
+                                id={`${idPrefix}.termsAndConditions.edit.${values.extendedData.key}`}
+                                name="termsAndConditions"
+                                className={css.textField}
+                                value=""
+                                label={intl.formatMessage({ id: 'EditListingAvailabilityPlanEntryForm.agreeTermsMessage'}, { termsLink : termsLink})}
+                                useSuccessColor
+                                onClick={handleTermAndCondChange}
+                            >
+                            </FieldCheckbox>        
+                        )
+                    }                                
 
-                    {updateListingError ? (
+                    {insertError || editError ? (
                         <p className={css.error}>
-                            <FormattedMessage id="EditListingAvailabilityPlanForm.updateFailed" />
+                            <FormattedMessage id="EditListingAvailabilityPlanEntryForm.updateFailed" />
                         </p>
                     ) : null}
 
@@ -244,9 +284,9 @@ const EditListingAvailabilityPlanEntryFormComponent = props => {
                         type="submit" 
                         inProgress={submitInProgress}
                         disabled={submitDisabled}
-                        ready={submitReady}                        
+                        ready={submitReady}
                         >
-                        <FormattedMessage id="EditListingAvailabilityPlanForm.saveSchedule" />
+                        <FormattedMessage id="EditListingAvailabilityPlanEntryForm.saveSpot" />
                     </PrimaryButton>
                 </Form>
             );

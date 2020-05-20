@@ -31,7 +31,7 @@
 .editPlanButton {
   @apply --marketplaceH5FontStyles;
   margin: 0;
-  padding: 5px;
+  padding: 0px 5px;
 }
 
 .editPlanIcon {
@@ -45,7 +45,7 @@
   border-right: solid 1px var(--matterColorNegative);
   border-left: solid 1px var(--matterColorNegative);
   border-radius: 4px; */
-  margin-bottom: 23px;
+  margin-bottom: 23px;  
 
   & > .weekDay {
     border: solid 1px var(--matterColorNegative);
@@ -57,7 +57,11 @@
   @apply --marketplaceTabNavHorizontalFontStyles;
   display: flex;
   flex-direction: row;
-  padding: 24px 24px 23px 24px;
+  padding: 24px 10px;
+
+  @media (--viewportSmall){
+    padding: 24px;
+  }
 }
 
 .dayOfWeek {
@@ -76,7 +80,7 @@
 }
 
 .entries {    
-  padding-right: 10px;
+  padding: 0px 10px;
 
   @media (--viewportLarge) {
     padding-right: 0px;
@@ -88,7 +92,7 @@
   padding-right: 10px;
 
   @media (--viewportLarge) {
-    padding-right: 100px;
+    padding-right: 80px;
   }
 }
 

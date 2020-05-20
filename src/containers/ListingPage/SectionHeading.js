@@ -17,7 +17,8 @@ const SectionHeading = props => {
     onContactUser,
   } = props;
 
-  const certificate = getCertificateInfo(certificateConfig, listingCertificate);
+  //const certificate = getCertificateInfo(certificateConfig, listingCertificate);
+  const certificate = [];
   const showCertificate = certificate && !certificate.hideFromListingInfo;
   return (
     <div className={css.sectionHeading}>

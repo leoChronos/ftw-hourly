@@ -82,6 +82,10 @@
   @apply --EditListingDescriptionForm_formMargins;  
 }
 
+.fieldDateInput {
+  @apply --EditListingDescriptionForm_formMargins;
+}
+
 .termsLink {
   @apply --marketplaceModalHelperLink;
 

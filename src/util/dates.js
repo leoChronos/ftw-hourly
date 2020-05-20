@@ -199,6 +199,7 @@ const findBookingUnitBoundaries = params => {
             {
               timestamp: currentBoundary.valueOf(),
               timeOfDay,
+              formatedDate: formatDateToText(intl, currentBoundary.valueOf(), timeZone)
             },
           ];
 
@@ -755,7 +756,7 @@ export const nextMonthFn = (currentMoment, timeZone) => {
  *
  * @returns {Object} containing date fromatted to date, time and dateAndTime strings
  */
-export const formatDateToText = (intl, date, timeZone) => {
+export const formatDateToText = (intl, date, timeZone) => {  
   const tzMaybe = timeZone ? { timeZone } : {};
   return {
     date: intl.formatDate(date, {

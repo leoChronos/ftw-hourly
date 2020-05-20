@@ -19,9 +19,12 @@ export const certificate = [
 
 export const businessCategory = [
   { key: 'none', label: 'None', hideFromFilters: true, hideFromListingInfo: true },
-  { key: '1', label: 'Finance' },
-  { key: '2', label: 'Food' },
-  { key: '3', label: 'Service' },
+  { key: 'bar_Dining', label: 'Bar & Dining' },
+  { key: 'health_wellness', label: 'Health & Wellness' },
+  { key: 'personal_services', label: 'Personal Services' },
+  { key: 'business_services', label: 'Business Services' },
+  { key: 'house_garden', label: 'House & Garden' },
+  { key: 'activities', label: 'Activities' },
 ]
 
 // Price filter configuration

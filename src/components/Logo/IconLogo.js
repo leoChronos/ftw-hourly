@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import MobileLogoImage from '../../assets/mobile_good_spot_logo.png';
 import DesktopLogoImage from '../../assets/good_spot_logo.png';
+import config from '../../config';
 
 const IconLogo = props => {
   const { className, format, ...rest } = props;  
@@ -11,7 +12,7 @@ const IconLogo = props => {
       <img
         className={className}
         src={DesktopLogoImage}
-        //alt={config.siteTitle}
+        alt={config.siteTitle}
         {...rest}
       />      
     );
@@ -21,7 +22,7 @@ const IconLogo = props => {
     <img
         className={className}
         src={MobileLogoImage}
-        //alt={config.siteTitle}
+        alt={config.siteTitle}
         {...rest}
       />      
   );

@@ -421,7 +421,7 @@ export class ListingPageComponent extends Component {
                     onContactUser={this.onContactUser}
                   />
                   <SectionDescriptionMaybe description={description} />
-                  <SectionFeaturesMaybe options={yogaStylesConfig} publicData={publicData} />
+                  {/* <SectionFeaturesMaybe options={yogaStylesConfig} publicData={publicData} /> */}
                   <SectionMapMaybe
                     geolocation={geolocation}
                     publicData={publicData}

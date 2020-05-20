@@ -475,14 +475,15 @@ export function requestUpdateListing(tab, data) {
   };
 }
 
-export const requestAddAvailabilityException = params => (dispatch, getState, sdk) => {
+export const requestAddAvailabilityException = params => (dispatch, getState, sdk) => {  
   dispatch(addAvailabilityExceptionRequest(params));
 
   return sdk.availabilityExceptions
     .create(params, { expand: true })
-    .then(response => {
+    //.create({}, { expand: true })
+    .then(response => {      
       const availabilityException = response.data.data;
-      return dispatch(addAvailabilityExceptionSuccess({ data: availabilityException }));
+      return dispatch(addAvailabilityExceptionSuccess({ data: availabilityException }));      
     })
     .catch(e => {
       dispatch(addAvailabilityExceptionError({ error: storableError(e) }));
@@ -497,13 +498,30 @@ export const requestDeleteAvailabilityException = params => (dispatch, getState,
     .delete(params, { expand: true })
     .then(response => {
       const availabilityException = response.data.data;
-      return dispatch(deleteAvailabilityExceptionSuccess({ data: availabilityException }));
+      return dispatch(deleteAvailabilityExceptionSuccess({ data: availabilityException }));      
     })
     .catch(e => {
       dispatch(deleteAvailabilityExceptionError({ error: storableError(e) }));
       throw e;
     });
 };
+
+export const refreshAvailabilityExceptions = listing => (dispatch) => {
+  const today = new Date();
+  const start = resetToStartOfDay(today, listing.timeZone, 0);
+  // Query range: today + 364 days
+  const exceptionRange = 364;
+  const end = resetToStartOfDay(today, listing.timeZone, exceptionRange);
+
+  // NOTE: in this template, we don't expect more than 100 exceptions.
+  // If there are more exceptions, pagination kicks in and we can't use frontend sorting.
+  const params = {
+    listingId: listing.id,
+    start,
+    end,
+  };
+  dispatch(requestFetchAvailabilityExceptions(params));
+}
 
 export const requestFetchAvailabilityExceptions = fetchParams => (dispatch, getState, sdk) => {
   dispatch(fetchAvailabilityExceptionsRequest(fetchParams));
