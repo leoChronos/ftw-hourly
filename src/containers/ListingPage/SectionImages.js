@@ -34,7 +34,7 @@ const SectionImages = props => {
     <button className={css.viewPhotos} onClick={handleViewPhotosClick}>
       <FormattedMessage
         id="ListingPage.viewImagesButton"
-        values={{ count: listing.images.length }}
+        values={{ count: noSpecialImages.length }}
       />
     </button>
   ) : null;

@@ -446,7 +446,7 @@
   "ListingPage.bookingTitle": "Book a session with {title}",
   "ListingPage.closedListing": "This listing has been closed and sessions can't be booked.",
   "ListingPage.contactUser": "Contact",
-  "ListingPage.descriptionTitle": "listing",
+  "ListingPage.descriptionTitle": "About",
   "ListingPage.editListing": "Edit listing",
   "ListingPage.editProfileLink": "Edit user profile",
   "ListingPage.errorLoadingListingMessage": "Could not load listing. Please try again.",

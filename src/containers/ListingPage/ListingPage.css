@@ -21,13 +21,17 @@
 }
 
 .sectionImages {
+  margin-top: 50px;  
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 1200px;  
 }
 
 .threeToTwoWrapper {
   /* Layout */
   display: block;
   width: 100%;
-  position: relative;
+  position: relative;  
 }
 
 /* Firefox doesn't support image aspect ratio inside flexbox */
@@ -41,6 +45,7 @@
 
   @media (--viewportMedium) {
     padding-bottom: 0; /* No fixed aspect on desktop layouts */
+    border-radius: var(--borderRadiusListingBackground);
   }
 }
 
@@ -130,7 +135,7 @@
     height: calc(0.41 * 100vw);
     max-height: 50vh;
     object-fit: cover;
-    border-radius: var(--borderRadius);
+    border-radius: inherit;    
 
     &:hover {
       transform: scale(1.005);
@@ -243,7 +248,7 @@
 .sectionAvatar {
   /* Position (over the listing image)*/
   margin-left: 24px;
-  margin-top: -72px;
+  margin-top: -50px;
 
   /* Rendering context to the same lavel as listing image */
   position: relative;
@@ -253,7 +258,7 @@
 
   @media (--viewportMedium) {
     position: absolute;
-    top: -112px;
+    top: -80px;
     margin-left: 0;
     margin-top: 0;
   }
@@ -355,6 +360,54 @@
   }
 }
 
+.titleAddress {
+  /* Font */
+  @apply --marketplaceH3FontStyles;
+  color: var(--matterColor);
+
+  /* Layout */
+  width: 100%;
+  margin-top: 0;
+  margin-bottom: 0;
+  @media (--viewportMedium) {
+    margin-top: 0;
+    margin-bottom: 5px;
+  }
+}
+
+.tags {
+  width: 100%;
+  @apply --marketplaceH5FontStyles;
+  margin-top: 7px;
+  margin-bottom: 0;
+
+  @media (--viewportMedium) {
+    margin-top: 20px;
+    margin-bottom: 0;
+    color: var(--matterColorLight);
+  }
+}
+
+.businessCategoryTag {
+  background: var(--marketplaceColorLight);
+  padding: 5px 30px;
+  margin-right: 10px;
+  border-radius: 5px;  
+}
+
+.recommendedTag {
+  background: var(--attentionColor);
+  padding: 5px 20px;
+  margin-right: 10px;
+  border-radius: 5px;  
+}
+
+.newListingTag {
+  background: var(--matterColorDark);
+  padding: 5px 10px;
+  border-radius: 5px;  
+}
+
 .author {
   width: 100%;
   @apply --marketplaceH4FontStyles;
@@ -402,8 +455,8 @@
 
 .descriptionTitle {
   /* Font */
-  @apply --marketplaceH3FontStyles;
-  color: var(--matterColorAnti);
+  @apply --marketplaceH2FontStyles;
+  color: var(--matterColorDark);
 
   margin-top: 0;
   margin-bottom: 13px;

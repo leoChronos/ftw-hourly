@@ -59,7 +59,8 @@
   --matterColorAnti: #b2b2b2;
   --matterColorNegative: #e7e7e7;
   --matterColorBright: #fcfcfc;
-  --matterColorLight: #ffffff;
+  --matterColorLight: #ffffff;  
+  --matterColorAvatarBusiness: #f0eee1;
 
   --matterColorLightTransparent: rgba(255, 255, 255, 0.65);
 
@@ -98,6 +99,7 @@
 
   --borderRadius: 2px;
   --borderRadiusMobileSearch: 3px;
+  --borderRadiusListingBackground: 20px;
 
   /* ================ Transition styles ================ */
 
