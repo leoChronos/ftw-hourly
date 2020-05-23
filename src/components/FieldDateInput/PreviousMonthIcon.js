@@ -7,6 +7,7 @@ import css from './DateInput.css';
 const PreviousMonthIcon = props => {
   const { className, rootClassName } = props;
   const classes = classNames(rootClassName || css.rootPreviousMonthIcon, className);
+  debugger;
 
   return (
     <svg

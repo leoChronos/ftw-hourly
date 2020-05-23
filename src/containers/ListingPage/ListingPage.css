@@ -369,43 +369,90 @@
   width: 100%;
   margin-top: 0;
   margin-bottom: 0;
-  @media (--viewportMedium) {
+  @media (--viewportSmall) {
     margin-top: 0;
     margin-bottom: 5px;
   }
 }
 
-.tags {
-  width: 100%;
+.overallRating {
   @apply --marketplaceH5FontStyles;
-  margin-top: 7px;
+  margin-top: 10px;
   margin-bottom: 0;
-
-  @media (--viewportMedium) {
+  
+  @media (--viewportSmall) {
     margin-top: 20px;
     margin-bottom: 0;
-    color: var(--matterColorLight);
+    /* color: var(--matterColorDark); */
   }
 }
 
+.ratingReviewCount {
+  margin-left: 10px;
+  top: 5px;
+  position: relative;
+}
+
+.tags {  
+  @apply --marketplaceH5FontStyles;
+  margin-top: 10px;
+  margin-bottom: 0;
+  color: var(--matterColorLight);
+
+  @media (--viewportSmall) {
+    margin-top: 20px;
+    margin-bottom: 0;    
+  }  
+}
+
 .businessCategoryTag {
+  display: block;
   background: var(--marketplaceColorLight);
+  text-align: center;
+  border-radius: 5px;
+  /* margin-left: auto;   */
+  margin-right: auto;
+  margin-bottom: 10px;
+  max-width: 150px;
   padding: 5px 30px;
-  margin-right: 10px;
-  border-radius: 5px;  
+
+  @media (--viewportSmall) {    
+    display: inline;
+    margin-right: 10px;
+  }
 }
 
 .recommendedTag {
-  background: var(--attentionColor);
-  padding: 5px 20px;
-  margin-right: 10px;
-  border-radius: 5px;  
+  display: block;
+  background: var(--attentionColor);  
+  text-align: center;
+  border-radius: 5px;
+  /* margin-left: auto;   */
+  margin-right: auto;
+  margin-bottom: 10px;
+  max-width: 150px;
+  padding: 5px 30px;
+
+  @media (--viewportSmall) {    
+    display: inline;    
+    margin-right: 10px;
+  }
 }
 
 .newListingTag {
-  background: var(--matterColorDark);
-  padding: 5px 10px;
-  border-radius: 5px;  
+  display: block;
+  background: var(--matterColorDark);  
+  text-align: center;
+  border-radius: 5px;
+  /* margin-left: auto;   */
+  margin-right: auto;
+  margin-bottom: 10px;
+  max-width: 150px;
+  padding: 5px 30px; 
+
+  @media (--viewportSmall) {    
+    display: inline;    
+  }
 }
 
 .author {
@@ -515,7 +562,7 @@
 .locationTitle {
   /* Font */
   @apply --marketplaceH3FontStyles;
-  color: var(--matterColorAnti);
+  color: var(--matterColorDark);
 
   margin-top: 0;
   margin-bottom: 20px;
@@ -523,6 +570,85 @@
     margin-top: 0;
     margin-bottom: 28px;
   }
+}
+
+.sectionManagedBy {
+  padding: 0 24px;
+  margin-bottom: 5px;
+
+  @media (--viewportMedium) {
+    padding: 0;
+  }
+  @media (--viewportLarge) {
+    margin-bottom: 3px;
+  }
+}
+
+.managedByHeading {
+  @apply --marketplaceH3FontStyles;
+  color: var(--matterColorDark);
+
+  margin: 52px 0 20px 0;
+
+  @media (--viewportMedium) {
+    margin: 53px 0 27px 0;
+  }
+  @media (--viewportLarge) {
+    margin: 50px 0 26px 0;
+  }
+}
+
+.areaAvatarManagedBy {
+  @media (--viewportSmall) {
+    float: left;
+    height: 200px;
+  }
+}
+
+.avatarManagedBy{
+  display: flex;
+  width: 96px;
+  height: 96px;  
+  margin-right: 40px;
+}
+
+.managedByContact{  
+  @apply --marketplaceH2FontStyles;
+  color: var(--matterColorDark);
+  margin-right: auto;
+  max-width: 300px;
+}
+
+.managedByContact h2 {
+  @media (--viewportSmall) {
+    padding-top: 15px;
+    margin-bottom: 0px;
+  }  
+}
+
+.managedByContact h3 {
+  @media (--viewportSmall) {    
+    margin-bottom: 50px;
+  }    
+}
+
+.socialIcon {
+  display: flex;
+  margin-bottom: 10px;
+}
+
+.socialFacebook {
+  padding-left: 20px;
+  font-size: 20px;
+  position: relative;
+  top: -6px;
+}
+
+.socialInstagram {
+  padding-left: 15px;
+  font-size: 20px;
+  position: relative;
+  top: -8px;
 }
 
 .sectionReviews {
@@ -539,7 +665,7 @@
 
 .reviewsHeading {
   @apply --marketplaceH3FontStyles;
-  color: var(--matterColorAnti);
+  color: var(--matterColorDark);
 
   margin: 52px 0 20px 0;
 

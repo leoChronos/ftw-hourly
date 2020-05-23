@@ -217,7 +217,7 @@ const createInitialValues = (availabilityPlan, reocurringExtendedData) => {
 
 // Create one off initial values
 const createOneOfInitialValues = (oneOffException, oneOffExtendedData) => {
-  const oneOffPlan = [...oneOffException];
+  const oneOffPlan = [...oneOffException];  
 
   oneOffPlan.forEach(element => {     
     element.extendedData = oneOffExtendedData.find(x => x.key === element.attributes.start.getTime()) || {};

@@ -49,7 +49,8 @@ import SectionImages from './SectionImages';
 import SectionAvatar from './SectionAvatar';
 import SectionHeading from './SectionHeading';
 import SectionDescriptionMaybe from './SectionDescriptionMaybe';
-import SectionFeaturesMaybe from './SectionFeaturesMaybe';
+import SectionKeyInformationMaybe from './SectionKeyInformationMaybe';
+import SectionManagedBy from './SectionManagedBy';
 import SectionReviews from './SectionReviews';
 import SectionMapMaybe from './SectionMapMaybe';
 import css from './ListingPage.css';
@@ -421,14 +422,19 @@ export class ListingPageComponent extends Component {
                     listingBusinessCategory={publicData ? publicData.businessCategory : null}
                     businessCategoryConfig={businessCategoryConfig}
                     address={publicData ? publicData.location.address : null}
+                    reviews={reviews}
                   />
                   <SectionDescriptionMaybe description={description} />
-                  {/* <SectionFeaturesMaybe options={yogaStylesConfig} publicData={publicData} /> */}
+                  <SectionKeyInformationMaybe 
+                    keyInformation={publicData ? publicData.keyInformation : null} 
+                    address={publicData ? publicData.location.address : null}
+                    />                  
                   <SectionMapMaybe
                     geolocation={geolocation}
                     publicData={publicData}
                     listingId={currentListing.id}
                   />
+                  <SectionManagedBy user={currentAuthor}/>
                   <SectionReviews reviews={reviews} fetchReviewsError={fetchReviewsError} />
                 </div>
                 <BookingPanel
@@ -442,6 +448,8 @@ export class ListingPageComponent extends Component {
                   onManageDisableScrolling={onManageDisableScrolling}
                   monthlyTimeSlots={monthlyTimeSlots}
                   onFetchTimeSlots={onFetchTimeSlots}
+                  oneOffExtendedData={publicData ? publicData.oneOffExtendedData : []}
+                  reocurringExtendedData={publicData ? publicData.reocurringExtendedData : []}
                 />
               </div>
             </div>

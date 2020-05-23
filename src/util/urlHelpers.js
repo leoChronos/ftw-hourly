@@ -248,3 +248,19 @@ export const twitterPageURL = twitterHandle => {
   }
   return null;
 };
+
+/**
+ * Create Instagram page url from instagramHandle
+ *
+ * @param {String} instagramHandle - handle is used for generating Instagram page URL
+ *
+ * @return {String} instagramPageURL
+ */
+export const instagramPageURL = instagramHandle => {
+  if (instagramHandle && instagramHandle.charAt(0) === '@') {
+    return `https://instagram.com/${instagramHandle.substring(1)}`;
+  } else if (instagramHandle) {
+    return `https://instagram.com/${instagramHandle}`;
+  }
+  return null;
+};

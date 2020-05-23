@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { bool, func, object, string } from 'prop-types';
+import { bool, func, object, string, array } from 'prop-types';
 import { compose } from 'redux';
 import { Form as FinalForm } from 'react-final-form';
 import { FormattedMessage, intlShape, injectIntl } from '../../util/reactIntl';
@@ -67,6 +67,8 @@ export class BookingTimeFormComponent extends Component {
             unitType,
             values,
             monthlyTimeSlots,
+            oneOffExtendedData,
+            reocurringExtendedData,
             onFetchTimeSlots,
             timeZone,
           } = fieldRenderProps;
@@ -134,12 +136,14 @@ export class BookingTimeFormComponent extends Component {
                   listingId={listingId}
                   bookingStartLabel={bookingStartLabel}
                   onFetchTimeSlots={onFetchTimeSlots}
+                  oneOffExtendedData={oneOffExtendedData}
+                  reocurringExtendedData={reocurringExtendedData}
                   monthlyTimeSlots={monthlyTimeSlots}
                   values={values}
                   intl={intl}
                   form={form}
                   pristine={pristine}
-                  timeZone={timeZone}
+                  timeZone={timeZone}                  
                 />
               ) : null}
               {bookingInfo}
@@ -175,6 +179,8 @@ BookingTimeFormComponent.defaultProps = {
   startDatePlaceholder: null,
   endDatePlaceholder: null,
   monthlyTimeSlots: null,
+  oneOffExtendedData: null,
+  reocurringExtendedData: null,
 };
 
 BookingTimeFormComponent.propTypes = {
@@ -188,6 +194,9 @@ BookingTimeFormComponent.propTypes = {
   listingId: propTypes.uuid,
   monthlyTimeSlots: object,
   onFetchTimeSlots: func.isRequired,
+
+  oneOffExtendedData: array.isRequired,
+  reocurringExtendedData: array.isRequired,
 
   // from injectIntl
   intl: intlShape.isRequired,

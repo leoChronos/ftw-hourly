@@ -2,7 +2,7 @@ import React from 'react';
 import { compose } from 'redux';
 import { withRouter } from 'react-router-dom';
 import { intlShape, injectIntl, FormattedMessage } from '../../util/reactIntl';
-import { bool, func, node, object, oneOfType, shape, string } from 'prop-types';
+import { bool, func, node, object, oneOfType, shape, string, array } from 'prop-types';
 import classNames from 'classnames';
 import omit from 'lodash/omit';
 import { propTypes, LISTING_STATE_CLOSED, LINE_ITEM_NIGHT, LINE_ITEM_DAY } from '../../util/types';
@@ -67,6 +67,8 @@ const BookingPanel = props => {
     history,
     location,
     intl,
+    oneOffExtendedData,
+    reocurringExtendedData,
   } = props;
 
   const price = listing.attributes.price;
@@ -111,14 +113,14 @@ const BookingPanel = props => {
           <h1 className={css.title}>{title}</h1>
         </div>
         <div className={css.bookingHeading}>
-          <div className={css.desktopPriceContainer}>
+          {/* <div className={css.desktopPriceContainer}>
             <div className={css.desktopPriceValue} title={priceTitle}>
               {formattedPrice}
             </div>
             <div className={css.desktopPerUnit}>
               <FormattedMessage id={unitTranslationKey} />
             </div>
-          </div>
+          </div> */}
           <div className={css.bookingHeadingContainer}>
             <h2 className={titleClasses}>{title}</h2>
             {subTitleText ? <div className={css.bookingHelp}>{subTitleText}</div> : null}
@@ -140,6 +142,8 @@ const BookingPanel = props => {
             startDatePlaceholder={intl.formatDate(TODAY, dateFormattingOptions)}
             endDatePlaceholder={intl.formatDate(TODAY, dateFormattingOptions)}
             timeZone={timeZone}
+            oneOffExtendedData={oneOffExtendedData}
+            reocurringExtendedData={reocurringExtendedData}
           />
         ) : null}
       </ModalInMobile>
@@ -178,6 +182,9 @@ BookingPanel.defaultProps = {
   subTitle: null,
   unitType: config.bookingUnitType,
   monthlyTimeSlots: null,
+
+  oneOffExtendedData: null,
+  reocurringExtendedData: null,
 };
 
 BookingPanel.propTypes = {
@@ -194,6 +201,9 @@ BookingPanel.propTypes = {
   onManageDisableScrolling: func.isRequired,
   onFetchTimeSlots: func.isRequired,
   monthlyTimeSlots: object,
+
+  oneOffExtendedData: array.isRequired,
+  reocurringExtendedData: array.isRequired,
 
   // from withRouter
   history: shape({

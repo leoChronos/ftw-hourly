@@ -774,6 +774,16 @@ export const formatDateToText = (intl, date, timeZone) => {
       day: 'numeric',
       ...tzMaybe,
     }),
+    weekday: intl.formatDate(date, {
+      weekday: 'short',
+      ...tzMaybe,
+    }),
+    time24: intl.formatDate(date, {
+      hour: 'numeric',
+      minute: 'numeric',
+      hour12: false,
+      ...tzMaybe,
+    }),
   };
 };
 

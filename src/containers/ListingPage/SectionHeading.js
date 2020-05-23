@@ -1,6 +1,5 @@
 import React from 'react';
-import { FormattedMessage } from '../../util/reactIntl';
-import { InlineTextButton } from '../../components';
+import { ReviewRating } from '../../components';
 
 import css from './ListingPage.css';
 
@@ -13,11 +12,16 @@ const SectionHeading = props => {
     richTitle,
     listingBusinessCategory,
     businessCategoryConfig,
-    address,    
+    address,   
+    reviews, 
   } = props;
 
   const businessCategory = getBusinessCategory(businessCategoryConfig, listingBusinessCategory);  
-  const showBusinessCategory = businessCategory && !businessCategory.hideFromListingInfo;
+  const showBusinessCategory = businessCategory && !businessCategory.hideFromListingInfo;  
+  const rating = reviews ? reviews.length : 0;
+  const reviewCount = reviews ? reviews.length : 0;
+
+
   return (
     <div className={css.sectionHeading}>
       <div className={css.heading}>
@@ -27,6 +31,14 @@ const SectionHeading = props => {
           {showBusinessCategory ? <span className={css.businessCategoryTag}>{businessCategory.label}</span> : null}          
           <span className={css.recommendedTag}>Recommended</span>
           <span className={css.newListingTag}>New</span>
+        </div>
+        <div className={css.overallRating}>                  
+            <ReviewRating
+              reviewStarClassName={css.reviewStar}
+              className={css.reviewStars}
+              rating={rating}
+            />
+            <span className={css.ratingReviewCount}>Reviews ({reviewCount})</span>
         </div>
       </div>
     </div>

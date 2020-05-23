@@ -173,8 +173,8 @@ const EditListingDescriptionFormComponent = props => (
           <FieldTextInput
             id="keyInformation"
             name="keyInformation"
-            className={css.textField}
-            type="text"
+            className={css.textArea}
+            type="textarea"
             label={keyInformationLabel}
             placeholder={keyInformationPlaceholder}
             validate={composeValidators(required(keyInformationRequiredMessage))}
