@@ -423,6 +423,8 @@ export class ListingPageComponent extends Component {
                     businessCategoryConfig={businessCategoryConfig}
                     address={publicData ? publicData.location.address : null}
                     reviews={reviews}
+                    showContactUser={showContactUser}
+                    onContactUser={this.onContactUser}
                   />
                   <SectionDescriptionMaybe description={description} />
                   <SectionKeyInformationMaybe 

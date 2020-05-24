@@ -1,5 +1,6 @@
 import React from 'react';
-import { ReviewRating } from '../../components';
+import { ReviewRating, InlineTextButton, IconEnquiry } from '../../components';
+import { FormattedMessage } from '../../util/reactIntl';
 
 import css from './ListingPage.css';
 
@@ -14,6 +15,8 @@ const SectionHeading = props => {
     businessCategoryConfig,
     address,   
     reviews, 
+    showContactUser,
+    onContactUser,
   } = props;
 
   const businessCategory = getBusinessCategory(businessCategoryConfig, listingBusinessCategory);  
@@ -39,6 +42,24 @@ const SectionHeading = props => {
               rating={rating}
             />
             <span className={css.ratingReviewCount}>Reviews ({reviewCount})</span>
+        </div>
+        <div className={css.iconActionArea}>
+          {showContactUser ? (
+            <span className={css.contactWrapper}>
+              <InlineTextButton rootClassName={css.contactLink}>
+                <IconEnquiry />
+                <label>Add to favorites</label>
+              </InlineTextButton>
+              <InlineTextButton rootClassName={css.contactLink}>
+                <IconEnquiry />
+                <label>Get spot alerts</label>
+              </InlineTextButton>
+              <InlineTextButton rootClassName={css.contactLink} onClick={onContactUser}>
+                <IconEnquiry />
+                <label>Ask a question</label>
+              </InlineTextButton>
+            </span>
+          ) : null}
         </div>
       </div>
     </div>
