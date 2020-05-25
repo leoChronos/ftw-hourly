@@ -388,6 +388,7 @@ const EditListingAvailabilityPanel = props => {
     //return onSubmit(values)
       .then(() => {
         handleSuccessSubmit(values);
+        window.location.reload(false);
       })
       .catch(e => {
         // Don't close modal if there was an error
@@ -403,6 +404,7 @@ const EditListingAvailabilityPanel = props => {
     //return onSubmit(updatedValues)
       .then(() => {
         handleSuccessSubmit(updatedValues);
+        window.location.reload(false);
       })
       .catch(e => {
         defineErrorLocation('isDeleteReocurError');
@@ -455,7 +457,8 @@ const EditListingAvailabilityPanel = props => {
 
     return onAddAvailabilityException(updatedException)
       .then(() => {
-        setIsEditExceptionsModalOpen(false);        
+        setIsEditExceptionsModalOpen(false);  
+        window.location.reload(false);      
       })
       .catch(e => {
         // Don't close modal if there was an error

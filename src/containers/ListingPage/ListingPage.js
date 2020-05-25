@@ -365,6 +365,9 @@ export class ListingPageComponent extends Component {
     const { businessLogoImageId } = publicData || '';
     const businessLogoImage = currentListing.images.find(x => x.id.uuid === businessLogoImageId);
 
+    const oneOffExtendedData = publicData && publicData.oneOffExtendedData ? publicData.oneOffExtendedData : [];
+    const reocurringExtendedData = publicData && publicData.reocurringExtendedData ? publicData.reocurringExtendedData : [];
+
     const hostLink = (
       <NamedLink
         className={css.authorNameLink}
@@ -450,8 +453,8 @@ export class ListingPageComponent extends Component {
                   onManageDisableScrolling={onManageDisableScrolling}
                   monthlyTimeSlots={monthlyTimeSlots}
                   onFetchTimeSlots={onFetchTimeSlots}
-                  oneOffExtendedData={publicData ? publicData.oneOffExtendedData : []}
-                  reocurringExtendedData={publicData ? publicData.reocurringExtendedData : []}
+                  oneOffExtendedData={oneOffExtendedData}
+                  reocurringExtendedData={reocurringExtendedData}
                 />
               </div>
             </div>

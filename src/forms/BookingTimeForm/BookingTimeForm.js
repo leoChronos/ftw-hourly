@@ -96,7 +96,9 @@ export class BookingTimeFormComponent extends Component {
                   endDate,
 
                   // Calculate the quantity as hours between the booking start and booking end
-                  quantity: calculateQuantityFromHours(startDate, endDate),
+                  //quantity: calculateQuantityFromHours(startDate, endDate),
+                  // Update if number of spots can be selected
+                  quantity: 1,
                   timeZone,
                 }
               : null;
