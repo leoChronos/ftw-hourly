@@ -28,7 +28,7 @@ const EditListingDescriptionPanel = props => {
   const classes = classNames(rootClassName || css.root, className);
   const currentListing = ensureOwnListing(listing);
   const { description, title, publicData } = currentListing.attributes;
-  const { social, keyInformation, businessCategory } = publicData;
+  const { social, keyInformation, category } = publicData;
 
   const isPublished = currentListing.id && currentListing.attributes.state !== LISTING_STATE_DRAFT;
   const panelTitle = isPublished ? (
@@ -54,18 +54,18 @@ const EditListingDescriptionPanel = props => {
         initialValues={{ 
           title, 
           description,           
-          businessCategory,           
+          category,           
           keyInformation, 
           social,          
         }}
         saveActionMsg={submitButtonText}
         onSubmit={values => {
-          const { title, description, businessCategory, keyInformation, social } = values;
+          const { title, description, category, keyInformation, social } = values;
           const updateValues = {
             title: title.trim(),
             description: description.trim(),            
             publicData: { 
-              businessCategory,
+              category,
               keyInformation,
               social,              
             },
@@ -79,7 +79,7 @@ const EditListingDescriptionPanel = props => {
         updated={panelUpdated}
         updateInProgress={updateInProgress}
         fetchErrors={errors}
-        businessCategory={config.custom.businessCategory}
+        category={config.custom.categories}
       />
     </div>
   );

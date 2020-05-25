@@ -192,7 +192,7 @@ export class ListingPageComponent extends Component {
       sendEnquiryInProgress,
       sendEnquiryError,
       monthlyTimeSlots,     
-      businessCategoryConfig       
+      categoryConfig       
     } = this.props;
 
     const listingId = new UUID(rawParams.id);
@@ -361,8 +361,8 @@ export class ListingPageComponent extends Component {
       { title, price: formattedPrice, siteTitle }
     );
 
-    // business Logo Id
-    const { businessLogoImageId } = publicData;
+    // business Logo Id    
+    const { businessLogoImageId } = publicData || '';
     const businessLogoImage = currentListing.images.find(x => x.id.uuid === businessLogoImageId);
 
     const hostLink = (
@@ -419,8 +419,8 @@ export class ListingPageComponent extends Component {
                     priceTitle={priceTitle}
                     formattedPrice={formattedPrice}
                     richTitle={richTitle}                    
-                    listingBusinessCategory={publicData ? publicData.businessCategory : null}
-                    businessCategoryConfig={businessCategoryConfig}
+                    listingCategory={publicData ? publicData.category : null}
+                    categoryConfig={categoryConfig}
                     address={publicData ? publicData.location.address : null}
                     reviews={reviews}
                     showContactUser={showContactUser}
@@ -491,7 +491,7 @@ ListingPageComponent.defaultProps = {
   fetchReviewsError: null,
   monthlyTimeSlots: null,
   sendEnquiryError: null,    
-  businessCategoryConfig: config.custom.businessCategory,
+  categoryConfig: config.custom.categories,
 };
 
 ListingPageComponent.propTypes = {
@@ -538,7 +538,7 @@ ListingPageComponent.propTypes = {
   onSendEnquiry: func.isRequired,
   onInitializeCardPaymentData: func.isRequired,
 
-  businessCategoryConfig: array,
+  categoryConfig: array,
 };
 
 const mapStateToProps = state => {

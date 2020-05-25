@@ -17,7 +17,7 @@ const EditListingDescriptionFormComponent = props => (
     {...props}
     render={formRenderProps => {
       const {
-        businessCategory,
+        category,
         className,
         disabled,
         ready,
@@ -47,8 +47,8 @@ const EditListingDescriptionFormComponent = props => (
 
       const maxLength60Message = maxLength(maxLengthMessage, TITLE_MAX_LENGTH);  
       
-      const businessCategoryLabel = intl.formatMessage({
-        id: 'EditListingDescriptionForm.businessCategoryLabel',
+      const categoryLabel = intl.formatMessage({
+        id: 'EditListingDescriptionForm.categoryLabel',
       });
 
       const aboutLabel = intl.formatMessage({
@@ -144,11 +144,11 @@ const EditListingDescriptionFormComponent = props => (
           />          
 
           <FieldSelect             
-            id="businessCategory"            
-            name="businessCategory" 
+            id="category"            
+            name="category" 
             className={css.selectField} 
-            label={businessCategoryLabel}>
-            {businessCategory.map(c => (
+            label={categoryLabel}>
+            {category.map(c => (
               <option key={c.key} value={c.key}>
                 {c.label}
               </option>
@@ -250,7 +250,7 @@ EditListingDescriptionFormComponent.propTypes = {
     showListingsError: propTypes.error,
     updateListingError: propTypes.error,
   }),
-  businessCategory: arrayOf(
+  category: arrayOf(
     shape({
       key: string.isRequired,
       label: string.isRequired,

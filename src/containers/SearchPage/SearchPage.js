@@ -53,39 +53,28 @@ export class SearchPageComponent extends Component {
 
   filters() {
     const {
-      certificateConfig,
-      yogaStylesConfig,
-      priceFilterConfig,
+      categories,            
+      dateRangeFilterConfig,
       keywordFilterConfig,
-      dateRangeLengthFilterConfig,
     } = this.props;
 
-    // Note: "certificate" and "yogaStyles" filters are not actually filtering anything by default.
+    // Note: "category" and "amenities" filters are not actually filtering anything by default.
     // Currently, if you want to use them, we need to manually configure them to be available
     // for search queries. Read more from extended data document:
     // https://www.sharetribe.com/docs/references/extended-data/#data-schema
 
     return {
-      priceFilter: {
-        paramName: 'price',
-        config: priceFilterConfig,
+      categoryFilter: {
+        paramName: 'pub_category',
+        options: categories,
       },
-      dateRangeLengthFilter: {
+      dateRangeFilter: {
         paramName: 'dates',
-        minDurationParamName: 'minDuration',
-        config: dateRangeLengthFilterConfig,
+        config: dateRangeFilterConfig,
       },
       keywordFilter: {
         paramName: 'keywords',
         config: keywordFilterConfig,
-      },
-      certificateFilter: {
-        paramName: 'pub_certificate',
-        options: certificateConfig.filter(c => !c.hideFromFilters),
-      },
-      yogaStylesFilter: {
-        paramName: 'pub_yogaStyles',
-        options: yogaStylesConfig,
       },
     };
   }
@@ -110,7 +99,7 @@ export class SearchPageComponent extends Component {
     if (viewportBoundsChanged && isSearchPage) {
       const { history, location } = this.props;
 
-      // parse query parameters, including a custom attribute named certificate
+      // parse query parameters, including a custom attribute named category
       const { address, bounds, mapSearch, ...rest } = parse(location.search, {
         latlng: ['origin'],
         latlngBounds: ['bounds'],
@@ -227,17 +216,15 @@ export class SearchPageComponent extends Component {
             pagination={pagination}
             searchParamsForPagination={parse(location.search)}
             showAsModalMaxWidth={MODAL_BREAKPOINT}
-            primaryFilters={{
-              priceFilter: filters.priceFilter,
-              dateRangeLengthFilter: filters.dateRangeLengthFilter,
+            primaryFilters={{              
+              dateRangeFilter: filters.dateRangeFilter,
               keywordFilter: filters.keywordFilter,
+              categoryFilter: filters.categoryFilter,
             }}
-            secondaryFilters={{
-              yogaStylesFilter: filters.yogaStylesFilter,
-              certificateFilter: filters.certificateFilter,
+            secondaryFilters={{              
             }}
           />
-          <ModalInMobile
+          {/* <ModalInMobile
             className={css.mapPanel}
             id="SearchPage.map"
             isModalOpenOnMobile={this.state.isSearchMapOpenOnMobile}
@@ -263,7 +250,7 @@ export class SearchPageComponent extends Component {
                 />
               ) : null}
             </div>
-          </ModalInMobile>
+          </ModalInMobile> */}
         </div>
       </Page>
     );
@@ -278,11 +265,9 @@ SearchPageComponent.defaultProps = {
   searchListingsError: null,
   searchParams: {},
   tab: 'listings',
-  certificateConfig: config.custom.certificate,
-  yogaStylesConfig: config.custom.yogaStyles,
-  priceFilterConfig: config.custom.priceFilterConfig,
+  categories: config.custom.categories,    
+  dateRangeFilterConfig: config.custom.dateRangeFilterConfig,
   keywordFilterConfig: config.custom.keywordFilterConfig,
-  dateRangeLengthFilterConfig: config.custom.dateRangeLengthFilterConfig,
   activeListingId: null,
 };
 
@@ -298,14 +283,8 @@ SearchPageComponent.propTypes = {
   searchListingsError: propTypes.error,
   searchParams: object,
   tab: oneOf(['filters', 'listings', 'map']).isRequired,
-  certificateConfig: array,
-  yogaStylesConfig: array,
-  priceFilterConfig: shape({
-    min: number.isRequired,
-    max: number.isRequired,
-    step: number.isRequired,
-  }),
-  dateRangeLengthFilterConfig: object,
+  categories: array,  
+  dateRangeFilterConfig: shape({ active: bool.isRequired }),
 
   // from withRouter
   history: shape({
@@ -382,10 +361,15 @@ SearchPage.loadData = (params, search) => {
     page,
     perPage: RESULT_PAGE_SIZE,
     include: ['author', 'images'],
-    'fields.listing': ['title', 'geolocation', 'price', 'publicData'],
-    'fields.user': ['profile.displayName', 'profile.abbreviatedName'],
+    'fields.listing': ['title', 'geolocation', 'publicData.category', 'publicData.location'],
+    //'fields.user': ['profile.displayName', 'profile.abbreviatedName'],
     'fields.image': ['variants.landscape-crop', 'variants.landscape-crop2x'],
     'limit.images': 1,
+    // include: ['author', 'images'],
+    // 'fields.listing': ['title', 'geolocation', 'price'],
+    // 'fields.user': ['profile.displayName', 'profile.abbreviatedName'],
+    // 'fields.image': ['variants.landscape-crop', 'variants.landscape-crop2x'],
+    // 'limit.images': 1,
   });
 };
 

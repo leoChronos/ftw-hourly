@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { array, string, func } from 'prop-types';
+import { string, func } from 'prop-types';
 import { FormattedMessage, intlShape, injectIntl } from '../../util/reactIntl';
 import classNames from 'classnames';
 import { lazyLoadWithDimensions } from '../../util/contextHelpers';
 import { LINE_ITEM_DAY, LINE_ITEM_NIGHT, propTypes } from '../../util/types';
 import { formatMoney } from '../../util/currency';
-import { ensureListing } from '../../util/data';
+import { ensureListing, ensureUser } from '../../util/data';
 import { richText } from '../../util/richText';
 import { createSlug } from '../../util/urlHelpers';
 import config from '../../config';
@@ -34,9 +34,9 @@ const priceData = (price, intl) => {
   return {};
 };
 
-const getCertificateInfo = (certificateConfig, key) => {
-  return certificateConfig.find(c => c.key === key);
-};
+const getcategory = (key) => {  
+  return config.custom.categories.find(c => c.key === key);  
+}
 
 class ListingImage extends Component {
   render() {
@@ -46,26 +46,22 @@ class ListingImage extends Component {
 const LazyImage = lazyLoadWithDimensions(ListingImage, { loadAfterInitialRendering: 3000 });
 
 export const ListingCardComponent = props => {
-  const {
-    className,
-    rootClassName,
-    intl,
-    listing,
-    renderSizes,
-    certificateConfig,
-    setActiveListing,
-  } = props;
+  const { className, rootClassName, intl, listing, renderSizes, setActiveListing } = props;
   const classes = classNames(rootClassName || css.root, className);
   const currentListing = ensureListing(listing);
   const id = currentListing.id.uuid;
   const { title = '', price, publicData } = currentListing.attributes;
   const slug = createSlug(title);
+  const author = ensureUser(listing.author);
+  const authorName = author.attributes.profile.displayName;
   const firstImage =
     currentListing.images && currentListing.images.length > 0 ? currentListing.images[0] : null;
 
-  const certificate = publicData
-    ? getCertificateInfo(certificateConfig, publicData.certificate)
-    : null;
+  const listingCategory = publicData.category;
+  const location = publicData.location;
+
+  const category = getcategory(listingCategory);
+
   const { formattedPrice, priceTitle } = priceData(price, intl);
 
   const unitType = config.bookingUnitType;
@@ -95,15 +91,7 @@ export const ListingCardComponent = props => {
           />
         </div>
       </div>
-      <div className={css.info}>
-        <div className={css.price}>
-          <div className={css.priceValue} title={priceTitle}>
-            {formattedPrice}
-          </div>
-          <div className={css.perUnit}>
-            <FormattedMessage id={unitTranslationKey} />
-          </div>
-        </div>
+      <div className={css.info}>        
         <div className={css.mainInfo}>
           <div className={css.title}>
             {richText(title, {
@@ -111,10 +99,11 @@ export const ListingCardComponent = props => {
               longWordClass: css.longWord,
             })}
           </div>
-          <div className={css.certificateInfo}>
-            {certificate && !certificate.hideFromListingInfo ? (
-              <span>{certificate.label}</span>
-            ) : null}
+          <div className={css.title}>
+            <span className={css.address}>{location.address}</span>
+          </div>
+          <div className={css.title}>            
+            <span className={css.categoryTag}>{category.label}</span>
           </div>
         </div>
       </div>
@@ -126,14 +115,12 @@ ListingCardComponent.defaultProps = {
   className: null,
   rootClassName: null,
   renderSizes: null,
-  certificateConfig: config.custom.certificate,
   setActiveListing: () => null,
 };
 
 ListingCardComponent.propTypes = {
   className: string,
   rootClassName: string,
-  certificateConfig: array,
   intl: intlShape.isRequired,
   listing: propTypes.listing.isRequired,
 

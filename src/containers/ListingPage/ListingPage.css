@@ -416,7 +416,7 @@
   }  
 }
 
-.businessCategoryTag {
+.categoryTag {
   display: block;
   background: var(--marketplaceColorLight);
   text-align: center;

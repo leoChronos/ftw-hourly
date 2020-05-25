@@ -2,24 +2,9 @@
  * Marketplace specific configuration.
  */
 
-export const yogaStyles = [
-  { key: 'ashtanga', label: 'Ashtanga' },
-  { key: 'hatha', label: 'Hatha' },
-  { key: 'kundalini', label: 'Kundalini' },
-  { key: 'restorative', label: 'Restorative' },
-  { key: 'vinyasa', label: 'Vinyasa' },
-  { key: 'yin', label: 'Yin' },
-];
-
-export const certificate = [
+export const categories = [
   { key: 'none', label: 'None', hideFromFilters: true, hideFromListingInfo: true },
-  { key: '200h', label: 'Registered yoga teacher 200h' },
-  { key: '500h', label: 'Registered yoga teacher 500h' },
-];
-
-export const businessCategory = [
-  { key: 'none', label: 'None', hideFromFilters: true, hideFromListingInfo: true },
-  { key: 'bar_Dining', label: 'Bar & Dining' },
+  { key: 'bar_dining', label: 'Bar & Dining' },
   { key: 'health_wellness', label: 'Health & Wellness' },
   { key: 'personal_services', label: 'Personal Services' },
   { key: 'business_services', label: 'Business Services' },
@@ -29,10 +14,15 @@ export const businessCategory = [
 
 // Price filter configuration
 // Note: unlike most prices this is not handled in subunits
-export const priceFilterConfig = {
-  min: 0,
-  max: 1000,
-  step: 5,
+// export const priceFilterConfig = {
+//   min: 0,
+//   max: 1000,
+//   step: 5,
+// };
+
+// Activate booking dates filter on search page
+export const dateRangeFilterConfig = {
+  active: true,
 };
 
 // Activate booking dates filter on search page
@@ -76,8 +66,8 @@ export const sortConfig = {
   options: [
     { key: 'createdAt', label: 'Newest' },
     { key: '-createdAt', label: 'Oldest' },
-    { key: '-price', label: 'Lowest price' },
-    { key: 'price', label: 'Highest price' },
+    // { key: '-price', label: 'Lowest price' },
+    // { key: 'price', label: 'Highest price' },
 
     // The relevance is only used for keyword search, but the
     // parameter isn't sent to the Marketplace API. The key is purely

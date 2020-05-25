@@ -173,7 +173,7 @@ export const searchListings = searchParams => (dispatch, getState, sdk) => {
     ...availabilityMaybe,
     per_page: perPage,
   };
-
+  
   return sdk.listings
     .query(params)
     .then(response => {

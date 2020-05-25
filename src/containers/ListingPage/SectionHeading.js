@@ -4,23 +4,23 @@ import { FormattedMessage } from '../../util/reactIntl';
 
 import css from './ListingPage.css';
 
-const getBusinessCategory = (businessCategoryConfig, key) => {
-  return businessCategoryConfig.find(c => c.key === key);
+const getcategory = (categoryConfig, key) => {
+  return categoryConfig.find(c => c.key === key);
 }
 
 const SectionHeading = props => {
   const {
     richTitle,
-    listingBusinessCategory,
-    businessCategoryConfig,
+    listingCategory,
+    categoryConfig,
     address,   
     reviews, 
     showContactUser,
     onContactUser,
   } = props;
 
-  const businessCategory = getBusinessCategory(businessCategoryConfig, listingBusinessCategory);  
-  const showBusinessCategory = businessCategory && !businessCategory.hideFromListingInfo;  
+  const category = getcategory(categoryConfig, listingCategory);  
+  const showcategory = category && !category.hideFromListingInfo;  
   const rating = reviews ? reviews.length : 0;
   const reviewCount = reviews ? reviews.length : 0;
 
@@ -31,7 +31,7 @@ const SectionHeading = props => {
         <h1 className={css.title}>{richTitle}</h1>
         <h3 className={css.titleAddress}>{address}</h3>
         <div className={css.tags}>
-          {showBusinessCategory ? <span className={css.businessCategoryTag}>{businessCategory.label}</span> : null}          
+          {showcategory ? <span className={css.categoryTag}>{category.label}</span> : null}          
           <span className={css.recommendedTag}>Recommended</span>
           <span className={css.newListingTag}>New</span>
         </div>
