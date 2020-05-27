@@ -23,12 +23,37 @@
   justify-content: space-between;
 }
 
+.spotDetails {
+  flex: 1 1;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  padding-bottom: 6px;
+  margin-top: 15px;
+
+  @media (--viewportMedium) {
+    padding-bottom: 8px;
+  }
+}
+
+.discountInfo {
+  @apply --marketplaceButtonFontStyles;
+  margin-bottom: 15px;
+}
+
+.detailsInfo {
+  @apply --marketplaceButtonFontStyles;
+  font-weight: normal;
+  flex: 1;
+}
+
 .bookingPeriod {
   flex: 1 1;
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
   padding-bottom: 6px;
+  margin-top: 25px;
 
   @media (--viewportMedium) {
     padding-bottom: 8px;

@@ -10,7 +10,7 @@
 
 {{~#*inline "format-day-time"~}}
 {{#with transaction.listing.availability-plan}}
-{{date date format="EE h:mm a" tz=timezone}}
+{{date date format="EEEE, MMM d, h a" tz=timezone}}
 {{/with}}
 {{~/inline~}}
 
@@ -51,25 +51,37 @@
 
     <p>
       Good news! {{ customer.display-name }} just requested to book {{ listing.title }} from
-      {{> format-date date=booking.start}} to {{> format-date date=booking.end}}. Here's the
-      breakdown.
+      {{> format-date date=booking.start}}. 
+      <br/>
+      <br/>
+      Here's the breakdown.
     </p>
     <table>
       <thead>
         <tr>
-          <td class="left">Start date</td>
-          <td class="right">End date</td>
+          <td class="left">Spot breakdown</td>
+          <td class="right"></td>
         </tr>
         <tr>
           <th class="left">{{> format-day-time date=booking.start}}</th>
-          <th class="right">{{> format-day-time date=booking.end}}</th>
+          <th class="right"></th>
+        </tr>
+        <!-- <tr class="bottom-row">
+          <th class="left">{{> format-month-date date=booking.start}}</th>
+          <th class="right"></th>
+        </tr> -->
+      </thead>
+      <tbody>        
+        <tr class="top-row">
+          <td colspan="2">
+            {{protected-data.discountData.discount}}
+          </td>            
         </tr>
         <tr class="bottom-row">
-          <th class="left">{{> format-month-date date=booking.start}}</th>
-          <th class="right">{{> format-month-date date=booking.end}}</th>
+          <td colspan="2">
+            {{protected-data.discountData.spotDetails}}
+          </td>            
         </tr>
-      </thead>
-      <tbody>
         {{#each tx-line-items}}
         {{#contains include-for "provider"}}
         {{#eq "line-item/units" code}}

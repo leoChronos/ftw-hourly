@@ -262,7 +262,7 @@ class FieldDateAndTimeInput extends Component {
     // It gets raw value as a param - browser's local time instead of time in listing's timezone.
     const startDate = timeOfDayFromLocalToTimeZone(value.date, timeZone);
     const timeSlots = getMonthlyTimeSlots(monthlyTimeSlots, this.state.currentMonth, timeZone);
-    const timeSlotsOnSelectedDate = getTimeSlots(timeSlots, startDate, timeZone);
+    const timeSlotsOnSelectedDate = getTimeSlots(timeSlots, startDate, timeZone);    
 
     const { startTime, endDate, endTime } = getAllTimeValues(
       intl,

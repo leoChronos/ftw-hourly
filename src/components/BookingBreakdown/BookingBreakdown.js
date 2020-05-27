@@ -23,6 +23,7 @@ import LineItemProviderCommissionRefundMaybe from './LineItemProviderCommissionR
 import LineItemRefundMaybe from './LineItemRefundMaybe';
 import LineItemTotalPrice from './LineItemTotalPrice';
 import LineItemUnknownItemsMaybe from './LineItemUnknownItemsMaybe';
+import LineItemSpotDetailsMaybe from './LineItemSpotDetailsMaybe';
 
 import css from './BookingBreakdown.css';
 
@@ -95,14 +96,15 @@ export const BookingBreakdownComponent = props => {
         unitType={unitType}
         dateType={dateType}
         timeZone={timeZone}
-      />
-      {/* <LineItemUnitPriceMaybe transaction={transaction} unitType={unitType} intl={intl} /> */}
+      />      
+      
+      <LineItemSpotDetailsMaybe transaction={transaction} intl={intl}/>
 
-      {/* <LineItemBasePriceMaybe transaction={transaction} unitType={unitType} intl={intl} /> */}
+      <LineItemUnitPriceMaybe transaction={transaction} unitType={unitType} intl={intl} />
 
-      <label>Add Spot discount detalis here</label>
+      {/* <LineItemBasePriceMaybe transaction={transaction} unitType={unitType} intl={intl} />       */}
 
-      <LineItemUnknownItemsMaybe transaction={transaction} intl={intl} />
+      <LineItemUnknownItemsMaybe transaction={transaction} intl={intl} />      
 
       <LineItemSubTotalMaybe
         transaction={transaction}

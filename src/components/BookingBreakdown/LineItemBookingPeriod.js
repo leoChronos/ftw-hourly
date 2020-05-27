@@ -14,14 +14,16 @@ const BookingPeriod = props => {
           weekday: 'long',
         }
       : {
-          weekday: 'short',
           hour: 'numeric',
-          minute: 'numeric',
+          weekday: 'long',
+          month: 'long',
+          day: 'numeric',
         };
 
   const dateFormatOptions = {
-    month: 'short',
-    day: 'numeric',
+    weekday: 'long',
+    month: 'long',
+    day: 'numeric',    
   };
 
   const timeZoneMaybe = timeZone ? { timeZone } : null;
@@ -30,15 +32,15 @@ const BookingPeriod = props => {
     <>
       <div className={css.bookingPeriod}>
         <div className={css.bookingPeriodSection}>
-          <div className={css.dayLabel}>
+          {/* <div className={css.dayLabel}>
             <FormattedMessage id="BookingBreakdown.bookingStart" />
-          </div>
+          </div> */}
           <div className={css.dayInfo}>
             <FormattedDate value={startDate} {...timeFormatOptions} {...timeZoneMaybe} />
           </div>
-          <div className={css.itemLabel}>
+          {/* <div className={css.itemLabel}>
             <FormattedDate value={startDate} {...dateFormatOptions} {...timeZoneMaybe} />
-          </div>
+          </div> */}
         </div>
 
         {/* <div className={css.bookingPeriodSectionRigth}>
@@ -83,7 +85,7 @@ const LineItemBookingPeriod = props => {
           timeZone={timeZone}
         />
       </div>
-      <hr className={css.totalDivider} />
+      {/* <hr className={css.totalDivider} /> */}
     </>
   );
 };

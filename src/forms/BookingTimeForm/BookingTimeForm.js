@@ -4,7 +4,7 @@ import { compose } from 'redux';
 import { Form as FinalForm } from 'react-final-form';
 import { FormattedMessage, intlShape, injectIntl } from '../../util/reactIntl';
 import classNames from 'classnames';
-import { calculateQuantityFromHours, timestampToDate } from '../../util/dates';
+import { calculateQuantityFromHours, timestampToDate, formatDateToText } from '../../util/dates';
 import { propTypes } from '../../util/types';
 import config from '../../config';
 import { Form, PrimaryButton } from '../../components';
@@ -12,6 +12,14 @@ import EstimatedBreakdownMaybe from './EstimatedBreakdownMaybe';
 import FieldDateAndTimeInput from './FieldDateAndTimeInput';
 
 import css from './BookingTimeForm.css';
+
+const getDiscountData = (startDate, oneOffExtendedData, reocurringExtendedData, intl, timeZone) => {
+  const formatedDate = formatDateToText(intl, startDate, timeZone);     
+
+  return oneOffExtendedData.find(x => x.key === startDate.getTime()) 
+    || reocurringExtendedData.find(x => x.key === `${formatedDate.weekday.toLowerCase()}_${formatedDate.time24}`);
+
+}
 
 export class BookingTimeFormComponent extends Component {
   constructor(props) {
@@ -82,7 +90,13 @@ export class BookingTimeFormComponent extends Component {
           const bookingEndLabel = intl.formatMessage({ id: 'BookingTimeForm.bookingEndTitle' });
 
           const startDate = startTime ? timestampToDate(startTime) : null;
-          const endDate = endTime ? timestampToDate(endTime) : null;
+          const endDate = endTime ? timestampToDate(endTime) : null;          
+
+          if(values && values.bookingStartTime){
+            values.discountData = startDate ? getDiscountData(startDate, oneOffExtendedData, reocurringExtendedData, intl, timeZone) : {};
+          }
+
+          const discountData = values && values.discountData ? values.discountData : {};
 
           // This is the place to collect breakdown estimation data. See the
           // EstimatedBreakdownMaybe component to change the calculations
@@ -100,6 +114,7 @@ export class BookingTimeFormComponent extends Component {
                   // Update if number of spots can be selected
                   quantity: 1,
                   timeZone,
+                  discountData,
                 }
               : null;
           const bookingInfo = bookingData ? (

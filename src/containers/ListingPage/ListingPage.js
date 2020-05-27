@@ -103,7 +103,8 @@ export class ListingPageComponent extends Component {
     const bookingEnd = timestampToDate(bookingEndTime);
 
     const bookingData = {
-      quantity: calculateQuantityFromHours(bookingStart, bookingEnd),
+      //quantity: calculateQuantityFromHours(bookingStart, bookingEnd),
+      quantity: 1,
       ...restOfValues,
     };
 
@@ -328,7 +329,7 @@ export class ListingPageComponent extends Component {
 
     const { formattedPrice, priceTitle } = priceData(price, intl);
 
-    const handleBookingSubmit = values => {
+    const handleBookingSubmit = values => {      
       const isCurrentlyClosed = currentListing.attributes.state === LISTING_STATE_CLOSED;
       if (isOwnListing || isCurrentlyClosed) {
         window.scrollTo(0, 0);

@@ -132,7 +132,7 @@ export class CheckoutPageComponent extends Component {
    * This function also sets of fetching the speculative transaction
    * based on this initial data.
    */
-  loadInitialData() {
+  loadInitialData() {    
     const {
       bookingData,
       bookingDates,
@@ -366,13 +366,14 @@ export class CheckoutPageComponent extends Component {
         ? { paymentMethod: stripePaymentMethodId }
         : selectedPaymentFlow === PAY_AND_SAVE_FOR_LATER_USE
         ? { setupPaymentMethodForSaving: true }
-        : {};
+        : {};   
 
     const orderParams = {
       listingId: pageData.listing.id,
       bookingStart: tx.booking.attributes.start,
       bookingEnd: tx.booking.attributes.end,
       quantity: pageData.bookingData ? pageData.bookingData.quantity : null,
+      protectedData : { discountData: pageData.bookingData ? pageData.bookingData.discountData : {}},
       ...optionalPaymentParams,
     };
 
@@ -514,6 +515,7 @@ export class CheckoutPageComponent extends Component {
     const isLoading = !this.state.dataLoaded || speculateTransactionInProgress;
 
     const { listing, bookingDates, transaction } = this.state.pageData;
+    const { discountData } = this.state.pageData && this.state.pageData.bookingData ? this.state.pageData.bookingData : {};
     const existingTransaction = ensureTransaction(transaction);
     const speculatedTransaction = ensureTransaction(speculatedTransactionMaybe, {}, null);
     const currentListing = ensureListing(listing);
@@ -573,8 +575,12 @@ export class CheckoutPageComponent extends Component {
       return <NamedRedirect name="ListingPage" params={params} />;
     }
 
+    if(!existingTransaction.booking){
+      speculatedTransaction.attributes.protectedData.discountData = discountData;
+    }
+
     // Show breakdown only when speculated transaction and booking are loaded
-    // (i.e. have an id)
+    // (i.e. have an id)    
     const tx = existingTransaction.booking ? existingTransaction : speculatedTransaction;
     const txBooking = ensureBooking(tx.booking);
     const timeZone = currentListing.attributes.availabilityPlan

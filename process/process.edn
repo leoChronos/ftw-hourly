@@ -12,7 +12,8 @@
     {:name :action/calculate-tx-unit-total-price}
     {:name :action/calculate-tx-provider-commission,
      :config {:commission 0.5M}}
-    {:name :action/stripe-create-payment-intent}],
+    {:name :action/stripe-create-payment-intent}
+    {:name :action/update-protected-data}],    
    :to :state/pending-payment}
   {:name :transition/request-payment-after-enquiry,
    :actor :actor.role/customer,

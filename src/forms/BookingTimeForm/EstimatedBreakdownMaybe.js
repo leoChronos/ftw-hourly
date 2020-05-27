@@ -49,7 +49,7 @@ const estimatedTotalPrice = (unitPrice, unitCount) => {
 // When we cannot speculatively initiate a transaction (i.e. logged
 // out), we must estimate the booking breakdown. This function creates
 // an estimated transaction object for that use case.
-const estimatedTransaction = (unitType, bookingStart, bookingEnd, unitPrice, quantity) => {
+const estimatedTransaction = (unitType, bookingStart, bookingEnd, unitPrice, quantity, discountData) => {
   const now = new Date();
   const totalPrice = estimatedTotalPrice(unitPrice, quantity);
 
@@ -72,6 +72,9 @@ const estimatedTransaction = (unitType, bookingStart, bookingEnd, unitPrice, qua
           reversal: false,
         },
       ],
+      protectedData: {
+        discountData
+      },
       transitions: [
         {
           createdAt: now,
@@ -92,7 +95,7 @@ const estimatedTransaction = (unitType, bookingStart, bookingEnd, unitPrice, qua
 };
 
 const EstimatedBreakdownMaybe = props => {
-  const { unitType, unitPrice, startDate, endDate, quantity, timeZone } = props.bookingData;
+  const { unitType, unitPrice, startDate, endDate, quantity, timeZone, discountData } = props.bookingData;
 
   const isUnits = unitType === LINE_ITEM_UNITS;
   const quantityIfUsingUnits = !isUnits || Number.isInteger(quantity);
@@ -101,7 +104,7 @@ const EstimatedBreakdownMaybe = props => {
     return null;
   }
 
-  const tx = estimatedTransaction(unitType, startDate, endDate, unitPrice, quantity);
+  const tx = estimatedTransaction(unitType, startDate, endDate, unitPrice, quantity, discountData);
 
   return (
     <BookingBreakdown
