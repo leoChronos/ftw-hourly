@@ -91,6 +91,9 @@ export const BookingBreakdownComponent = props => {
 
   return (
     <div className={classes}>
+      <h3 className={css.priceBreakdownTitle}>
+        <FormattedMessage id="BookingTimeForm.priceBreakdownTitle" />
+      </h3>
       <LineItemBookingPeriod
         booking={booking}
         unitType={unitType}

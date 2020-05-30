@@ -9,6 +9,18 @@
   white-space: nowrap;
 }
 
+.priceBreakdownTitle {
+  /* Font */
+  color: var(--matterColorAnti);
+
+  margin-top: 5px;
+  margin-bottom: 14px;
+  @media (--viewportMedium) {
+    margin-top: 5px;
+    margin-bottom: 26px;
+  }
+}
+
 .lineItem {
   @apply --marketplaceH4FontStyles;
   margin: 0;

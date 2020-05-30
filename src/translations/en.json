@@ -1105,7 +1105,7 @@
   "TransactionPage.fetchSaleFailed": "Fetching sale data failed.",
   "TransactionPage.loadingOrderData": "Loading order data.",
   "TransactionPage.loadingSaleData": "Loading sale data.",
-  "TransactionPage.title": "Sale details: {title}",
+  "TransactionPage.title": "Sale details: {title}",  
   "TransactionPanel.acceptButton": "Accept",
   "TransactionPanel.acceptSaleFailed": "Oops, accepting failed. Please try again.",
   "TransactionPanel.activityHeading": "Activity",

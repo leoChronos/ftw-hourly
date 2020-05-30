@@ -31,8 +31,9 @@ import {
 } from '../../util/errors';
 import { formatMoney } from '../../util/currency';
 import { TRANSITION_ENQUIRE, txIsPaymentPending, txIsPaymentExpired } from '../../util/transaction';
+import { getNonSpecialImages, getImage } from '../../util/images';
 import {
-  AvatarMedium,
+  AvatarBusinessMedium,
   BookingBreakdown,
   Logo,
   NamedLink,
@@ -524,6 +525,9 @@ export class CheckoutPageComponent extends Component {
     const listingTitle = currentListing.attributes.title;
     const title = intl.formatMessage({ id: 'CheckoutPage.title' }, { listingTitle });
 
+    const { publicData } = currentListing.attributes;
+    const businessLogoImageId = publicData && publicData.businessLogoImageId ? publicData.businessLogoImageId : null;
+
     const pageProps = { title, scrollingDisabled };
     const topbar = (
       <div className={css.topbar}>
@@ -618,8 +622,9 @@ export class CheckoutPageComponent extends Component {
       !isPaymentExpired
     );
 
-    const firstImage =
-      currentListing.images && currentListing.images.length > 0 ? currentListing.images[0] : null;
+    const noSpecialImages = getNonSpecialImages(currentListing, businessLogoImageId);
+    const firstImage = noSpecialImages && noSpecialImages.length > 0 ? noSpecialImages[0] : null;
+    const businessLogoImage = businessLogoImageId ? getImage(currentListing, businessLogoImageId) : null;    
 
     const listingLink = (
       <NamedLink
@@ -764,8 +769,8 @@ export class CheckoutPageComponent extends Component {
               variants={['landscape-crop', 'landscape-crop2x']}
             />
           </div>
-          <div className={classNames(css.avatarWrapper, css.avatarMobile)}>
-            <AvatarMedium user={currentAuthor} disableProfileLink />
+          <div className={classNames(css.avatarWrapper, css.avatarMobile)}>            
+            <AvatarBusinessMedium user={currentAuthor} businessLogoImage={businessLogoImage} businessName={listingTitle} disableProfileLink />
           </div>
           <div className={css.bookListingContainer}>
             <div className={css.heading}>
@@ -832,11 +837,11 @@ export class CheckoutPageComponent extends Component {
               />
             </div>
             <div className={css.avatarWrapper}>
-              <AvatarMedium user={currentAuthor} disableProfileLink />
+              <AvatarBusinessMedium user={currentAuthor} businessLogoImage={businessLogoImage} businessName={listingTitle} disableProfileLink />
             </div>
             <div className={css.detailsHeadings}>
               <h2 className={css.detailsTitle}>{listingTitle}</h2>
-              <p className={css.detailsSubtitle}>{detailsSubTitle}</p>
+              {/* <p className={css.detailsSubtitle}>{detailsSubTitle}</p> */}              
             </div>
             {speculateTransactionErrorMessage}
             {breakdown}

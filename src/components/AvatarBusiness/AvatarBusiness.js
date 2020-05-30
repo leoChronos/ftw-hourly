@@ -64,11 +64,12 @@ export const AvatarBusinessComponent = props => {
   
   const displayName = userDisplayNameAsString(avatarUser, defaultUserDisplayName);
   const abbreviatedName = userAbbreviatedName(avatarUser, defaultUserAbbreviatedName);
-  const rootProps = { className: classes, title: displayName };
+  const rootProps = { className: classes, title: businessName || displayName };
   const linkProps = avatarUser.id
     ? { name: 'ProfilePage', params: { id: avatarUser.id.uuid } }
     : { name: 'ProfileBasePage' };
   const hasProfileImage = avatarUser.profileImage && avatarUser.profileImage.id;
+  const hasBusinessLogo = businessLogoImage && businessLogoImage.id;
   const profileLinkEnabled = !disableProfileLink;
 
   const classForInitials = initialsClassName || css.initials;
@@ -79,13 +80,26 @@ export const AvatarBusinessComponent = props => {
         <IconBannedUser className={css.bannedUserIcon} />
       </div>
     );
+  }
+  else if (hasBusinessLogo){
+    return (
+      <div {...rootProps}>
+        <ResponsiveImage
+          rootClassName={css.avatarImage}
+          alt={businessName}
+          image={businessLogoImage}
+          variants={AVATAR_IMAGE_VARIANTS}
+          sizes={renderSizes}
+        />
+      </div>
+    );  
   } else if (hasProfileImage && profileLinkEnabled) {
     return (
       <NamedLink {...rootProps} {...linkProps}>
         <ResponsiveImage
           rootClassName={css.avatarImage}
-          alt={businessName}
-          image={businessLogoImage}
+          alt={displayName}
+          image={avatarUser.profileImage}
           variants={AVATAR_IMAGE_VARIANTS}
           sizes={renderSizes}
         />
@@ -96,8 +110,8 @@ export const AvatarBusinessComponent = props => {
       <div {...rootProps}>
         <ResponsiveImage
           rootClassName={css.avatarImage}
-          alt={businessName}
-          image={businessLogoImage}
+          alt={displayName}
+          image={avatarUser.profileImage}
           variants={AVATAR_IMAGE_VARIANTS}
           sizes={renderSizes}
         />

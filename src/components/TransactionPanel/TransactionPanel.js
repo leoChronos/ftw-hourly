@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { array, arrayOf, bool, func, number, object, string } from 'prop-types';
 import { FormattedMessage, injectIntl, intlShape } from '../../util/reactIntl';
+import { getNonSpecialImages, getImage } from '../../util/images';
 import classNames from 'classnames';
 import {
   TRANSITION_REQUEST_PAYMENT_AFTER_ENQUIRY,
@@ -23,7 +24,7 @@ import {
 import { isMobileSafari } from '../../util/userAgent';
 import { formatMoney } from '../../util/currency';
 import {
-  AvatarLarge,
+  AvatarLarge,  
   BookingPanel,
   NamedLink,
   ReviewModal,
@@ -190,7 +191,7 @@ export class TransactionPanelComponent extends Component {
       declineSaleError,
       onSubmitBookingRequest,
       monthlyTimeSlots,
-      nextTransitions,
+      nextTransitions,      
     } = this.props;
 
     const currentTransaction = ensureTransaction(transaction);
@@ -279,6 +280,7 @@ export class TransactionPanelComponent extends Component {
 
     const { publicData, geolocation } = currentListing.attributes;
     const location = publicData && publicData.location ? publicData.location : {};
+    const businessLogoImageId = publicData && publicData.businessLogoImageId ? publicData.businessLogoImageId : '';
     const listingTitle = currentListing.attributes.deleted
       ? deletedListingTitle
       : currentListing.attributes.title;
@@ -293,13 +295,14 @@ export class TransactionPanelComponent extends Component {
       ? 'TransactionPanel.perDay'
       : 'TransactionPanel.perUnit';
 
-    const price = currentListing.attributes.price;
-    const bookingSubTitle = price
-      ? `${formatMoney(intl, price)} ${intl.formatMessage({ id: unitTranslationKey })}`
-      : '';
+    //const price = currentListing.attributes.price;    
+    // const bookingSubTitle = price
+    //   ? `${formatMoney(intl, price)} ${intl.formatMessage({ id: unitTranslationKey })}`
+    //   : '';
 
-    const firstImage =
-      currentListing.images && currentListing.images.length > 0 ? currentListing.images[0] : null;
+    const noSpecialImages = getNonSpecialImages(currentListing, businessLogoImageId);
+    const firstImage = noSpecialImages && noSpecialImages.length > 0 ? noSpecialImages[0] : null;
+    const businessLogoImage = businessLogoImageId ? getImage(currentListing, businessLogoImageId) : null;
 
     const saleButtons = (
       <SaleActionButtonsMaybe
@@ -346,10 +349,11 @@ export class TransactionPanelComponent extends Component {
               isCustomer={isCustomer}
               listingId={currentListing.id && currentListing.id.uuid}
               listingDeleted={listingDeleted}
+              businessLogoImage={businessLogoImage}
             />
             {isProvider ? (
               <div className={css.avatarWrapperProviderDesktop}>
-                <AvatarLarge user={currentCustomer} className={css.avatarDesktop} />
+                <AvatarLarge user={currentCustomer} className={css.avatarDesktop} />                
               </div>
             ) : null}
 
@@ -425,12 +429,13 @@ export class TransactionPanelComponent extends Component {
                 isCustomer={isCustomer}
                 listingId={currentListing.id && currentListing.id.uuid}
                 listingDeleted={listingDeleted}
+                businessLogoImage={businessLogoImage}
               />
 
               <DetailCardHeadingsMaybe
                 showDetailCardHeadings={stateData.showDetailCardHeadings}
                 listingTitle={listingTitle}
-                subTitle={bookingSubTitle}
+                // subTitle={bookingSubTitle}
                 location={location}
                 geolocation={geolocation}
                 showAddress={stateData.showAddress}
@@ -442,7 +447,7 @@ export class TransactionPanelComponent extends Component {
                   isOwnListing={false}
                   listing={currentListing}
                   title={listingTitle}
-                  subTitle={bookingSubTitle}
+                  //subTitle={bookingSubTitle}
                   authorDisplayName={authorDisplayName}
                   onSubmit={onSubmitBookingRequest}
                   onManageDisableScrolling={onManageDisableScrolling}

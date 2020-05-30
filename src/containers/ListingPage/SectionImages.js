@@ -1,5 +1,6 @@
 import React from 'react';
 import { FormattedMessage } from '../../util/reactIntl';
+import { getNonSpecialImages } from '../../util/images';
 import { ResponsiveImage, Modal, ImageCarousel } from '../../components';
 import ActionBarMaybe from './ActionBarMaybe';
 
@@ -18,7 +19,7 @@ const SectionImages = props => {
     onManageDisableScrolling,
   } = props;
 
-  const noSpecialImages = listing.images.filter(x => x.id.uuid !== businessLogoImageId);
+  const noSpecialImages = getNonSpecialImages(listing, businessLogoImageId);
   const hasImages = noSpecialImages && noSpecialImages.length > 0;
   const firstImage = hasImages ? noSpecialImages[0] : null;
 
