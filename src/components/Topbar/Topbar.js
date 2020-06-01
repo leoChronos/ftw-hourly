@@ -158,8 +158,6 @@ class TopbarComponent extends Component {
       latlngBounds: ['bounds'],
     });
 
-    console.log(notificationCount);
-
     const notificationDot = notificationCount > 0 ? <div className={css.notificationDot} /> : null;
 
     const isMobileLayout = viewport.width < MAX_MOBILE_SCREEN_WIDTH;
