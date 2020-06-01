@@ -11,12 +11,13 @@ import {
   Page,
   SectionHero,
   SectionHowItWorks,
-  SectionLocations,
+  SectionCategories,
   LayoutSingleColumn,
   LayoutWrapperTopbar,
   LayoutWrapperMain,
   LayoutWrapperFooter,
   Footer,
+  NamedLink,
 } from '../../components';
 import { TopbarContainer } from '../../containers';
 
@@ -72,7 +73,16 @@ export const LandingPageComponent = props => {
           <ul className={css.sections}>
             <li className={css.section}>
               <div className={css.sectionContentFirstChild}>
-                <SectionLocations />
+                <SectionCategories />
+              </div>
+            </li>
+            <li className={css.section}>
+              <div className={css.sectionContent}>
+                  <h1 className={css.supportTittle}>Support your local businesses and get rewarded in return.</h1>
+                  <h2 className={css.supportSubTittle}>Everyday hundreds of businesses upload discounted off-peak spots for you to book</h2>
+                  <NamedLink name="SearchPage" className={css.supportLink}>
+                    <span>Find Spots</span>
+                  </NamedLink>
               </div>
             </li>
             <li className={css.section}>

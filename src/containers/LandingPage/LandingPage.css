@@ -128,3 +128,38 @@
     top: calc(-1 * var(--LandingPage_sectionMarginTopLarge));
   }
 }
+
+.supportTittle {
+  @apply --marketplaceH1FontStyles;
+  color: var(--matterColorDark);
+  text-align: center;
+}
+
+.supportSubTittle {
+  @apply --marketplaceH2FontStyles;
+  color: var(--matterColorAnti);
+  text-align: center;
+}
+
+.supportLink {
+  /* Font */
+  @apply --marketplaceBodyFontStyles;
+  color: var(--attentionColor);
+  transition: var(--transitionStyleButton);
+  text-decoration-line: underline;
+  text-align: center;
+  display: block;
+
+  margin-top: 0;
+  margin-bottom: 0;
+
+  &:hover {
+    color: var(--marketplaceColor);
+    text-decoration: none;
+  }
+
+  @media (--viewportMedium) {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+}

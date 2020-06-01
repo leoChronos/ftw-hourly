@@ -113,8 +113,7 @@
 }
 
 .logoLink {
-  display: block;
-  margin-bottom: 14px;
+  display: block;  
 }
 
 .logo img {
@@ -125,6 +124,8 @@
 }
 
 .organizationInfo {
+  width: 50%;
+  display: inline-block;
 }
 
 .organizationDescription {
@@ -132,8 +133,12 @@
 }
 
 .organizationCopyright {
-  @apply --marketplaceTinyFontStyles;
-  margin-top: 32px;
+  @apply --marketplaceTinyFontStyles;  
+}
+
+.organizationMade {
+  @apply --marketplaceTinyFontStyles;  
+  text-align: right;
 }
 
 .copyrightLink {
@@ -143,19 +148,6 @@
   &:hover {
     color: var(--marketplaceColor);
     text-decoration: none;
-  }
-}
-
-/* Desktop and Mobile: links to more information */
-.infoLinks {
-  order: 2;
-  flex-basis: 165px;
-  margin-right: 24px;
-  margin-bottom: 24px;
-
-  @media (--viewportMedium) {
-    padding-top: 2px;
-    margin-right: 12px;
   }
 }
 
@@ -169,13 +161,17 @@
   margin-bottom: 6px;
 
   @media (--viewportMedium) {
-    margin-bottom: 0;
+    margin-bottom: 5px;
   }
+}
+
+.listItem:first-of-type {
+  margin-bottom: 15px;
 }
 
 .link {
   /* Font */
-  @apply --marketplaceH4FontStyles;
+  @apply --marketplaceH5FontStyles;
   line-height: 20px;
   color: var(--matterColor);
   transition: var(--transitionStyleButton);
@@ -194,9 +190,11 @@
   }
 }
 
-/* Desktop and Mobile: searches - first column */
-.searches {
-  order: 3;
+.firstLink {
+  @apply --marketplaceH4FontStyles;
+}
+
+.linkAreas {
   flex-basis: 165px;
   margin-right: 24px;
   margin-bottom: 24px;
@@ -207,37 +205,24 @@
   }
 }
 
-/* Desktop and Mobile: searches - second column */
-/* This is not always visible */
-.searchesExtra {
-  order: 4;
-  flex-basis: 165px;
-  margin-right: 24px;
-  margin-bottom: 24px;
-
-  @media (--viewportMedium) {
-    padding-top: 2px;
-    margin-right: 12px;
-  }
+.expoloreLinks {
+  order: 1;  
 }
 
-/* Desktop: extra links (social media links and legal links) */
-.extraLinks {
-  flex-shrink: 0;
-  order: 5;
-  display: none;
-  flex-basis: 109px;
-  margin-right: 24px;
-  margin-bottom: 24px;
+.aboutLinks {
+  order: 2;  
+}
 
-  @media (--viewportMedium) {
-    display: flex;
-    flex-direction: column;
-    margin-right: 12px;
-  }
-  @media (--viewportLarge) {
-    margin-right: 0;
-  }
+.partnersLinks {
+  order: 3;  
+}
+
+.companyLinks {
+  order: 4;  
+}
+
+.connectLinks {
+  order: 5;  
 }
 
 .legalMatters {
@@ -326,4 +311,10 @@
 
 .privacy {
   margin-right: 24px;
+}
+
+.flag {
+  width: 50px;
+  margin-left: 10px;
+  border-radius: 4px;
 }
