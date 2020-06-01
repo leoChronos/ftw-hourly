@@ -21,6 +21,7 @@ import css from './TopbarMobileMenu.css';
 
 const TopbarMobileMenu = props => {
   const {
+    isBusiness,
     isAuthenticated,
     currentPage,
     currentUserHasListings,
@@ -61,11 +62,11 @@ const TopbarMobileMenu = props => {
             />
           </div>
         </div>
-        <div className={css.footer}>
+        {/* <div className={css.footer}>
           <NamedLink className={css.createNewListingLink} name="NewListingPage">
             <FormattedMessage id="TopbarMobileMenu.newListingLink" />
           </NamedLink>
-        </div>
+        </div> */}
       </div>
     );
   }
@@ -99,12 +100,7 @@ const TopbarMobileMenu = props => {
         >
           <FormattedMessage id="TopbarMobileMenu.inboxLink" />
           {notificationCountBadge}
-        </NamedLink>
-        <OwnListingLink
-          listing={currentUserListing}
-          listingFetched={currentUserListingFetched}
-          className={css.navigationLink}
-        />
+        </NamedLink>        
         <NamedLink
           className={classNames(css.navigationLink, currentPageClass('ProfileSettingsPage'))}
           name="ProfileSettingsPage"
@@ -112,17 +108,20 @@ const TopbarMobileMenu = props => {
           <FormattedMessage id="TopbarMobileMenu.profileSettingsLink" />
         </NamedLink>
         <NamedLink
-          className={classNames(css.navigationLink, currentPageClass('AccountSettingsPage'))}
-          name="AccountSettingsPage"
+          className={classNames(css.navigationLink, currentPageClass(isBusiness ? 'ManageListingsPage': 'ListBusinessPage'))}
+          name={isBusiness ? "ManageListingsPage" : "ListBusinessPage"}
         >
-          <FormattedMessage id="TopbarMobileMenu.accountSettingsLink" />
-        </NamedLink>
+          <span className={css.menuItemBorder} />
+          <FormattedMessage id="TopbarMobileMenu.yourListingsLink" />
+        </NamedLink>        
       </div>
-      <div className={css.footer}>
-        <NamedLink className={css.createNewListingLink} name="NewListingPage">
-          <FormattedMessage id="TopbarMobileMenu.newListingLink" />
-        </NamedLink>
-      </div>
+      {isBusiness ? 
+        <div className={css.footer}>
+          <NamedLink className={css.createNewListingLink} name="NewListingPage">
+            <FormattedMessage id="TopbarMobileMenu.newListingLink" />
+          </NamedLink>
+        </div>
+      : null}
     </div>
   );
 };
@@ -133,9 +132,11 @@ TopbarMobileMenu.defaultProps = {
   currentPage: null,
   currentUserListing: null,
   currentUserListingFetched: false,
+  isBusiness: false,
 };
 
 TopbarMobileMenu.propTypes = {
+  isBusiness: bool.isRequired,
   isAuthenticated: bool.isRequired,
   currentUserHasListings: bool.isRequired,
   currentUserListing: propTypes.ownListing,
