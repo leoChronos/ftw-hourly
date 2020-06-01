@@ -34,6 +34,16 @@
       text-decoration: none;
     }
   }
+
+  --TopbarDesktop_buttonHover: {
+    border-bottom: 0px solid;
+    transition: var(--transitionStyleButton);
+
+    &:hover {      
+      border-radius: 0;
+      text-decoration: none;
+    }
+  }
 }
 
 /* Desktop */
@@ -231,7 +241,7 @@
 
 /* Authentication */
 .signupLink {
-  @apply --TopbarDesktop_linkHover;
+  @apply --TopbarDesktop_buttonHover;
   flex-shrink: 0;
   height: 100%;
   padding: 0 12px 0 12px;
@@ -260,6 +270,19 @@
 .login {
   @apply --marketplaceH4FontStyles;
   @apply --TopbarDesktop_label;
+}
+
+.signup {
+  color: var(--matterColorLight);
+  background-color: var(--matterColorGoodSpotOrange);  
+  text-align: center;  
+  margin-top: 20px;
+  padding: 5px 20px;
+  border-radius: 5px;
+
+  &:hover{
+    background-color: var(--attentionColor);
+  }
 }
 
 /* left animated "border" like hover element */
