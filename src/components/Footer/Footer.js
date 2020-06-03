@@ -126,24 +126,24 @@ const Footer = props => {
             <div className={classNames(css.linkAreas, css.partnersLinks)}>
               <ul className={css.list}>
                 <li className={css.listItem}>
-                  <NamedLink name="AboutPage" className={classNames(css.link, css.firstLink)}>
+                  <ExternalLink href={config.linkGoodSpotPartners} className={classNames(css.link, css.firstLink)}>
                     <FormattedMessage id="Footer.partners" />
-                  </NamedLink>
+                  </ExternalLink>
                 </li>
                 <li className={css.listItem}>
-                  <NamedLink name="AboutPage" className={css.link}>
+                  <ExternalLink href={`${config.linkGoodSpotPartners}#partner`} className={css.link}>
                     <FormattedMessage id="Footer.listYourBusiness" />
-                  </NamedLink>
+                  </ExternalLink>                  
                 </li>
                 <li className={css.listItem}>
-                  <NamedLink name="AboutPage" className={css.link}>
+                  <ExternalLink href={`${config.linkGoodSpotPartners}#overview`} className={css.link}>
                     <FormattedMessage id="Footer.moreInformation" />
-                  </NamedLink>
+                  </ExternalLink>
                 </li>
                 <li className={css.listItem}>
-                  <NamedLink name="AboutPage" className={css.link}>
+                  <ExternalLink href={`${config.linkGoodSpotPartners}#pricing`} className={css.link}>
                     <FormattedMessage id="Footer.feesAndPricing" />
-                  </NamedLink>
+                  </ExternalLink>
                 </li>
                 <li className={css.listItem}>
                   <NamedLink name="AboutPage" className={css.link}>

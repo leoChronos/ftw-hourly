@@ -119,6 +119,31 @@ const TopbarDesktop = props => {
     </NamedLink>
   );
 
+  const menuLinks = (
+    <>
+      <NamedLink name="SearchPage" className={css.menuLink}>
+        <span className={css.link}>
+          <FormattedMessage id="TopbarDesktop.explore" />
+        </span>
+      </NamedLink>
+      <NamedLink name="SearchPage" className={css.menuLink}>
+        <span className={css.link}>
+          <FormattedMessage id="TopbarDesktop.howItWorks" />
+        </span>
+      </NamedLink>
+      <NamedLink name="SearchPage" className={css.menuLink}>
+        <span className={css.link}>
+          <FormattedMessage id="TopbarDesktop.forBusiness" />
+        </span>
+      </NamedLink>
+      <NamedLink name="SearchPage" className={classNames(css.menuLink, css.lastMenuLink)}>
+        <span className={css.link}>
+          <FormattedMessage id="TopbarDesktop.invite" />
+        </span>
+      </NamedLink>
+    </>
+  );
+
   return (
     <nav className={classes}>
       <NamedLink className={css.logoLink} name="LandingPage">
@@ -129,6 +154,7 @@ const TopbarDesktop = props => {
         />
       </NamedLink>
       {search}      
+      {menuLinks}
       {profileMenu}
       {signupLink}
       {loginLink}

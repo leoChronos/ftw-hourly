@@ -85,6 +85,9 @@ const streetAddress = 'Bulevardi 14';
 // Canonical root url is needed in social media sharing and SEO optimization purposes.
 const canonicalRootURL = process.env.REACT_APP_CANONICAL_ROOT_URL;
 
+// External link to Good Spot Partners
+const linkGoodSpotPartners = 'https://partners.goodspot.co.nz/partners/';
+
 // Site title is needed in meta tags (bots and social media sharing reads those)
 const siteTitle = 'Good Spot';
 
@@ -211,6 +214,7 @@ const config = {
     postalCode,
     streetAddress,
   },
+  linkGoodSpotPartners,
   siteTitle,
   siteFacebookPage,
   siteInstagramPage,

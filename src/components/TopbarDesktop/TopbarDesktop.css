@@ -98,6 +98,7 @@
 .searchLink {
   flex-grow: 1;
   height: 100%;
+  min-width: 150px;
   margin-right: 24px;
   border-left-style: solid;
   border-left-width: 1px;
@@ -123,26 +124,31 @@
   }
 }
 
-/* Create listing (CTA for providers) */
-.createListingLink {
+/* Generic links for non authenticated users*/
+.menuLink {
   @apply --TopbarDesktop_linkHover;
-  @apply --marketplaceH4FontStyles;
-
   flex-shrink: 0;
   height: 100%;
   padding: 0 12px 0 12px;
-  color: var(--marketplaceColor);
-  margin-top: 0;
-  margin-bottom: 0;
+
+  color: var(--matterColor);
 
   &:hover {
-    color: var(--marketplaceColorDark);
-  }
+    color: var(--matterColorDark);
+  }  
+}
 
-  @media (--viewportMedium) {
-    margin-top: 0;
-    margin-bottom: 0;
+.lastMenuLink {
+  margin-right: 0;
+
+  @media (--viewportLarge) {
+    margin-right: 100px;
   }
+}
+
+.link {
+  @apply --marketplaceH4FontStyles;
+  @apply --TopbarDesktop_label;
 }
 
 .createListing {
