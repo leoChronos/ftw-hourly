@@ -21,7 +21,7 @@ const SectionHeading = props => {
 
   const category = getcategory(categoryConfig, listingCategory);  
   const showcategory = category && !category.hideFromListingInfo;  
-  const rating = reviews ? reviews.length : 0;
+  const rating = reviews ? reviews : [];
   const reviewCount = reviews ? reviews.length : 0;
 
 

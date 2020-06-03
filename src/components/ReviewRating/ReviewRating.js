@@ -3,20 +3,24 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { IconReviewStar } from '../../components';
 import { REVIEW_RATINGS } from '../../util/types';
-import intersection from 'lodash/intersection';
+import meanBy from 'lodash/meanBy';
+
+
 
 const ReviewRating = props => {
   const { className, rootClassName, reviewStarClassName, rating } = props;
   const classes = classNames(rootClassName, className);  
 
   const stars = REVIEW_RATINGS;
+  const ratingAvg = rating.length > 0 ? meanBy(rating, function(o) { return o.attributes.rating; }) : 0;
+
   return (
     <span className={classes}>
       {stars.map(star => (
         <IconReviewStar
           key={`star-${star}`}
           className={reviewStarClassName}
-          isFilled={star <= rating}
+          isFilled={star <= ratingAvg}
         />
       ))}
     </span>
