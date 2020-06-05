@@ -35,7 +35,7 @@ const priceData = (price, intl) => {
   return {};
 };
 
-const getcategory = (key) => {  
+const getCategory = (key) => {  
   return config.custom.categories.find(c => c.key === key);  
 }
 
@@ -61,7 +61,7 @@ export const ListingCardComponent = props => {
   const listingCategory = publicData.category;
   const location = publicData.location;
 
-  const category = getcategory(listingCategory);
+  const category = getCategory(listingCategory);
 
   const { formattedPrice, priceTitle } = priceData(price, intl);
 
