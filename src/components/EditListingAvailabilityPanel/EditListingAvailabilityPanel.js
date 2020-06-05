@@ -100,9 +100,18 @@ const OneOffEntry = props => {
 ///////////  
 
 const Entry = props => {
-  const { entry, initialValues, dayOfWeek, onManageDisableScrolling, onSubmit, onDeleteSubmit, updateInProgress, fetchErrors, errorLocation, updated } = props;
+  const { entry, intl, initialValues, dayOfWeek, onManageDisableScrolling, onSubmit, onDeleteSubmit, updateInProgress, fetchErrors, errorLocation, updated } = props;
   // Hooks
   const [isEditEntryModalOpen, setIsEditEntryModalOpen] = useState(false);
+
+  const getTimeFormated = (intl, timeZone, time) => {    
+    const newDate = new Date();
+    newDate.setHours(time.split(':')[0]);
+    newDate.setMinutes(time.split(':')[1]);
+    newDate.setSeconds(0);
+
+    return formatDateToText(intl, newDate, timeZone);
+  }
 
   return (
     <div className={css.weekDay}>
@@ -111,7 +120,7 @@ const Entry = props => {
       </div>
       <div className={css.entries} >
         <span className={css.entry}>
-          {`${entry.startTime}, ${entry.extendedData.discount}% discount`}
+          {`${getTimeFormated(intl, initialValues.timezone, entry.startTime).time}, ${entry.extendedData.discount}% discount`}
         </span>
         <span className={css.entry}>
           {`${entry.seats} spots`}
@@ -169,7 +178,7 @@ const getEntries = (availabilityPlan, dayOfWeek) =>
   availabilityPlan.entries.filter(d => d.dayOfWeek === dayOfWeek);
 
 const Weekday = props => {
-  const { initialValues, dayOfWeek, onManageDisableScrolling, onSubmit, onDeleteSubmit, updateInProgress, fetchErrors, errorLocation, updated } = props;
+  const { intl, initialValues, dayOfWeek, onManageDisableScrolling, onSubmit, onDeleteSubmit, updateInProgress, fetchErrors, errorLocation, updated } = props;
   const hasEntry = findEntry(initialValues, dayOfWeek);  
 
   if (!initialValues && !hasEntry)
@@ -183,6 +192,7 @@ const Weekday = props => {
           initialValues={initialValues}
           dayOfWeek={dayOfWeek}
           entry={e}
+          intl={intl}          
           onManageDisableScrolling={onManageDisableScrolling}
           updateInProgress={updateInProgress}
           onSubmit={onSubmit}
@@ -388,7 +398,7 @@ const EditListingAvailabilityPanel = props => {
     //return onSubmit(values)
       .then(() => {
         handleSuccessSubmit(values);
-        window.location.reload(false);
+        //window.location.reload(false);
       })
       .catch(e => {
         // Don't close modal if there was an error
@@ -404,7 +414,7 @@ const EditListingAvailabilityPanel = props => {
     //return onSubmit(updatedValues)
       .then(() => {
         handleSuccessSubmit(updatedValues);
-        window.location.reload(false);
+        //window.location.reload(false);
       })
       .catch(e => {
         defineErrorLocation('isDeleteReocurError');
@@ -458,7 +468,7 @@ const EditListingAvailabilityPanel = props => {
     return onAddAvailabilityException(updatedException)
       .then(() => {
         setIsEditExceptionsModalOpen(false);  
-        window.location.reload(false);      
+        //window.location.reload(false);      
       })
       .catch(e => {
         // Don't close modal if there was an error
@@ -489,7 +499,7 @@ const EditListingAvailabilityPanel = props => {
       onSubmit(createOneOffExtendedDataToSave(sortedAvailabilityOneOffExceptions, extendedData))
         .then(() => {
           setIsEditOneOffExceptionsModalOpen(false);
-          window.location.reload(false);
+          //window.location.reload(false);
         })
         .catch(e => {          
           // Don't close modal if there was an error
@@ -507,7 +517,7 @@ const EditListingAvailabilityPanel = props => {
         onSubmit(createOneOffExtendedDataToDelete(sortedAvailabilityOneOffExceptions, values.extendedData))
         .then(() => {
           setIsEditOneOffExceptionsModalOpen(false);
-          window.location.reload(false);
+          //window.location.reload(false);
         });        
       }).catch(e => {        
         defineErrorLocation('isDeleteOneOffError');
@@ -555,7 +565,8 @@ const EditListingAvailabilityPanel = props => {
           {WEEKDAYS.map(w => (
             <Weekday
               dayOfWeek={w}
-              key={w}              
+              key={w}   
+              intl={intl}           
               initialValues={initialValues}
               onManageDisableScrolling={onManageDisableScrolling}
               updateInProgress={updateInProgress}

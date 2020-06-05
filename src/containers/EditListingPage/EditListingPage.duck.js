@@ -380,6 +380,7 @@ export function requestShowListing(actionPayload) {
         dispatch(addMarketplaceEntities(response));
         // In case of success, we'll clear state.EditListingPage (user will be redirected away)
         dispatch(showListingsSuccess(response));
+        dispatch(refreshAvailabilityExceptions(response.data.data.id, response.data.data.attributes.availabilityPlan.timezone));
         return response;
       })
       .catch(e => dispatch(showListingsError(storableError(e))));
@@ -506,17 +507,17 @@ export const requestDeleteAvailabilityException = params => (dispatch, getState,
     });
 };
 
-export const refreshAvailabilityExceptions = listing => (dispatch) => {
+const refreshAvailabilityExceptions = (listingId, timeZone) => (dispatch) => {
   const today = new Date();
-  const start = resetToStartOfDay(today, listing.timeZone, 0);
+  const start = resetToStartOfDay(today, timeZone, 0);
   // Query range: today + 364 days
   const exceptionRange = 364;
-  const end = resetToStartOfDay(today, listing.timeZone, exceptionRange);
+  const end = resetToStartOfDay(today, timeZone, exceptionRange);
 
   // NOTE: in this template, we don't expect more than 100 exceptions.
   // If there are more exceptions, pagination kicks in and we can't use frontend sorting.
   const params = {
-    listingId: listing.id,
+    listingId,
     start,
     end,
   };
@@ -589,25 +590,27 @@ export const loadData = params => (dispatch, getState, sdk) => {
       // Because of two dispatch functions, response is an array.
       // sWe are only interest the response from requestShowListing here,
       // so we need to pick the first one
-      if (response[0].data && response[0].data.data) {
-        const listing = response[0].data.data;
-        const tz = listing.attributes.availabilityPlan.timezone;
+      // if (response[0].data && response[0].data.data) {
+      //   const listing = response[0].data.data;
+      //   const tz = listing.attributes.availabilityPlan.timezone;
 
-        const today = new Date();
-        const start = resetToStartOfDay(today, tz, 0);
-        // Query range: today + 364 days
-        const exceptionRange = 364;
-        const end = resetToStartOfDay(today, tz, exceptionRange);
+      //   //dispatch(refreshAvailabilityExceptions(listing.id, tz));
 
-        // NOTE: in this template, we don't expect more than 100 exceptions.
-        // If there are more exceptions, pagination kicks in and we can't use frontend sorting.
-        const params = {
-          listingId: listing.id,
-          start,
-          end,
-        };
-        dispatch(requestFetchAvailabilityExceptions(params));
-      }
+      //   // const today = new Date();
+      //   // const start = resetToStartOfDay(today, tz, 0);
+      //   // // Query range: today + 364 days
+      //   // const exceptionRange = 364;
+      //   // const end = resetToStartOfDay(today, tz, exceptionRange);
+
+      //   // // NOTE: in this template, we don't expect more than 100 exceptions.
+      //   // // If there are more exceptions, pagination kicks in and we can't use frontend sorting.
+      //   // const params = {
+      //   //   listingId: listing.id,
+      //   //   start,
+      //   //   end,
+      //   // };
+      //   // dispatch(requestFetchAvailabilityExceptions(params));
+      // }
 
       return response;
     })

@@ -109,7 +109,7 @@
     width: 100vw;
 
     @media (--viewportMedium) {
-      width: calc(200% + 24px);
+      width: calc(100% + 24px);
     }
   }
 }

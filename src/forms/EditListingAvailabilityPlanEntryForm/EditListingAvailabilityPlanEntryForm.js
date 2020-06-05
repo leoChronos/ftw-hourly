@@ -13,6 +13,7 @@ import {
   FieldCheckbox,
 } from '../../components';
 import { maxLength, required, composeValidators } from '../../util/validators';
+import { formatDateToText } from '../../util/dates';
 
 import css from './EditListingAvailabilityPlanEntryForm.css';
 
@@ -55,6 +56,15 @@ const setEntryKey = (entry) => {
 const setEndTime = (entry) => {
     const aStart = Number.parseInt(entry.startTime.split(':')[0]);
     entry.endTime = printHourStrings(aStart + 1);
+}
+
+const getTimeFormated = (intl, timeZone, time) => {    
+    const newDate = new Date();
+    newDate.setHours(time.split(':')[0]);
+    newDate.setMinutes(time.split(':')[1]);
+    newDate.setSeconds(0);
+
+    return formatDateToText(intl, newDate, timeZone);
 }
 
 const EditListingAvailabilityPlanEntryFormComponent = props => {    
@@ -222,7 +232,7 @@ const EditListingAvailabilityPlanEntryFormComponent = props => {
                         {filterStartHours(availabilityPlan.entries, values).map(
                             s => (
                               <option value={s.value} key={s.value} disabled={!s.available}>
-                                {s.value}
+                                {getTimeFormated(intl, availabilityPlan.timezone, s.value).time}
                               </option>
                             )
                         )}

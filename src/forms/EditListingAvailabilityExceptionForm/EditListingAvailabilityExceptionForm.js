@@ -34,6 +34,7 @@ import {
   Form,
   IconArrowHead,
   PrimaryButton,
+  FieldTextInput,
 } from '../../components';
 
 import css from './EditListingAvailabilityExceptionForm.css';
@@ -492,7 +493,7 @@ const EditListingAvailabilityExceptionForm = props => {
 
         const submitInProgress = updateInProgress;
         const hasData =
-          availability &&
+          //availability &&
           exceptionStartDate &&
           exceptionStartTime &&
           exceptionEndDate &&
@@ -520,7 +521,14 @@ const EditListingAvailabilityExceptionForm = props => {
               <FormattedMessage id="EditListingAvailabilityExceptionForm.title" />
             </h2>
 
-            <div className={css.radioButtons}>
+            <FieldTextInput 
+               id={`${idPrefix}.available`}
+               name="availability"
+               type="hidden"
+               value="not-available"
+            />            
+
+            {/* <div className={css.radioButtons}>
               <FieldRadioButton
                 id={`${idPrefix}.available`}
                 name="availability"
@@ -539,7 +547,7 @@ const EditListingAvailabilityExceptionForm = props => {
                 checkedClassName={css.checkedNotAvailable}
                 showAsRequired={pristine}
               />
-            </div>
+            </div> */}
             <div className={css.section}>
               <div className={css.formRow}>
                 <div className={css.field}>
