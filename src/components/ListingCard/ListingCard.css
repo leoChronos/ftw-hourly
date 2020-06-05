@@ -91,6 +91,11 @@
   flex-direction: column;
 }
 
+.spotsArea {
+  margin-left: 40px;
+  min-width: 70px;
+}
+
 .title {
   /* Font */
   @apply --marketplaceH3FontStyles;
@@ -104,6 +109,18 @@
     margin-top: 10px;
     margin-bottom: 0;
   }
+}
+
+.spotCount {
+  text-align: center;
+}
+
+.spotLeft {  
+  text-align: center;
+}
+
+.spotLeft span {
+  @apply --marketplaceH5FontStyles;
 }
 
 .address {

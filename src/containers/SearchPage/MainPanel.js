@@ -27,6 +27,7 @@ class MainPanel extends Component {
       urlQueryParams,
       sort,
       listings,
+      currentPageListingsTimeSlots,
       searchInProgress,
       searchListingsError,
       searchParamsAreInSync,
@@ -34,7 +35,7 @@ class MainPanel extends Component {
       onManageDisableScrolling,
       onOpenModal,
       onCloseModal,
-      onMapIconClick,
+      onMapIconClick,      
       pagination,
       searchParamsForPagination,
       showAsModalMaxWidth,
@@ -64,15 +65,15 @@ class MainPanel extends Component {
       : {};
 
     const hasPaginationInfo = !!pagination && pagination.totalItems != null;
-    const totalItems = searchParamsAreInSync && hasPaginationInfo ? pagination.totalItems : 0;
-    const listingsAreLoaded = !searchInProgress && searchParamsAreInSync && hasPaginationInfo;
+    const totalItems = searchParamsAreInSync && hasPaginationInfo ? pagination.totalItems : listings.length;
+    const listingsAreLoaded = !searchInProgress && searchParamsAreInSync;// && hasPaginationInfo;
 
     const classes = classNames(rootClassName || css.searchResultContainer, className);
 
     const filterParamNames = Object.values(filters).map(f => f.paramName);
     const secondaryFilterParamNames = secondaryFilters
       ? Object.values(secondaryFilters).map(f => f.paramName)
-      : [];
+      : [];    
 
     return (
       <div className={classes}>
@@ -117,7 +118,7 @@ class MainPanel extends Component {
               {...secondaryFilters}
             />
           </div>
-        ) : (
+        ) : (          
           <div
             className={classNames(css.listings, {
               [css.newSearchInProgress]: !listingsAreLoaded,
@@ -131,9 +132,10 @@ class MainPanel extends Component {
             <SearchResultsPanel
               className={css.searchListingsPanel}
               listings={listings}
+              currentPageListingsTimeSlots={currentPageListingsTimeSlots}
               pagination={listingsAreLoaded ? pagination : null}
               search={searchParamsForPagination}
-              setActiveListing={onActivateListing}
+              setActiveListing={onActivateListing}              
             />
           </div>
         )}
@@ -146,6 +148,7 @@ MainPanel.defaultProps = {
   className: null,
   rootClassName: null,
   listings: [],
+  currentPageListingsTimeSlots: null,
   resultsCount: 0,
   pagination: null,
   searchParamsForPagination: {},
@@ -159,6 +162,7 @@ MainPanel.propTypes = {
 
   urlQueryParams: object.isRequired,
   listings: array,
+  currentPageListingsTimeSlots: object.isRequired,
   searchInProgress: bool.isRequired,
   searchListingsError: propTypes.error,
   searchParamsAreInSync: bool.isRequired,

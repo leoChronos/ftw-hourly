@@ -66,7 +66,7 @@ export class SearchPageComponent extends Component {
     return {
       categoryFilter: {
         paramName: 'pub_category',
-        options: categories,
+        options: categories.filter(x => !x.hideFromFilters),
       },
       dateRangeFilter: {
         paramName: 'dates',
@@ -138,6 +138,7 @@ export class SearchPageComponent extends Component {
       listings,
       location,
       mapListings,
+      currentPageListingsTimeSlots,
       onManageDisableScrolling,
       pagination,
       scrollingDisabled,
@@ -145,7 +146,7 @@ export class SearchPageComponent extends Component {
       searchListingsError,
       searchParams,
       activeListingId,
-      onActivateListing,
+      onActivateListing,      
     } = this.props;
     // eslint-disable-next-line no-unused-vars
     const { mapSearch, page, sort, ...searchInURL } = parse(location.search, {
@@ -205,6 +206,7 @@ export class SearchPageComponent extends Component {
             urlQueryParams={validQueryParams}
             sort={sort}
             listings={listings}
+            currentPageListingsTimeSlots={currentPageListingsTimeSlots}
             searchInProgress={searchInProgress}
             searchListingsError={searchListingsError}
             searchParamsAreInSync={searchParamsAreInSync}
@@ -212,7 +214,7 @@ export class SearchPageComponent extends Component {
             onManageDisableScrolling={onManageDisableScrolling}
             onOpenModal={this.onOpenMobileModal}
             onCloseModal={this.onCloseMobileModal}
-            onMapIconClick={onMapIconClick}
+            onMapIconClick={onMapIconClick}            
             pagination={pagination}
             searchParamsForPagination={parse(location.search)}
             showAsModalMaxWidth={MODAL_BREAKPOINT}
@@ -298,7 +300,7 @@ SearchPageComponent.propTypes = {
   intl: intlShape.isRequired,
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = state => {  
   const {
     currentPageResultIds,
     pagination,
@@ -307,6 +309,7 @@ const mapStateToProps = state => {
     searchParams,
     searchMapListingIds,
     activeListingId,
+    currentPageListingsTimeSlots
   } = state.SearchPage;
   const pageListings = getListingsById(state, currentPageResultIds);
   const mapListings = getListingsById(
@@ -318,6 +321,7 @@ const mapStateToProps = state => {
     listings: pageListings,
     mapListings,
     pagination,
+    currentPageListingsTimeSlots,
     scrollingDisabled: isScrollingDisabled(state),
     searchInProgress,
     searchListingsError,
@@ -330,7 +334,7 @@ const mapDispatchToProps = dispatch => ({
   onManageDisableScrolling: (componentId, disableScrolling) =>
     dispatch(manageDisableScrolling(componentId, disableScrolling)),
   onSearchMapListings: searchParams => dispatch(searchMapListings(searchParams)),
-  onActivateListing: listingId => dispatch(setActiveListing(listingId)),
+  onActivateListing: listingId => dispatch(setActiveListing(listingId)),  
 });
 
 // Note: it is important that the withRouter HOC is **outside** the

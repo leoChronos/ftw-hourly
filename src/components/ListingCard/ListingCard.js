@@ -9,7 +9,8 @@ import { ensureListing, ensureUser } from '../../util/data';
 import { richText } from '../../util/richText';
 import { createSlug } from '../../util/urlHelpers';
 import config from '../../config';
-import { NamedLink, ResponsiveImage } from '../../components';
+import { NamedLink, ResponsiveImage, IconSpinner } from '../../components';
+import sumBy from 'lodash/sumBy';
 
 import css from './ListingCard.css';
 
@@ -46,7 +47,7 @@ class ListingImage extends Component {
 const LazyImage = lazyLoadWithDimensions(ListingImage, { loadAfterInitialRendering: 3000 });
 
 export const ListingCardComponent = props => {
-  const { className, rootClassName, intl, listing, renderSizes, setActiveListing } = props;
+  const { className, rootClassName, intl, listing, timeSlots, renderSizes, setActiveListing } = props;
   const classes = classNames(rootClassName || css.root, className);
   const currentListing = ensureListing(listing);
   const id = currentListing.id.uuid;
@@ -72,7 +73,11 @@ export const ListingCardComponent = props => {
     ? 'ListingCard.perNight'
     : isDaily
     ? 'ListingCard.perDay'
-    : 'ListingCard.perUnit';
+    : 'ListingCard.perUnit'; 
+  
+    
+  const isSlotLoading = !timeSlots || timeSlots.fetchTimeSlotsInProgress;
+  const slotCount = !isSlotLoading ? sumBy(timeSlots.timeSlots, function(s) { return s.attributes.seats; }) : 0;
 
   return (
     <NamedLink className={classes} name="ListingPage" params={{ id, slug }}>
@@ -106,6 +111,20 @@ export const ListingCardComponent = props => {
             <span className={css.categoryTag}>{category.label}</span>
           </div>
         </div>
+        <div className={classNames(css.mainInfo, css.spotsArea)}>
+            <div className={classNames(css.title, css.spotCount)}>
+              {
+                isSlotLoading ? (
+                  <IconSpinner />
+                ) : (
+                  <span>{slotCount}</span>
+                )
+              }              
+            </div>
+            <div className={classNames(css.title, css.spotLeft)}>
+              <span>Spots left</span>
+            </div>
+        </div>
       </div>
     </NamedLink>
   );
@@ -116,6 +135,7 @@ ListingCardComponent.defaultProps = {
   rootClassName: null,
   renderSizes: null,
   setActiveListing: () => null,
+  onFetchTimeSlots: () => null,
 };
 
 ListingCardComponent.propTypes = {
@@ -128,6 +148,7 @@ ListingCardComponent.propTypes = {
   renderSizes: string,
 
   setActiveListing: func,
+  onFetchTimeSlots: func,
 };
 
 export default injectIntl(ListingCardComponent);

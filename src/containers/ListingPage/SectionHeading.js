@@ -1,6 +1,7 @@
 import React from 'react';
 import { ReviewRating, InlineTextButton, IconEnquiry } from '../../components';
 import { FormattedMessage } from '../../util/reactIntl';
+import meanBy from 'lodash/meanBy';
 
 import css from './ListingPage.css';
 
@@ -23,6 +24,7 @@ const SectionHeading = props => {
   const showcategory = category && !category.hideFromListingInfo;  
   const rating = reviews ? reviews : [];
   const reviewCount = reviews ? reviews.length : 0;
+  const ratingAvg = rating.length > 0 ? meanBy(rating, function(o) { return o.attributes.rating; }) : 0;
 
 
   return (
@@ -39,7 +41,7 @@ const SectionHeading = props => {
             <ReviewRating
               reviewStarClassName={css.reviewStar}
               className={css.reviewStars}
-              rating={rating}
+              rating={ratingAvg}
             />
             <span className={css.ratingReviewCount}>Reviews ({reviewCount})</span>
         </div>

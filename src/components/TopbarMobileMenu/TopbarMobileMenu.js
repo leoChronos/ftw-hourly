@@ -12,7 +12,7 @@ import { ensureCurrentUser } from '../../util/data';
 import {
   AvatarLarge,
   InlineTextButton,
-  NamedLink,
+  NamedLink,  
   NotificationBadge,
   OwnListingLink,
 } from '../../components';
@@ -51,7 +51,8 @@ const TopbarMobileMenu = props => {
       <span className={css.authenticationLinks}>
         <FormattedMessage id="TopbarMobileMenu.signupOrLogin" values={{ signup, login }} />
       </span>
-    );
+    );    
+
     return (
       <div className={css.root}>
         <div className={css.content}>
@@ -92,7 +93,7 @@ const TopbarMobileMenu = props => {
         </span>
         <InlineTextButton rootClassName={css.logoutButton} onClick={onLogout}>
           <FormattedMessage id="TopbarMobileMenu.logoutLink" />
-        </InlineTextButton>
+        </InlineTextButton>        
         <NamedLink
           className={classNames(css.inbox, currentPageClass('InboxPage'))}
           name="InboxPage"

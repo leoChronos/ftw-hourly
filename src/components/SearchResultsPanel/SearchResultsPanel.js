@@ -6,7 +6,7 @@ import { ListingCard, PaginationLinks } from '../../components';
 import css from './SearchResultsPanel.css';
 
 const SearchResultsPanel = props => {
-  const { className, rootClassName, listings, pagination, search, setActiveListing } = props;
+  const { className, rootClassName, listings, currentPageListingsTimeSlots, pagination, search, setActiveListing } = props;
   const classes = classNames(rootClassName || css.root, className);
 
   const paginationLinks =
@@ -29,6 +29,10 @@ const SearchResultsPanel = props => {
     `${panelLargeWidth / 3}vw`,
   ].join(', ');
 
+  const getListingTimeSlots = (l) => {    
+    return l && currentPageListingsTimeSlots ? currentPageListingsTimeSlots[l.id.uuid] || null : null;
+  }
+
   return (
     <div className={classes}>
       <div className={css.listingCards}>
@@ -37,8 +41,9 @@ const SearchResultsPanel = props => {
             className={css.listingCard}
             key={l.id.uuid}
             listing={l}
+            timeSlots={getListingTimeSlots(l)}
             renderSizes={cardRenderSizes}
-            setActiveListing={setActiveListing}
+            setActiveListing={setActiveListing}            
           />
         ))}
         {props.children}
@@ -52,6 +57,7 @@ SearchResultsPanel.defaultProps = {
   children: null,
   className: null,
   listings: [],
+  currentPageListingsTimeSlots: null,
   pagination: null,
   rootClassName: null,
   search: null,
@@ -63,6 +69,7 @@ SearchResultsPanel.propTypes = {
   children: node,
   className: string,
   listings: array,
+  currentPageListingsTimeSlots: object.isRequired,
   pagination: propTypes.pagination,
   rootClassName: string,
   search: object,

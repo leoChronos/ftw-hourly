@@ -3,7 +3,7 @@
  */
 
 export const categories = [
-  { key: 'none', label: 'None', hideFromFilters: true, hideFromListingInfo: true },
+  { key: '', label: 'None', hideFromFilters: true, hideFromListingInfo: true },
   { key: 'bar_dining', label: 'Bar & Dining' },
   { key: 'health_wellness', label: 'Health & Wellness' },
   { key: 'personal_services', label: 'Personal Services' },

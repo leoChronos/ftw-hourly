@@ -13,10 +13,12 @@ import {
   MenuContent,
   MenuItem,
   NamedLink,
+  ExternalLink,
   // ListingLink,
   //OwnListingLink,
 } from '../../components';
 import { TopbarSearchForm } from '../../forms';
+import config from '../../config';
 
 import css from './TopbarDesktop.css';
 
@@ -130,12 +132,12 @@ const TopbarDesktop = props => {
         <span className={css.link}>
           <FormattedMessage id="TopbarDesktop.howItWorks" />
         </span>
-      </NamedLink>
-      <NamedLink name="SearchPage" className={css.menuLink}>
+      </NamedLink>      
+      <ExternalLink href={config.linkGoodSpotPartners} className={css.menuLink}>
         <span className={css.link}>
           <FormattedMessage id="TopbarDesktop.forBusiness" />
         </span>
-      </NamedLink>
+      </ExternalLink>
       <NamedLink name="SearchPage" className={classNames(css.menuLink, css.lastMenuLink)}>
         <span className={css.link}>
           <FormattedMessage id="TopbarDesktop.invite" />
