@@ -25,6 +25,10 @@
   }
 }
 
+.monthSpotsLeft {
+  margin-top: 0;
+}
+
 .field {
   display: flex;
   align-items: flex-end;

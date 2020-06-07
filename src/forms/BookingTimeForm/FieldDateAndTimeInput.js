@@ -23,12 +23,14 @@ import {
 import { propTypes } from '../../util/types';
 import { bookingDateRequired } from '../../util/validators';
 import { FieldDateInput, FieldSelect } from '../../components';
+import sumBy from 'lodash/sumBy';
 
 import NextMonthIcon from './NextMonthIcon';
 import PreviousMonthIcon from './PreviousMonthIcon';
 import css from './FieldDateAndTimeInput.css';
+import config from '../../config';
 
-const MAX_TIME_SLOTS_RANGE = 180;
+const MAX_TIME_SLOTS_RANGE = config.dayCountAvailableForBooking;
 const TODAY = new Date();
 
 const endOfRange = (date, timeZone) => {
@@ -164,6 +166,10 @@ const getMonthlyTimeSlots = (monthlyTimeSlots, date, timeZone) => {
     ? monthlyTimeSlots[monthId].timeSlots
     : [];
 };
+
+const getNumberOfSpots = timeSlotsOnSelectedMonth => {
+  return sumBy(timeSlotsOnSelectedMonth, function(x) { return x.attributes.seats; });
+}
 
 const Next = props => {
   const { currentMonth, timeZone } = props;
@@ -354,7 +360,7 @@ class FieldDateAndTimeInput extends Component {
       values,
       monthlyTimeSlots,
       timeZone,
-      intl,
+      intl,      
     } = this.props;
 
     const classes = classNames(rootClassName || css.root, className);
@@ -374,6 +380,9 @@ class FieldDateAndTimeInput extends Component {
       this.state.currentMonth,
       timeZone
     );
+
+    const availableSpotsOnSelectedMonth = getNumberOfSpots(timeSlotsOnSelectedMonth);
+
     const timeSlotsOnSelectedDate = getTimeSlots(
       timeSlotsOnSelectedMonth,
       bookingStartDate,
@@ -420,6 +429,7 @@ class FieldDateAndTimeInput extends Component {
             )
           )
       : () => false;
+    
 
     const placeholderTime = localizeAndFormatTime(
       intl,
@@ -439,6 +449,9 @@ class FieldDateAndTimeInput extends Component {
 
     return (
       <div className={classes}>
+        <div className={classNames(css.formRow, css.monthSpotsLeft)}>
+          <label>Only {availableSpotsOnSelectedMonth} spots left</label>
+        </div>
         <div className={css.formRow}>
           <div className={classNames(css.field, css.startDate)}>
             <FieldDateInput
