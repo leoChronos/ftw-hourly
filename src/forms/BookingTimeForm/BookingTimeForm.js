@@ -197,16 +197,7 @@ export class BookingTimeFormComponent extends Component {
                   // onClick={handleTermAndCondChange}
                 >
                 </FieldCheckbox>                      
-              )}              
-              <FieldCheckbox
-                id={`BookingTimeForm.termsAndConditionsasd`}
-                name="termsAndConditions"                
-                value="acceptas"
-                label="I understand and have read the terms and conditions"
-                useSuccessColor
-                // onClick={handleTermAndCondChange}
-              >
-              </FieldCheckbox>    
+              )}
               <div className={submitButtonClasses}>
                 <PrimaryButton type="submit"disabled={submitDisabled}>
                   <FormattedMessage id="BookingTimeForm.requestToBook" />
