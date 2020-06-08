@@ -7,7 +7,7 @@
 
 .bookingDates {
   flex-shrink: 0;
-  margin-bottom: 38px;
+  /* margin-bottom: 38px; */
 
   /* Ensure that calendar dropdown gets some stacking context relative to other form items below */
   z-index: 1;
@@ -84,4 +84,68 @@
     padding: 0;
     width: 100%;
   }
+}
+
+.secureSpotTitle {
+  @apply --marketplaceH2FontStyles;
+  color: var(--matterColorAnti);
+
+  padding: 0 24px;
+
+  @media (--viewportMedium) {
+    padding: 0;    
+  }
+}
+
+.secureSpotSubTitle {
+  @apply --marketplaceH3FontStyles;
+
+  padding: 0 24px;
+
+  @media (--viewportMedium) {
+    padding: 0;    
+  }
+}
+
+.secureSpotDivider {
+  /* dimensions */
+  width: 100%;
+  height: 4px;
+  margin: 10px 24px; 
+
+  border: none;
+  background-color: var(--successColorDark);
+
+  @media (--viewportMedium) {
+    margin: 25px 0 40px 0;    
+  }
+}
+
+.termsAndConditions {
+  margin-bottom: 20px;
+
+  padding: 0 24px;
+
+  @media (--viewportMedium) {
+    padding: 0;    
+  }
+}
+
+.termsAndConditionsText {
+  @apply --marketplaceTinyFontStyles;
+}
+
+.footerMessage{  
+  text-align: center;
+  padding: 0 24px;
+
+  @media (--viewportMedium) {
+    padding: 0;    
+    margin-top: 40px;
+  }
+}
+
+.footerMessage span {
+  @apply --marketplaceTinyFontStyles;
+  display: block;
 }

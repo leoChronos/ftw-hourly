@@ -14,6 +14,7 @@
     background-color: var(--matterColorLight);
     margin-top: 12.5vh;
     margin-bottom: 12.5vh;
+    overflow: auto;
   }
 
   @media (--viewportLarge) {
@@ -21,6 +22,7 @@
     background-color: transparent;
     margin-top: 0;
     margin-bottom: 0;
+    overflow: unset;
   }
 }
 
@@ -140,7 +142,7 @@
   /* Mobile phones introduce bottom-bar, which takes 102px vertical space.
      In addition to that we have fixed button that takes 84px vertical space.
   */
-  margin: 0 0 186px 0;
+  margin: 0 0 100px 0;
 
   @media (--viewportMedium) {
     margin: 0;

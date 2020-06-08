@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { func, object, string } from 'prop-types';
+import { func, object, string, array } from 'prop-types';
 import classNames from 'classnames';
 import { intlShape } from '../../util/reactIntl';
 import {
@@ -22,7 +22,7 @@ import {
 } from '../../util/dates';
 import { propTypes } from '../../util/types';
 import { bookingDateRequired } from '../../util/validators';
-import { FieldDateInput, FieldSelect } from '../../components';
+import { FieldDateInput, FieldSelect, Button } from '../../components';
 import sumBy from 'lodash/sumBy';
 
 import NextMonthIcon from './NextMonthIcon';
@@ -35,6 +35,18 @@ const TODAY = new Date();
 
 const endOfRange = (date, timeZone) => {
   return resetToStartOfDay(date, timeZone, MAX_TIME_SLOTS_RANGE - 1);
+};
+
+const getDiscountData = (startDate, oneOffExtendedData, reocurringExtendedData) => {
+  return oneOffExtendedData.find(x => x.key === startDate.timestamp) 
+    || reocurringExtendedData.find(x => x.key === `${startDate.formatedDate.weekday.toLowerCase()}_${startDate.formatedDate.time24}`);
+
+};
+
+const setDiscountData = (availableStartTimes, oneOffExtendedData, reocurringExtendedData) => {
+  availableStartTimes.forEach(element => {
+    element.discountData = getDiscountData(element, oneOffExtendedData, reocurringExtendedData);
+  });
 };
 
 const getAvailableStartTimes = (intl, timeZone, bookingStart, timeSlotsOnSelectedDate) => {
@@ -57,6 +69,10 @@ const getAvailableStartTimes = (intl, timeZone, bookingStart, timeSlotsOnSelecte
     const endLimit = dateIsAfter(endDate, nextDate) ? nextDate : endDate;
 
     const hours = getStartHours(intl, timeZone, startLimit, endLimit);
+    
+    // set number of spots
+    hours[0].seats = t.attributes.seats;
+    
     return availableHours.concat(hours);
   }, []);
   return allHours;
@@ -167,9 +183,13 @@ const getMonthlyTimeSlots = (monthlyTimeSlots, date, timeZone) => {
     : [];
 };
 
-const getNumberOfSpots = timeSlotsOnSelectedMonth => {
+const getMonthlyNumberOfSpots = timeSlotsOnSelectedMonth => {
   return sumBy(timeSlotsOnSelectedMonth, function(x) { return x.attributes.seats; });
-}
+};
+
+const getDailyNumberOfSpots = availableStartTimes => {
+  return sumBy(availableStartTimes, function(x) { return x.seats; });
+};
 
 const Next = props => {
   const { currentMonth, timeZone } = props;
@@ -201,7 +221,31 @@ class FieldDateAndTimeInput extends Component {
     this.onBookingStartDateChange = this.onBookingStartDateChange.bind(this);
     this.onBookingStartTimeChange = this.onBookingStartTimeChange.bind(this);
     this.onBookingEndDateChange = this.onBookingEndDateChange.bind(this);
-    this.isOutsideRange = this.isOutsideRange.bind(this);
+    this.isOutsideRange = this.isOutsideRange.bind(this);    
+    this.onClaimClick = this.onClaimClick.bind(this);
+  }
+
+  onClaimClick = value => {
+    const { monthlyTimeSlots, timeZone, intl, form, values } = this.props;
+    
+    values.bookingStartTime = value.timestamp;
+
+    const timeSlots = getMonthlyTimeSlots(monthlyTimeSlots, this.state.currentMonth, timeZone);
+    const startDate = values.bookingStartDate.date;
+    const timeSlotsOnSelectedDate = getTimeSlots(timeSlots, startDate, timeZone);
+
+    const { endDate, endTime } = getAllTimeValues(
+      intl,
+      timeZone,
+      timeSlotsOnSelectedDate,
+      startDate,
+      value.timestamp
+    );
+
+    form.batch(() => {
+      form.change('bookingEndDate', { date: endDate });
+      form.change('bookingEndTime', endTime);
+    });
   }
 
   fetchMonthData(date) {
@@ -278,9 +322,11 @@ class FieldDateAndTimeInput extends Component {
     );
 
     form.batch(() => {
-      form.change('bookingStartTime', startTime);
+      //form.change('bookingStartTime', startTime);
+      form.change('bookingStartTime', null);
       form.change('bookingEndDate', { date: endDate });
-      form.change('bookingEndTime', endTime);
+      //form.change('bookingEndTime', endTime);
+      form.change('bookingEndTime', null);
     });
   };
 
@@ -361,9 +407,11 @@ class FieldDateAndTimeInput extends Component {
       monthlyTimeSlots,
       timeZone,
       intl,      
+      oneOffExtendedData,
+      reocurringExtendedData,
     } = this.props;
 
-    const classes = classNames(rootClassName || css.root, className);
+    const classes = classNames(rootClassName || css.root, className);    
 
     const bookingStartDate =
       values.bookingStartDate && values.bookingStartDate.date ? values.bookingStartDate.date : null;
@@ -381,7 +429,7 @@ class FieldDateAndTimeInput extends Component {
       timeZone
     );
 
-    const availableSpotsOnSelectedMonth = getNumberOfSpots(timeSlotsOnSelectedMonth);
+    const availableSpotsOnSelectedMonth = getMonthlyNumberOfSpots(timeSlotsOnSelectedMonth);
 
     const timeSlotsOnSelectedDate = getTimeSlots(
       timeSlotsOnSelectedMonth,
@@ -395,6 +443,8 @@ class FieldDateAndTimeInput extends Component {
       bookingStartDate,
       timeSlotsOnSelectedDate
     );
+
+    setDiscountData(availableStartTimes, oneOffExtendedData, reocurringExtendedData);    
 
     const firstAvailableStartTime =
       availableStartTimes.length > 0 && availableStartTimes[0] && availableStartTimes[0].timestamp
@@ -510,7 +560,7 @@ class FieldDateAndTimeInput extends Component {
             />
           </div>
 
-          <div className={css.field}>
+          {/* <div className={classNames(css.field, css.endDateHidden)}>
             <FieldSelect
               name="bookingStartTime"
               id={formId ? `${formId}.bookingStartTime` : 'bookingStartTime'}
@@ -530,9 +580,7 @@ class FieldDateAndTimeInput extends Component {
                 <option>{placeholderTime}</option>
               )}
             </FieldSelect>
-          </div>
-
-          {/* <div className={bookingStartDate ? css.lineBetween : css.lineBetweenDisabled}>-</div> */}
+          </div>          
 
           <div className={classNames(css.field, css.endDateHidden)}>
             <FieldSelect
@@ -553,7 +601,44 @@ class FieldDateAndTimeInput extends Component {
                 <option>{placeholderTime}</option>
               )}
             </FieldSelect>
-          </div>
+          </div> */}
+        </div>
+        <div className={css.formRowAvailableSpots}>
+          {bookingStartDate ? (
+            <div className={css.availableSpotsTitle}>
+              <span>{getDailyNumberOfSpots(availableStartTimes)} spots available on {availableStartTimes[0].formatedDate.date2}</span>
+            </div>
+          ) : (null)}
+          {bookingStartDate ? (
+            availableStartTimes.map(p => (
+              <div key={`spot_${p.timestamp}`} className={css.availableSpotBlock}>                
+                <div className={css.availableSpotDateTime}>
+                  <span>{p.formatedDate.time}, {p.formatedDate.date2}</span>
+                </div>
+                <div className={css.availableSpotButtons}>
+                  <div>
+                    <span className={css.discountValue}>{p.discountData.discount}% Discount</span>
+                  </div>
+                  <div>
+                    <Button 
+                      className={classNames(css.claimButton, p.timestamp === values.bookingStartTime ? css.selectedClaim : null)} 
+                      onClick={(e) => {
+                        e.preventDefault();
+                        this.onClaimClick(p);
+                      }}
+                    >Claim</Button>
+                  </div>                                    
+                </div>
+                <div className={css.availableSpotDetails}>
+                  <div><span className={css.availableSpotDetailsTitle}>Spots details</span></div>
+                  <div><span className={css.availableSpotDetailsSubTitle}>{p.discountData.spotDetails}</span></div>
+                </div>         
+                <hr className={css.spotDivider} />
+              </div>
+                ))
+            ) : (
+            null
+          )}
         </div>
       </div>
     );
@@ -570,6 +655,9 @@ FieldDateAndTimeInput.defaultProps = {
   listingId: null,
   monthlyTimeSlots: null,
   timeZone: null,
+
+  oneOffExtendedData: null,
+  reocurringExtendedData: null,
 };
 
 FieldDateAndTimeInput.propTypes = {
@@ -587,6 +675,9 @@ FieldDateAndTimeInput.propTypes = {
   monthlyTimeSlots: object,
   onFetchTimeSlots: func.isRequired,
   timeZone: string,
+
+  oneOffExtendedData: array.isRequired,
+  reocurringExtendedData: array.isRequired,
 
   // from injectIntl
   intl: intlShape.isRequired,

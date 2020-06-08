@@ -7,7 +7,7 @@ import classNames from 'classnames';
 import { calculateQuantityFromHours, timestampToDate, formatDateToText } from '../../util/dates';
 import { propTypes } from '../../util/types';
 import config from '../../config';
-import { Form, PrimaryButton } from '../../components';
+import { Form, PrimaryButton, FieldCheckbox } from '../../components';
 import EstimatedBreakdownMaybe from './EstimatedBreakdownMaybe';
 import FieldDateAndTimeInput from './FieldDateAndTimeInput';
 
@@ -144,6 +144,10 @@ export class BookingTimeFormComponent extends Component {
             endDateInputProps,
           };
 
+          const isSpotDateSelected = (values && values.bookingStartDate);
+          const isSpotSelected = (values && values.bookingStartTime && values.discountData);
+          const submitDisabled = !isSpotSelected || !values.termsAndConditions || values.termsAndConditions.length === 0;
+
           return (
             <Form onSubmit={handleSubmit} className={classes}>
               {monthlyTimeSlots && timeZone ? (
@@ -163,21 +167,59 @@ export class BookingTimeFormComponent extends Component {
                   timeZone={timeZone}                  
                 />
               ) : null}
-              {bookingInfo}
-              <p className={css.smallPrint}>
-                <FormattedMessage
-                  id={
-                    isOwnListing
-                      ? 'BookingTimeForm.ownListing'
-                      : 'BookingTimeForm.youWontBeChargedInfo'
-                  }
-                />
-              </p>
+              {isSpotSelected ? (<hr className={css.secureSpotDivider} />) : (null)}
+              {isSpotDateSelected ? (<p className={css.secureSpotTitle}>Secure your spot</p>) : (null)}
+              {bookingInfo}              
+              {!isSpotSelected ? 
+              (
+                <>                  
+                  <p className={css.secureSpotSubTitle}>Please select an option to continue.</p>
+                  <hr className={css.secureSpotDivider} />
+                </>
+              ) : (
+              //   <p className={css.smallPrint}>
+              //   <FormattedMessage
+              //     id={
+              //       isOwnListing
+              //         ? 'BookingTimeForm.ownListing'
+              //         : 'BookingTimeForm.youWontBeChargedInfo'
+              //     }
+              //   />
+              // </p>
+                <FieldCheckbox
+                  id={`BookingTimeForm.termsAndConditions`}
+                  name="termsAndConditions"
+                  textClassName={css.termsAndConditionsText}
+                  className={css.termsAndConditions}
+                  value="accept"
+                  label="I understand and have read the terms and conditions"
+                  useSuccessColor
+                  // onClick={handleTermAndCondChange}
+                >
+                </FieldCheckbox>                      
+              )}              
+              <FieldCheckbox
+                id={`BookingTimeForm.termsAndConditionsasd`}
+                name="termsAndConditions"                
+                value="acceptas"
+                label="I understand and have read the terms and conditions"
+                useSuccessColor
+                // onClick={handleTermAndCondChange}
+              >
+              </FieldCheckbox>    
               <div className={submitButtonClasses}>
-                <PrimaryButton type="submit">
+                <PrimaryButton type="submit"disabled={submitDisabled}>
                   <FormattedMessage id="BookingTimeForm.requestToBook" />
                 </PrimaryButton>
               </div>
+              {isSpotDateSelected ?
+              (
+                <div className={css.footerMessage}>
+                  <span>You'll get your deposit back with your purchase.</span>
+                  <span>Please remember your deposit is non refundable if you decide to change your mind or you don't turn up.</span>
+                </div>
+              )
+              : (null)}
             </Form>
           );
         }}

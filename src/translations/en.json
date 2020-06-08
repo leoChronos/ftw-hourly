@@ -96,7 +96,7 @@
   "BookingTimeForm.ownListing": "You won't be able to book a session with yourself.",
   "BookingTimeForm.placeholder": "mm/dd/yyyy",
   "BookingTimeForm.priceBreakdownTitle": "Your spot breakdown",
-  "BookingTimeForm.requestToBook": "Request to book",
+  "BookingTimeForm.requestToBook": "Secure your spot",
   "BookingTimeForm.requiredDate": "Oops, make sure your date is correct!",
   "BookingTimeForm.timeSlotsError": "Loading  availability failed. Please refresh the page.",
   "BookingTimeForm.youWontBeChargedInfo": "You won't be charged yet",

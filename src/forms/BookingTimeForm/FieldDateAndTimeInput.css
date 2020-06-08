@@ -27,6 +27,31 @@
 
 .monthSpotsLeft {
   margin-top: 0;
+  padding: 0 24px;
+
+  @media (--viewportMedium) {    
+    margin-top: 0;
+    padding: 0;
+  }
+}
+
+.formRowAvailableSpots {
+  /* parent aka root is flexbox, this container takes all available space */
+  flex-grow: 1;
+  flex-shrink: 0;
+
+  /* This container uses flexbox layout */
+  /* display: flex; */
+  justify-content: space-between;  
+
+  width: 100%;
+  margin-top: 30px;
+  padding: 0 24px;
+
+  @media (--viewportMedium) {    
+    padding: 0;
+    margin-top: 24px;
+  }
 }
 
 .field {
@@ -164,3 +189,103 @@ Remember to do required code changes also in FieldDateAndTimeInput.js!
 /**
 CSS for hiding the end date above
 **/
+
+
+/*
+CSS for available spots
+*/
+
+.availableSpotsTitle{
+  margin-bottom: 20px;
+
+  @media (--viewportMedium) {
+    margin-bottom: 50px;
+  }
+}
+
+.availableSpotsTitle span{
+  @apply --marketplaceH3FontStyles;
+}
+
+.availableSpotDateTime {
+  margin-bottom: 20px;
+}
+
+.availableSpotDateTime span {
+  @apply --marketplaceH4FontStyles;
+}
+
+.availableSpotButtons {
+  margin-bottom: 10px;
+  display: flex;
+}
+
+.availableSpotButtons div:first-of-type {
+  width: 70%;
+  margin-right: 10px  
+}
+
+.availableSpotButtons div:last-of-type {
+  width: 30%;
+}
+
+.discountValue {
+  @apply --marketplaceH4FontStyles;
+  /* display: block; */
+  background: var(--successColor);
+  color: var(--matterColorLight);
+  text-align: center;
+  border-radius: 5px;
+  /* margin-left: auto; */
+  /* margin-right: auto; */
+  /* margin-bottom: 10px; */
+  max-width: 150px;
+  padding: 10px 35px;  
+}
+
+.claimButton {
+  top: -8px;
+  position: relative;
+  padding: 10px 25px;
+  min-height: 0;
+  min-width: 0; 
+  border-radius: 5px;
+
+  background-color: var(--matterColorLight) !important;
+  border: solid 1px var(--matterColorAnti);
+  color: var(--matterColorAnti);
+
+  &:hover {
+    background-color: var(--matterColorLight) !important;
+    border: solid 1px var(--successColor);
+    color: var(--successColor);
+  }
+}
+
+.selectedClaim {
+  background-color: var(--matterColorLight) !important;
+  border: solid 1px var(--successColor);
+  color: var(--successColor);
+}
+
+.availableSpotDetailsTitle {
+  @apply --marketplaceH4FontStyles;
+}
+
+.availableSpotDetailsSubTitle {
+  @apply --marketplaceH5FontStyles;
+}
+
+.spotDivider {
+  /* dimensions */
+  width: 100%;
+  height: 1px;
+  margin: 10px 0;
+
+  border: none;
+  background-color: var(--matterColorNegative);
+
+  @media (--viewportMedium) {
+    margin: 30px 0;
+  }
+}

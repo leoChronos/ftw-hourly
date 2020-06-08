@@ -232,15 +232,15 @@
   @media (--viewportLarge) {
     display: block;
     margin-top: 95px;
-    margin-left: 60px;
+    margin-left: 30px;
     border-left-style: solid;
     border-left-width: 1px;
     border-left-color: var(--matterColorNegative);
 
-    padding-left: 60px;
+    padding-left: 30px;
 
     /* The calendar needs 312px */
-    flex-basis: 312px;
+    flex-basis: 400px;
     flex-shrink: 0;
   }
 }

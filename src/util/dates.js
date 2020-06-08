@@ -764,6 +764,12 @@ export const formatDateToText = (intl, date, timeZone) => {
       day: 'numeric',
       ...tzMaybe,
     }),
+    date2: intl.formatDate(date, {
+      weekday: 'long',
+      month: 'long',
+      day: 'numeric',    
+      ...tzMaybe,
+    }),
     time: intl.formatDate(date, {
       hour: 'numeric',
       minute: 'numeric',
@@ -784,6 +790,7 @@ export const formatDateToText = (intl, date, timeZone) => {
       hour12: false,
       ...tzMaybe,
     }),
+
   };
 };
 
