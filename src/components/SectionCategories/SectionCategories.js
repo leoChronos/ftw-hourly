@@ -38,6 +38,15 @@ const categoryLink = (key, name, image, searchQuery) => {
   );
 };
 
+const searchPageLink = (
+  <NamedLink
+    name="SearchPage"
+    to={{ search: 'address=New%20Zealand&bounds=-33.8587230028189%2C178.67686298258%2C-47.3898039959898%2C166.326152004449' }}    
+  >
+    <FormattedMessage id="SectionHero.browseButton" />
+  </NamedLink>
+);
+
 const SectionCategories = props => {
   const { rootClassName, className } = props;
 
@@ -45,9 +54,9 @@ const SectionCategories = props => {
 
   return (
     <div className={classes}>
-      {/* <div className={css.title}>
-        <FormattedMessage id="SectionLocations.title" />
-      </div> */}
+      <div className={css.title}>              
+        <FormattedMessage id="SectionCategories.title" values={{searchPageLink}}/>                  
+      </div>
       <div className={css.categories}>
         {
             config.custom.categories.filter(x => !x.hideFromFilters).map((category, i) => {

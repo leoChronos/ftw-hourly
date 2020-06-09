@@ -874,6 +874,8 @@
   "SectionHowItWorks.titleLineTwo": " ",
   "SectionLocations.listingsInLocation": "Yogis in {location}",
   "SectionLocations.title": "Find yoga teachers in your city",
+  "SectionCategories.title": "Get huge discounts on off-peak spots to (almost) anywhere in. {searchPageLink}",
+  "SectionCategories.findSpotsLink": "Find Spots",
   "SelectMultipleFilter.labelSelected": "{labelText} • {count}",
   "SelectMultipleFilterPlainForm.labelSelected": "{labelText} • {count}",
   "SelectSingleFilter.popupClear": "Clear",

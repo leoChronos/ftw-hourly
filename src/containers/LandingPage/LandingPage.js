@@ -3,7 +3,7 @@ import { bool, object } from 'prop-types';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { injectIntl, intlShape } from '../../util/reactIntl';
+import { injectIntl, intlShape, FormattedMessage } from '../../util/reactIntl';
 import { isScrollingDisabled } from '../../ducks/UI.duck';
 import { propTypes } from '../../util/types';
 import config from '../../config';
@@ -18,6 +18,7 @@ import {
   LayoutWrapperFooter,
   Footer,
   NamedLink,
+  ExternalLink,
 } from '../../components';
 import { TopbarContainer } from '../../containers';
 
@@ -66,13 +67,10 @@ export const LandingPageComponent = props => {
         <LayoutWrapperTopbar>
           <TopbarContainer />
         </LayoutWrapperTopbar>
-        <LayoutWrapperMain>
-          <div className={css.heroContainer}>
-            <SectionHero className={css.hero} history={history} location={location} />
-          </div>
+        <LayoutWrapperMain>          
           <ul className={css.sections}>
             <li className={css.section}>
-              <div className={css.sectionContentFirstChild}>
+              <div className={css.sectionContentFirstChild}>                
                 <SectionCategories />
               </div>
             </li>
@@ -87,13 +85,35 @@ export const LandingPageComponent = props => {
             </li>
             <li className={css.section}>
               <div className={css.sectionContent}>
-                <SectionHowItWorks
-                  currentUserListing={currentUserListing}
-                  currentUserListingFetched={currentUserListingFetched}
-                />
+                <div className={css.howItWorksArea}>
+                  <NamedLink name="SearchPage" className={css.howItWorksLink}>
+                    <span>How GoodSpot Works</span>
+                  </NamedLink>
+                </div>                
+              </div>
+            </li>
+            <li className={css.section}>
+              <div className={css.sectionContent}>
+                <div className={css.goodSpotForBusiness}>
+                  <div className={css.businessBoard}>
+                  </div>
+                  <div className={css.businessContent}> 
+                    <h1>GoodSpot for business</h1>
+                    <h3 className={css.businessSubTitle}>We partner with businesses just like yours to help turn your empty off-peak spots into on-peak spots.</h3>
+                    <ExternalLink href={config.linkGoodSpotPartners} className={css.businessLink}>
+                      <span>GoodSpot For Business</span>
+                    </ExternalLink>
+                  </div>
+                </div>                
               </div>
             </li>
           </ul>
+          <div className={css.ourStoryContainer}>
+            <h2 className={css.ourStoryTitle}>A real pain in the covid turned into a really good way to help Kiwis.</h2>
+            <ExternalLink href={config.linkGoodSpotPartners} className={css.ourStoryLink}>
+              <span>Our Story</span>
+            </ExternalLink>
+          </div>
         </LayoutWrapperMain>
         <LayoutWrapperFooter>
           <Footer />

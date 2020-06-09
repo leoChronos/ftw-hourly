@@ -130,8 +130,7 @@
 }
 
 .supportTittle {
-  @apply --marketplaceH1FontStyles;
-  color: var(--matterColorDark);
+  @apply --marketplaceH1FontStyles;  
   text-align: center;
 }
 
@@ -155,6 +154,165 @@
 
   &:hover {
     color: var(--marketplaceColor);
+    text-decoration: none;
+  }
+
+  @media (--viewportMedium) {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+}
+
+.howItWorksArea {
+  /* background: url('images/how good spot works.JPG'); */
+
+  /* Add loading color for the div */
+  background-color: var(--matterColor);
+
+  /* Cover the whole screen with the background image */
+  background-size: cover;
+
+  /* Align the image within the container */
+  background-position: center center;
+  
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  min-height: 250px;    
+
+  justify-content: center;
+  align-items: center;
+
+  @media (--viewportMedium) {
+    min-height: 500px;  
+  }  
+}
+
+.howItWorksLink {
+  @apply --marketplaceH4FontStyles;
+  color: var(--matterColorLight);  
+  background: var(--matterColorGoodSpotOrange);
+  text-align: center;
+  border-radius: 8px;
+  /* max-width: 250px; */
+  padding: 15px 35px;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: none;
+  }
+
+  @media (--viewportMedium) {
+    @apply --marketplaceH3FontStyles;
+    padding: 20px 45px;
+  }  
+}
+
+.goodSpotForBusiness { 
+
+  @media (--viewportMedium) {
+    display: flex;    
+    flex-wrap: nowrap;
+    height: 100%;
+  }  
+}
+
+.businessBoard {
+  background: url('images/good_spot_business_board.png');
+  background-repeat:no-repeat;
+  background-size: contain;  
+  background-position: center center;
+  
+  border-radius: 5px;  
+  width: 100%;
+  height: 100%;  
+
+  min-height: 250px;
+
+  justify-content: center;
+  align-items: center;
+
+  @media (--viewportMedium) {    
+    flex-basis: 50%;
+    min-height: 350px;
+  }  
+}
+
+.businessContent {
+  display: flex;
+  flex-direction: column;  
+  
+  justify-content: center;
+
+  @media (--viewportMedium) {    
+    flex-basis: 50%;
+    padding-left: 30px;
+  }  
+}
+
+.businessSubTitle {
+  color: var(--matterColorAnti);
+}
+
+.businessLink {
+  /* Font */
+  @apply --marketplaceBodyFontStyles;
+  color: var(--attentionColor);
+  transition: var(--transitionStyleButton);
+  text-decoration-line: underline;
+  margin-top: 0;
+  margin-bottom: 0;
+
+  &:hover {
+    color: var(--marketplaceColor);
+    text-decoration: none;
+  }
+
+  @media (--viewportMedium) {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+}
+
+.ourStoryContainer {
+  /* background: url('images/good_spot_business_board.png');
+  background-repeat:no-repeat;
+  background-size: contain;  
+  background-position: center center; */
+
+  background-color: var(--marketplaceColor);
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0 40px;
+
+  min-height: 200px;
+
+  @media (--viewportMedium) {
+    min-height: 350px;
+  }  
+}
+
+.ourStoryTitle {
+  color: var(--matterColorLight);
+  text-align: center;
+}
+
+.ourStoryLink {
+  /* Font */
+  @apply --marketplaceBodyFontStyles;
+  color: var(--matterColorDark);
+  transition: var(--transitionStyleButton);
+  text-decoration-line: underline;
+  margin-top: 0;
+  margin-bottom: 0;
+
+  &:hover {
+    color: var(--matterColor);
     text-decoration: none;
   }
 
