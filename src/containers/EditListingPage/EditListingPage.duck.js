@@ -380,7 +380,10 @@ export function requestShowListing(actionPayload) {
         dispatch(addMarketplaceEntities(response));
         // In case of success, we'll clear state.EditListingPage (user will be redirected away)
         dispatch(showListingsSuccess(response));
-        dispatch(refreshAvailabilityExceptions(response.data.data.id, response.data.data.attributes.availabilityPlan.timezone));
+        // Only load exception when availabilityPlan is already available with timeZone
+        if(response.data.data.attributes.availabilityPlan) {
+          dispatch(refreshAvailabilityExceptions(response.data.data.id, response.data.data.attributes.availabilityPlan.timezone));
+        }
         return response;
       })
       .catch(e => dispatch(showListingsError(storableError(e))));
