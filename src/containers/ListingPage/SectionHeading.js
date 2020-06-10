@@ -3,6 +3,7 @@ import { ReviewRating, InlineTextButton, IconEnquiry, IconSpinner } from '../../
 import { FormattedMessage } from '../../util/reactIntl';
 import classNames from 'classnames';
 import meanBy from 'lodash/meanBy';
+import { nightsBetween } from './../../util/dates';
 
 import css from './ListingPage.css';
 
@@ -12,6 +13,7 @@ const getcategory = (categoryConfig, key) => {
 
 const SectionHeading = props => {
   const {
+    createdAt,
     richTitle,
     listingCategory,
     categoryConfig,
@@ -24,13 +26,13 @@ const SectionHeading = props => {
     userFavoritesListingsInProgress
   } = props;
 
+  const isRecommended = true;
+  const isNew = nightsBetween(createdAt, new Date()) < 7;  
   const category = getcategory(categoryConfig, listingCategory);  
   const showcategory = category && !category.hideFromListingInfo;  
   const rating = reviews ? reviews : [];
   const reviewCount = reviews ? reviews.length : 0;
-  const ratingAvg = rating.length > 0 ? meanBy(rating, function(o) { return o.attributes.rating; }) : 0;
-
-  console.log(userFavoritesListingsInProgress);
+  const ratingAvg = rating.length > 0 ? meanBy(rating, function(o) { return o.attributes.rating; }) : 0;    
 
   return (
     <div className={css.sectionHeading}>
@@ -38,9 +40,9 @@ const SectionHeading = props => {
         <h1 className={css.title}>{richTitle}</h1>
         <h3 className={css.titleAddress}>{address}</h3>
         <div className={css.tags}>
-          {showcategory ? <span className={css.categoryTag}>{category.label}</span> : null}          
-          <span className={css.recommendedTag}>Recommended</span>
-          <span className={css.newListingTag}>New</span>
+          {showcategory ? <span className={css.categoryTag}>{category.label}</span> : null}
+          {isRecommended ? <span className={css.recommendedTag}>Recommended</span> : null}
+          {isNew ? <span className={css.newListingTag}>New</span> : null}
         </div>
         <div className={css.overallRating}>                  
             <ReviewRating

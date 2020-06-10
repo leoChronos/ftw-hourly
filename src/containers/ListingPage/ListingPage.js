@@ -274,6 +274,7 @@ export class ListingPageComponent extends Component {
       geolocation = null,
       price = null,
       title = '',
+      createdAt = null,
       publicData,
     } = currentListing.attributes;   
 
@@ -459,6 +460,7 @@ export class ListingPageComponent extends Component {
                 <SectionAvatar user={currentAuthor} businessLogoImage={businessLogoImage} businessName={title} params={params} />
                 <div className={css.mainContent}>
                   <SectionHeading
+                    createdAt={createdAt}
                     priceTitle={priceTitle}
                     formattedPrice={formattedPrice}
                     richTitle={richTitle}                    
