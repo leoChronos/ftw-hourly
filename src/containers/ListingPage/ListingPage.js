@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import React, { Component } from 'react';
 import { array, arrayOf, bool, func, object, shape, string, oneOf } from 'prop-types';
+import remove from 'lodash/remove';
 import { FormattedMessage, intlShape, injectIntl } from '../../util/reactIntl';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
@@ -45,6 +46,7 @@ import { EnquiryForm } from '../../forms';
 import { TopbarContainer, NotFoundPage } from '../../containers';
 
 import { sendEnquiry, loadData, setInitialValues, fetchTimeSlots } from './ListingPage.duck';
+import { updateUserFavorites }  from './../../ducks/user.duck';
 import SectionImages from './SectionImages';
 import SectionAvatar from './SectionAvatar';
 import SectionHeading from './SectionHeading';
@@ -85,6 +87,7 @@ export class ListingPageComponent extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.onContactUser = this.onContactUser.bind(this);
     this.onSubmitEnquiry = this.onSubmitEnquiry.bind(this);
+    this.onSubmitFavorite = this.onSubmitFavorite.bind(this);
   }
 
   handleSubmit(values) {
@@ -154,6 +157,38 @@ export class ListingPageComponent extends Component {
     }
   }
 
+  onSubmitFavorite() {
+    const { currentUser, userFavoritesListings, history, location, params, onUpdateUserFavorites } = this.props;
+
+    if (!currentUser) {
+      const state = { from: `${location.pathname}${location.search}${location.hash}` };
+
+      // signup and return back to listingPage.
+      history.push(createResourceLocatorString('SignupPage', routeConfiguration(), {}, {}), state);
+    } else {
+      const listingId = params.id;
+      let userFavoritesListingsToUpdate = [...userFavoritesListings];
+
+      if(userFavoritesListingsToUpdate.find(x => x === listingId)){
+        remove(userFavoritesListingsToUpdate, function(f) {
+          return f === listingId;
+        });
+      }
+      else {
+        userFavoritesListingsToUpdate.push(listingId);
+      }
+
+      onUpdateUserFavorites(userFavoritesListingsToUpdate)
+        .then(response =>{
+          console.log(response);
+        })
+        .catch(() =>{
+          // Ignore, error handling in duck file
+          console.log('Error');
+        });
+    }
+  }
+
   onSubmitEnquiry(values) {
     const { history, params, onSendEnquiry } = this.props;
     const routes = routeConfiguration();
@@ -179,6 +214,8 @@ export class ListingPageComponent extends Component {
       unitType,
       isAuthenticated,
       currentUser,
+      userFavoritesListings,
+      userFavoritesListingsInProgress,
       getListing,
       getOwnListing,
       intl,
@@ -318,6 +355,8 @@ export class ListingPageComponent extends Component {
     const isOwnListing =
       userAndListingAuthorAvailable && currentListing.author.id.uuid === currentUser.id.uuid;
     const showContactUser = authorAvailable && (!currentUser || (currentUser && !isOwnListing));
+    
+    const isFavoriteListing = userFavoritesListings ? userFavoritesListings.filter(x => x === currentListing.id.uuid).length === 1 : false;
 
     const currentAuthor = authorAvailable ? currentListing.author : null;
     const ensuredAuthor = ensureUser(currentAuthor);
@@ -429,6 +468,9 @@ export class ListingPageComponent extends Component {
                     reviews={reviews}
                     showContactUser={showContactUser}
                     onContactUser={this.onContactUser}
+                    isFavoriteListing={isFavoriteListing}
+                    onSubmitFavorite={this.onSubmitFavorite}
+                    userFavoritesListingsInProgress={userFavoritesListingsInProgress}
                   />
                   <SectionDescriptionMaybe description={description} />
                   <SectionKeyInformationMaybe 
@@ -540,6 +582,7 @@ ListingPageComponent.propTypes = {
   sendEnquiryInProgress: bool.isRequired,
   sendEnquiryError: propTypes.error,
   onSendEnquiry: func.isRequired,
+  onUpdateUserFavorites: func.isRequired,
   onInitializeCardPaymentData: func.isRequired,
 
   categoryConfig: array,
@@ -556,7 +599,12 @@ const mapStateToProps = state => {
     sendEnquiryError,
     enquiryModalOpenForListingId,
   } = state.ListingPage;
-  const { currentUser } = state.user;
+  const { 
+    currentUser, 
+    userFavoritesListings, 
+    userFavoritesListingsInProgress,
+    userFavoritesListingsError, 
+  } = state.user;  
 
   const getListing = id => {
     const ref = { id, type: 'listing' };
@@ -573,6 +621,9 @@ const mapStateToProps = state => {
   return {
     isAuthenticated,
     currentUser,
+    userFavoritesListings,
+    userFavoritesListingsInProgress,
+    userFavoritesListingsError,
     getListing,
     getOwnListing,
     scrollingDisabled: isScrollingDisabled(state),
@@ -594,6 +645,7 @@ const mapDispatchToProps = dispatch => ({
   onInitializeCardPaymentData: () => dispatch(initializeCardPaymentData()),
   onFetchTimeSlots: (listingId, start, end, timeZone) =>
     dispatch(fetchTimeSlots(listingId, start, end, timeZone)),
+  onUpdateUserFavorites: (userFavoritesListings) => dispatch(updateUserFavorites(userFavoritesListings)),
 });
 
 // Note: it is important that the withRouter HOC is **outside** the

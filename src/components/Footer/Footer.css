@@ -91,24 +91,25 @@
 
 /* Desktop: logo and organization stuff */
 .organization {
-  flex-shrink: 0;
-  flex-basis: 220px;
   display: none;
+  flex-shrink: 0;
+  
+  /* flex-basis: 220px;   */
   margin-right: 24px;
   margin-bottom: 24px;
 
   @media (--viewportMedium) {
     display: block;
     order: 1;
-    margin-right: 12px;
+    /* margin-right: 12px; */
   }
   @media (--viewportLarge) {
-    flex-basis: 240px;
-    margin-right: 57px;
+    /* flex-basis: 240px;
+    margin-right: 57px; */
   }
   @media (--viewportLargeWithPaddings) {
-    flex-basis: 250px;
-    margin-right: 12px;
+    /* flex-basis: 250px;
+    margin-right: 12px; */
   }
 }
 

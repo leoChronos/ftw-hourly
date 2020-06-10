@@ -1,6 +1,7 @@
 import React from 'react';
-import { ReviewRating, InlineTextButton, IconEnquiry } from '../../components';
+import { ReviewRating, InlineTextButton, IconEnquiry, IconSpinner } from '../../components';
 import { FormattedMessage } from '../../util/reactIntl';
+import classNames from 'classnames';
 import meanBy from 'lodash/meanBy';
 
 import css from './ListingPage.css';
@@ -17,7 +18,10 @@ const SectionHeading = props => {
     address,   
     reviews, 
     showContactUser,
-    onContactUser,
+    onContactUser,    
+    onSubmitFavorite,
+    isFavoriteListing,
+    userFavoritesListingsInProgress
   } = props;
 
   const category = getcategory(categoryConfig, listingCategory);  
@@ -26,6 +30,7 @@ const SectionHeading = props => {
   const reviewCount = reviews ? reviews.length : 0;
   const ratingAvg = rating.length > 0 ? meanBy(rating, function(o) { return o.attributes.rating; }) : 0;
 
+  console.log(userFavoritesListingsInProgress);
 
   return (
     <div className={css.sectionHeading}>
@@ -48,10 +53,18 @@ const SectionHeading = props => {
         <div className={css.iconActionArea}>
           {showContactUser ? (
             <span className={css.contactWrapper}>
-              <InlineTextButton rootClassName={css.contactLink}>
-                <IconEnquiry />
-                <label>Add to favorites</label>
-              </InlineTextButton>
+              {userFavoritesListingsInProgress ? (
+                <IconSpinner />
+              ):(
+                <InlineTextButton rootClassName={classNames(css.contactLink, isFavoriteListing ? css.favorite : null)} onClick={(e) => {
+                    e.preventDefault();
+                    onSubmitFavorite();
+                  }}
+                >
+                  <IconEnquiry />
+                    {isFavoriteListing ? (<label>Remove from favorites</label>) : (<label>Add to favorites</label>)}                    
+                  </InlineTextButton>
+              )}              
               <InlineTextButton rootClassName={css.contactLink}>
                 <IconEnquiry />
                 <label>Get spot alerts</label>

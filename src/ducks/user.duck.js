@@ -41,6 +41,11 @@ export const SEND_VERIFICATION_EMAIL_REQUEST = 'app/user/SEND_VERIFICATION_EMAIL
 export const SEND_VERIFICATION_EMAIL_SUCCESS = 'app/user/SEND_VERIFICATION_EMAIL_SUCCESS';
 export const SEND_VERIFICATION_EMAIL_ERROR = 'app/user/SEND_VERIFICATION_EMAIL_ERROR';
 
+export const UPDATE_FAVORITE_REQUEST =  'app/user/UPDATE_FAVORITE_REQUEST';
+export const UPDATE_FAVORITE_SUCCESS =  'app/user/UPDATE_FAVORITE_SUCCESS';
+export const UPDATE_FAVORITE_ERROR =    'app/user/UPDATE_FAVORITE_ERROR';
+export const FETCH_CURRENT_USER_FAVORITE_SUCCESS = 'app/user/FETCH_CURRENT_USER_FAVORITE_SUCCESS';
+
 // ================ Reducer ================ //
 
 const mergeCurrentUser = (oldCurrentUser, newCurrentUser) => {
@@ -71,6 +76,9 @@ const initialState = {
   currentUserListing: null,
   currentUserListingFetched: false,
   isBusiness: false,
+  userFavoritesListings: null,
+  userFavoritesListingsInProgress: false,
+  userFavoritesListingsError: false,
 };
 
 export default function reducer(state = initialState, action = {}) {
@@ -97,10 +105,11 @@ export default function reducer(state = initialState, action = {}) {
         currentUserListing: null,
         currentUserListingFetched: false,
         isBusiness: false,
+        userFavoritesListings: null,
       };
 
     case FETCH_CURRENT_USER_IS_BUSINESS_SUCCESS:
-      return  { ...state, isBusiness: payload };
+      return  { ...state, isBusiness: payload };   
 
     case FETCH_CURRENT_USER_HAS_LISTINGS_REQUEST:
       return { ...state, currentUserHasListingsError: null };
@@ -147,6 +156,30 @@ export default function reducer(state = initialState, action = {}) {
         ...state,
         sendVerificationEmailInProgress: false,
         sendVerificationEmailError: payload,
+      };
+
+    case FETCH_CURRENT_USER_FAVORITE_SUCCESS:
+      return { ...state, userFavoritesListings: payload};
+  
+    case UPDATE_FAVORITE_SUCCESS:
+      return { 
+        ...state, 
+        userFavoritesListings: payload,
+        userFavoritesListingsInProgress: false,        
+      };
+
+    case UPDATE_FAVORITE_REQUEST:
+      return { 
+        ...state,         
+        userFavoritesListingsInProgress: true,
+        userFavoritesListingsError: null,
+      };
+
+    case UPDATE_FAVORITE_ERROR:
+      return { 
+        ...state,         
+        userFavoritesListingsInProgress: false,
+        userFavoritesListingsError: payload,
       };
 
     default:
@@ -247,6 +280,26 @@ export const sendVerificationEmailSuccess = () => ({
 
 export const sendVerificationEmailError = e => ({
   type: SEND_VERIFICATION_EMAIL_ERROR,
+  error: true,
+  payload: e,
+});
+
+export const fetchCurrentUserFavoritesListingsSuccess = userFavoritesListings => ({
+  type: FETCH_CURRENT_USER_FAVORITE_SUCCESS,
+  payload: userFavoritesListings,
+});
+
+export const updateUserFavoritesListingsRequest = () => ({
+  type: UPDATE_FAVORITE_REQUEST,
+});
+
+export const updateUserFavoritesListingsSuccess = userFavoritesListings => ({
+  type: UPDATE_FAVORITE_SUCCESS,
+  payload: userFavoritesListings,
+});
+
+export const updateUserFavoritesListingsError = e => ({
+  type: UPDATE_FAVORITE_ERROR,
   error: true,
   payload: e,
 });
@@ -354,9 +407,11 @@ export const fetchCurrentUser = (params = null) => (dispatch, getState, sdk) => 
       const privateData = currentUser.attributes.profile.privateData || {};
       
       // Define if user is Business or not
-      const isBusiness = privateData.isBusiness || false;
-      //const isBusiness = true;
+      const isBusiness = privateData.isBusiness || false;      
       dispatch(fetchCurrentUserIsBusinessSuccess(isBusiness));
+
+      const userFavoritesListings = privateData.userFavoritesListings || [];
+      dispatch(fetchCurrentUserFavoritesListingsSuccess(userFavoritesListings));
 
       // Save stripeAccount to store.stripe.stripeAccount if it exists
       if (currentUser.stripeAccount) {
@@ -395,4 +450,28 @@ export const sendVerificationEmail = () => (dispatch, getState, sdk) => {
     .sendVerificationEmail()
     .then(() => dispatch(sendVerificationEmailSuccess()))
     .catch(e => dispatch(sendVerificationEmailError(storableError(e))));
+};
+
+export const updateUserFavorites = (userFavoritesListings) => (dispatch, getState, sdk) => {  
+  dispatch(updateUserFavoritesListingsRequest);
+
+  return sdk.currentUser
+    .updateProfile(
+      { privateData: { userFavoritesListings } }      
+  )
+  .then(response => {
+    const entities = denormalisedResponseEntities(response);
+    if (entities.length !== 1) {
+      throw new Error('Expected a resource in the sdk.currentUser.updateProfile response');
+    }
+
+    dispatch(updateUserFavoritesListingsSuccess(userFavoritesListings));
+
+    //const currentUser = entities[0];
+    //return currentUser;
+  })
+  .catch(e => {
+    dispatch(updateUserFavoritesListingsError(storableError(e)));    
+    //throw e;
+  });
 };
