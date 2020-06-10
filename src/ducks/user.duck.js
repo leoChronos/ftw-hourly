@@ -464,14 +464,9 @@ export const updateUserFavorites = (userFavoritesListings) => (dispatch, getStat
     if (entities.length !== 1) {
       throw new Error('Expected a resource in the sdk.currentUser.updateProfile response');
     }
-
-    dispatch(updateUserFavoritesListingsSuccess(userFavoritesListings));
-
-    //const currentUser = entities[0];
-    //return currentUser;
+    dispatch(updateUserFavoritesListingsSuccess(userFavoritesListings));    
   })
   .catch(e => {
-    dispatch(updateUserFavoritesListingsError(storableError(e)));    
-    //throw e;
+    dispatch(updateUserFavoritesListingsError(storableError(e)));
   });
 };
