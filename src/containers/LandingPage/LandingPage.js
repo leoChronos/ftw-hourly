@@ -9,16 +9,15 @@ import { propTypes } from '../../util/types';
 import config from '../../config';
 import {
   Page,
-  SectionHero,
-  SectionHowItWorks,
+  SectionOurStory,  
   SectionCategories,
+  SectionGoodSpotForBusiness,
   LayoutSingleColumn,
   LayoutWrapperTopbar,
   LayoutWrapperMain,
   LayoutWrapperFooter,
   Footer,
   NamedLink,
-  ExternalLink,
 } from '../../components';
 import { TopbarContainer } from '../../containers';
 
@@ -94,26 +93,11 @@ export const LandingPageComponent = props => {
             </li>
             <li className={css.section}>
               <div className={css.sectionContent}>
-                <div className={css.goodSpotForBusiness}>
-                  <div className={css.businessBoard}>
-                  </div>
-                  <div className={css.businessContent}> 
-                    <h1>GoodSpot for business</h1>
-                    <h3 className={css.businessSubTitle}>We partner with businesses just like yours to help turn your empty off-peak spots into on-peak spots.</h3>
-                    <ExternalLink href={config.linkGoodSpotPartners} className={css.businessLink}>
-                      <span>GoodSpot For Business</span>
-                    </ExternalLink>
-                  </div>
-                </div>                
+                <SectionGoodSpotForBusiness/>  
               </div>
             </li>
           </ul>
-          <div className={css.ourStoryContainer}>
-            <h2 className={css.ourStoryTitle}>A real pain in the covid turned into a really good way to help Kiwis.</h2>
-            <ExternalLink href={config.linkGoodSpotPartners} className={css.ourStoryLink}>
-              <span>Our Story</span>
-            </ExternalLink>
-          </div>
+          <SectionOurStory />
         </LayoutWrapperMain>
         <LayoutWrapperFooter>
           <Footer />

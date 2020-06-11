@@ -79,13 +79,14 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;
-  width: 100%;
+  width: 100%;  
   margin-bottom: 18px;
 
   @media (--viewportMedium) {
     flex-wrap: nowrap;
     justify-content: space-between;
     margin-bottom: 0;
+    min-height: 377px;
   }
 }
 
@@ -162,17 +163,19 @@
   margin-bottom: 6px;
 
   @media (--viewportMedium) {
-    margin-bottom: 5px;
+    margin-bottom: 20px;    
   }
 }
 
 .listItem:first-of-type {
-  margin-bottom: 15px;
+  margin-bottom: 35px;
+  font-size: 35px;
 }
 
 .link {
   /* Font */
   @apply --marketplaceH5FontStyles;
+  font-size: 18px;
   line-height: 20px;
   color: var(--matterColor);
   transition: var(--transitionStyleButton);
@@ -193,6 +196,7 @@
 
 .firstLink {
   @apply --marketplaceH4FontStyles;
+  font-size: 30px;
 }
 
 .linkAreas {

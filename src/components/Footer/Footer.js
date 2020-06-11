@@ -15,7 +15,7 @@ import {
 
 import css from './Footer.css';
 
-import flagImage from './images/nz flag.jpg';
+import flagImage from './images/new-zealand-flag.png';
 
 const renderSocialMediaLinks = (isMobile, intl) => {
   const { siteFacebookPage, siteInstagramPage, siteTwitterHandle } = config;

@@ -1,0 +1,54 @@
+@import '../../marketplace.css';
+
+.ourStoryContainer {
+     background: url('images/GoodSpot-Footer.png');
+    background-repeat:no-repeat;
+    background-size: cover;
+    background-position: center center;
+  
+    /* background-color: var(--marketplaceColor); */
+  
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0 40px;
+  
+    min-height: 200px;
+  
+    @media (--viewportMedium) {
+      min-height: 450px;
+    }  
+  }
+  
+  .ourStoryTitle {
+    color: var(--matterColorLight);
+    text-align: center;
+    font-size: 35px;
+    font-weight: 500;
+    letter-spacing: -1px;
+  }
+  
+  .ourStoryLink {
+    /* Font */
+    @apply --marketplaceBodyFontStyles;
+    color: var(--matterColorDark);
+    transition: var(--transitionStyleButton);
+    text-decoration-line: underline;
+    margin-top: 0;
+    margin-bottom: 0;
+
+    font-size: 35px;
+    font-weight: 500;
+    letter-spacing: -1px;
+  
+    &:hover {
+      color: var(--matterColor);
+      text-decoration: none;
+    }
+  
+    @media (--viewportMedium) {
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+  }

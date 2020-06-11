@@ -62,7 +62,7 @@
   --matterColorLight: #ffffff;  
   --matterColorAvatarBusiness: #f0eee1;
 
-  --matterColorGoodSpotOrange: #f25d3e;
+  --matterColorGoodSpotOrange: #f35a2e;
 
   --matterColorLightTransparent: rgba(255, 255, 255, 0.65);
 
@@ -159,7 +159,7 @@
   /* ================ Buttons ================ */
 
   --marketplaceButtonFontStyles: {
-    font-family: 'sofiapro', Helvetica, Arial, sans-serif;
+    font-family: 'Circular Std', Helvetica, Arial, sans-serif;
     font-weight: var(--fontWeightSemiBold);
     font-size: 18px;
     line-height: 24px;
