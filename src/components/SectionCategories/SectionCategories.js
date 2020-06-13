@@ -9,9 +9,12 @@ import { NamedLink } from '../../components';
 
 import css from './SectionCategories.css';
 
-import nyImage from './images/ny-yogi.jpg';
-import laImage from './images/la-yogi.jpg';
-import sfImage from './images/sf-yogi.jpg';
+import barImage from './images/Bar-Dining-Home-Page-tile.png';
+import healthImage from './images/Health-Wellness-Home-Page-tile.png';
+import beautyImage from './images/Beauty-Home-Page-tile.png';
+import businessImage from './images/Business-Home-Page-tile.png';
+import houseImage from './images/Home-Garden-Home-Page-tile.png';
+import activitiesImage from './images/Activities-Home-Page-tile.png';
 
 class CategoryImage extends Component {
   render() {
@@ -24,28 +27,31 @@ class CategoryImage extends Component {
     );
   }
 }
+
+const getCategoryImage = (category) => {
+  switch(category){
+    case "bar_dining" : return barImage;
+    case "health_wellness" : return healthImage;
+    case "beauty_services" : return beautyImage;
+    case "business_services" : return businessImage;
+    case "house_garden" : return houseImage;
+    case "activities" : return activitiesImage;
+  }
+};
+
 const LazyImage = lazyLoadWithDimensions(CategoryImage);
 
-const categoryLink = (key, name, image, searchQuery) => {  
+const categoryLink = (key, name, searchQuery) => {  
   return (
     <NamedLink key={`category_link_${key}`} name="SearchPage" to={{ search: searchQuery }} className={css.category}>
       <div className={css.imageWrapper}>
         <div className={css.aspectWrapper}>
-          <LazyImage src={image} alt={name} className={css.categoryImage} />
+          <LazyImage src={getCategoryImage(key)} alt={name} className={css.categoryImage} />
         </div>        
       </div>      
     </NamedLink>
   );
 };
-
-const searchPageLink = (
-  <NamedLink
-    name="SearchPage"
-    to={{ search: 'address=New%20Zealand&bounds=-33.8587230028189%2C178.67686298258%2C-47.3898039959898%2C166.326152004449' }}    
-  >
-    <FormattedMessage id="SectionHero.browseButton" />
-  </NamedLink>
-);
 
 const SectionCategories = props => {
   const { rootClassName, className } = props;
@@ -53,10 +59,7 @@ const SectionCategories = props => {
   const classes = classNames(rootClassName || css.root, className);
 
   return (
-    <div className={classes}>
-      <div className={css.title}>              
-        <FormattedMessage id="SectionCategories.title" values={{searchPageLink}}/>                  
-      </div>
+    <div className={classes}>  
       <div className={css.categories}>
         {
             config.custom.categories.filter(x => !x.hideFromFilters).map((category, i) => {
@@ -64,8 +67,7 @@ const SectionCategories = props => {
                 return (
                     categoryLink(
                         category.key,
-                        category.label,
-                        nyImage, 
+                        category.label,                         
                         `?pub_category=${category.key}`
                       )
                 );

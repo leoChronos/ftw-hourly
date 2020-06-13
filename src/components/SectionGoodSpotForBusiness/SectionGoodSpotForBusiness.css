@@ -5,8 +5,7 @@
     @media (--viewportMedium) {
       display: flex;    
       flex-wrap: nowrap;
-      height: 100%;
-      margin-bottom: 250px;
+      height: 700px;
     }  
   }
   
@@ -39,13 +38,16 @@
   
 .content {
     display: flex;
-    flex-direction: column;  
-    
+    flex-direction: column;    
     justify-content: center;
+    align-items: center;
+    text-align: center;
   
     @media (--viewportMedium) {    
       flex-basis: 70%;
       padding-left: 30px;
+      align-items: unset;
+      text-align: unset;
     }  
 }
 

@@ -58,12 +58,12 @@
 }
 
 .sections {
-  margin: 0;
-  padding-top: 1px;
+  /* margin: 0;
+  padding-top: 1px; */
 }
 
 .section {
-  overflow: auto;
+  /* overflow: auto; */
 }
 
 /* Square corners for the last section if it's even */
@@ -86,13 +86,15 @@
 
   @media (--viewportMedium) {
     max-width: 100%;
-    margin: var(--LandingPage_sectionMarginTopMedium) 24px 60px 24px;
+    /* margin: var(--LandingPage_sectionMarginTopMedium) 24px 60px 24px; */
+    margin: 0 auto 0 auto;
   }
 
   @media (--viewportLarge) {
     max-width: 1128px;
     padding: 0 36px 0 36px;
-    margin: var(--LandingPage_sectionMarginTopLarge) auto 93px auto;
+    /* margin: var(--LandingPage_sectionMarginTopLarge) auto 93px auto; */
+    margin: 0 auto 0 auto;    
   }
 
   @media (--viewportXLarge) {
@@ -104,6 +106,16 @@
 .sectionContentFirstChild {
   composes: sectionContent;
   margin-top: 3vh;
+}
+
+.supportArea {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  @media (--viewportMedium) {
+    height: 450px;
+  }
 }
 
 .supportTittle {
@@ -180,8 +192,9 @@
   letter-spacing: -1px;
   font-weight: 500;
 
-  width: 350px;
-  height: 70px;
+  width: 200px;
+  height: 50px;
+  line-height: 50px;
 
   &:hover {
     text-decoration: none;
@@ -197,4 +210,37 @@
     width: 350px;
     height: 70px;
   }  
+}
+
+.findSpotArea{
+  display: flex;
+  align-items: center;
+
+
+  @media (--viewportMedium) {
+    height: 450px;
+  }
+}
+
+.findSpotsTitle {
+  @apply --marketplaceH1FontStyles;  
+  font-size: 45px;
+  font-weight: 500;
+  line-height: 57px;
+  letter-spacing: -1px;
+
+  margin-top: 0;
+  max-width: 750px;
+
+  @media (--viewportMedium) {    
+  }
+}
+
+.findSpotsTitle a {
+  text-decoration: underline;  
+  color: var(--matterColor);
+
+  &:hover {
+    text-decoration: unset;
+  }
 }

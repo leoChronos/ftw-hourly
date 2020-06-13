@@ -169,7 +169,7 @@ const maps = {
     // The easiest place is /public/static/icons/ folder, but then the
     // marker image is not available while developing through
     // localhost.
-    url: encodeURI(`${canonicalRootURL}/static/icons/map-marker-32x32.png`),
+    url: encodeURI(`${canonicalRootURL}/static/icons/favicon-32x32.png`),
 
     // Dimensions of the marker image.
     width: 32,

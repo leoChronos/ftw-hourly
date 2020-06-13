@@ -1,7 +1,7 @@
 @import '../../marketplace.css';
 
 .ourStoryContainer {
-     background: url('images/GoodSpot-Footer.png');
+    background: url('images/GoodSpot-Footer.png');
     background-repeat:no-repeat;
     background-size: cover;
     background-position: center center;
@@ -24,9 +24,13 @@
   .ourStoryTitle {
     color: var(--matterColorLight);
     text-align: center;
-    font-size: 35px;
+    font-size: 20px;
     font-weight: 500;
     letter-spacing: -1px;
+
+    @media (--viewportMedium) {
+      font-size: 35px;      
+    }  
   }
   
   .ourStoryLink {
@@ -38,7 +42,7 @@
     margin-top: 0;
     margin-bottom: 0;
 
-    font-size: 35px;
+    font-size: 20px;
     font-weight: 500;
     letter-spacing: -1px;
   
@@ -50,5 +54,6 @@
     @media (--viewportMedium) {
       margin-top: 0;
       margin-bottom: 0;
+      font-size: 35px;
     }
   }

@@ -6,7 +6,7 @@ export const categories = [
   { key: '', label: 'None', hideFromFilters: true, hideFromListingInfo: true },
   { key: 'bar_dining', label: 'Bar & Dining' },
   { key: 'health_wellness', label: 'Health & Wellness' },
-  { key: 'personal_services', label: 'Personal Services' },
+  { key: 'beauty_services', label: 'Beauty Services' },
   { key: 'business_services', label: 'Business Services' },
   { key: 'house_garden', label: 'House & Garden' },
   { key: 'activities', label: 'Activities' },

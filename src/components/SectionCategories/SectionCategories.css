@@ -13,13 +13,12 @@
 
 .categories {
   display: flex;
-  flex-direction: column;
-  margin-top: 32px;
+  flex-direction: column;  
 
   @media (--viewportMedium) {
     flex-direction: row;
     flex-wrap: wrap;
-    margin-top: 57px;
+    margin-top: -25px;    
   }
 }
 
@@ -38,8 +37,8 @@
   }
 
   @media (--viewportLarge) {
-    flex-basis: 29%;
-    margin-right: 50px;    
+    flex-basis: 31.5%;
+    margin-right: 25px;    
   }
 }
 
@@ -64,10 +63,13 @@
 
 /* An image wrapper that defines the images aspect ratio */
 .aspectWrapper {
-  padding-bottom: calc(6 / 13 * 100%); /* 13:6 Aspect Ratio */
+  /* padding-bottom: calc(6 / 13 * 100%); 13:6 Aspect Ratio */
+
+  padding-bottom: calc(3 / 4 * 100%);
 
   @media (--viewportMedium) {
-    padding-bottom: calc(2 / 3 * 100%); /* 3:2 Aspect Ratio */
+    /* padding-bottom: calc(2 / 3 * 100%); 3:2 Aspect Ratio */
+    padding-bottom: calc(3 / 4 * 100%); /* 4:3 Aspect Ratio */
   }
 }
 
@@ -85,8 +87,7 @@
 }
 
 .linkText {
-  @apply --marketplaceH2FontStyles;
-  color: var(--matterColor);
+  @apply --marketplaceH2FontStyles;  
   margin-top: 15px;
   margin-bottom: 0;
 
@@ -97,7 +98,10 @@
 
 .categoryName {
   @apply --marketplaceH5FontStyles;
-  color: var(--matterColorDark);  
+  font-size: 20px;
+  font-weight: 500;
+  letter-spacing: -1px;
+  color: var(--matterColor);
   position: relative;
   display: block;
   background: var(--matterColorLight);
@@ -105,11 +109,11 @@
   border-radius: 5px;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 20%;
-  max-width: 150px;
-  padding: 5px 0px;
+  margin-top: 32.5%;
+  max-width: 200px;
+  padding: 10px 0px;
 
   @media (--viewportMedium) {
-    margin-top: 30%;
+    margin-top: 32.5%;
   }  
 }

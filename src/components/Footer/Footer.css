@@ -175,7 +175,7 @@
 .link {
   /* Font */
   @apply --marketplaceH5FontStyles;
-  font-size: 18px;
+  font-size: 16px;
   line-height: 20px;
   color: var(--matterColor);
   transition: var(--transitionStyleButton);
@@ -196,7 +196,7 @@
 
 .firstLink {
   @apply --marketplaceH4FontStyles;
-  font-size: 30px;
+  font-size: 25px;
 }
 
 .linkAreas {

@@ -43,6 +43,15 @@ export const LandingPageComponent = props => {
   const schemaDescription = intl.formatMessage({ id: 'LandingPage.schemaDescription' });
   const schemaImage = `${config.canonicalRootURL}${facebookImage}`;
 
+  const searchPageLink = (
+    <NamedLink
+      name="SearchPage"
+      to={{ search: 'address=New%20Zealand&bounds=-33.8587230028189%2C178.67686298258%2C-47.3898039959898%2C166.326152004449' }}    
+    >
+      <span>Find Spots</span>
+    </NamedLink>
+  );
+
   return (
     <Page
       className={css.root}
@@ -69,17 +78,30 @@ export const LandingPageComponent = props => {
         <LayoutWrapperMain>          
           <ul className={css.sections}>
             <li className={css.section}>
-              <div className={css.sectionContentFirstChild}>                
+              <div className={css.sectionContent}>                
+                <div className={css.findSpotArea}>
+                  <div className={css.findSpotsTitle}>              
+                    <FormattedMessage id="LandingPage.getDiscountTitle" values={{searchPageLink}}/>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li className={css.section}>
+              <div className={css.sectionContent}>                
                 <SectionCategories />
               </div>
             </li>
             <li className={css.section}>
               <div className={css.sectionContent}>
-                  <h1 className={css.supportTittle}>Support your local businesses and get rewarded in return.</h1>
-                  <h2 className={css.supportSubTittle}>Everyday hundreds of businesses upload discounted off-peak spots for you to book</h2>
-                  <NamedLink name="SearchPage" className={css.supportLink}>
-                    <span>Find Spots</span>
-                  </NamedLink>
+                <div className={css.supportArea}>
+                  <div>
+                    <h1 className={css.supportTittle}>Support your local businesses and get rewarded in return.</h1>
+                    <h2 className={css.supportSubTittle}>Everyday hundreds of businesses upload discounted off-peak spots for you to book</h2>
+                    <NamedLink name="SearchPage" className={css.supportLink}>
+                      <span>Find Spots</span>
+                    </NamedLink>
+                  </div>
+                </div>
               </div>
             </li>
             <li className={css.section}>
