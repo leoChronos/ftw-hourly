@@ -109,7 +109,7 @@ class PaymentMethodsForm extends Component {
       this.stripe = window.Stripe(config.stripe.publishableKey);
 
       const elements = this.stripe.elements(stripeElementsOptions);
-      this.card = elements.create('card', { style: cardStyles });
+      this.card = elements.create('card', { style: cardStyles, hidePostalCode: true });
       this.card.mount(this.cardContainer);
       this.card.addEventListener('change', this.handleCardValueChange);
       // EventListener is the only way to simulate breakpoints with Stripe.
@@ -212,7 +212,7 @@ class PaymentMethodsForm extends Component {
     // Stripe recommends asking billing address.
     // In PaymentMethodsForm, we send name and email as billing details, but address only if it exists.
     const billingAddress = (
-      <StripePaymentAddress intl={intl} form={form} fieldId={formId} card={this.card} />
+      <StripePaymentAddress intl={intl} form={form} fieldId={formId} card={this.card} country={'NZ'} />
     );
 
     const hasStripeKey = config.stripe.publishableKey;

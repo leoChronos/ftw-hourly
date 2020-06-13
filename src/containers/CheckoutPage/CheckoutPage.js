@@ -755,7 +755,7 @@ export class CheckoutPageComponent extends Component {
     // If your marketplace works mostly in one country you can use initial values to select country automatically
     // e.g. {country: 'FI'}
 
-    const initalValuesForStripePayment = { name: userName };
+    const initalValuesForStripePayment = { name: userName, country: 'NZ' };
 
     return (
       <Page {...pageProps}>
@@ -796,6 +796,7 @@ export class CheckoutPageComponent extends Component {
               ) : null}
               {showPaymentForm ? (
                 <StripePaymentForm
+                  listingTitle={listingTitle}
                   className={css.paymentForm}
                   onSubmit={this.handleSubmit}
                   inProgress={this.state.submitting}

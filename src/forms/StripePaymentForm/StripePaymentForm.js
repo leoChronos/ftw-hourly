@@ -230,7 +230,7 @@ class StripePaymentForm extends Component {
     const elements = this.stripe.elements(stripeElementsOptions);
 
     if (!this.card) {
-      this.card = elements.create('card', { style: cardStyles });
+      this.card = elements.create('card', { style: cardStyles, hidePostalCode: true });
       this.card.mount(element || this.cardContainer);
       this.card.addEventListener('change', this.handleCardValueChange);
       // EventListener is the only way to simulate breakpoints with Stripe.
@@ -311,6 +311,7 @@ class StripePaymentForm extends Component {
 
   paymentForm(formRenderProps) {
     const {
+      listingTitle,
       className,
       rootClassName,
       inProgress: submitInProgress,
@@ -373,17 +374,17 @@ class StripePaymentForm extends Component {
 
     const messageOptionalText = intl.formatMessage({
       id: 'StripePaymentForm.messageOptionalText',
-    });
+    });    
 
     const initialMessageLabel = intl.formatMessage(
-      { id: 'StripePaymentForm.messageLabel' },
-      { messageOptionalText: messageOptionalText }
-    );
+      { id: 'StripePaymentForm.messageLabel'},      
+      { listingTitle: listingTitle}      
+    ) + messageOptionalText;
 
     // Asking billing address is recommended in PaymentIntent flow.
     // In CheckoutPage, we send name and email as billing details, but address only if it exists.
     const billingAddress = (
-      <StripePaymentAddress intl={intl} form={form} fieldId={formId} card={this.card} />
+      <StripePaymentAddress intl={intl} form={form} fieldId={formId} card={this.card}/>
     );
 
     const hasStripeKey = config.stripe.publishableKey;

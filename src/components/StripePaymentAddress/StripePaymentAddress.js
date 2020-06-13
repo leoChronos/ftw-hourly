@@ -75,7 +75,7 @@ const StripePaymentAddress = props => {
   };
 
   // Use tha language set in config.locale to get the correct translations of the country names
-  const countryCodes = getCountryCodes(config.locale);
+  const countryCodes = getCountryCodes(config.locale);  
 
   return (
     <div className={className ? className : css.root}>
@@ -159,7 +159,7 @@ const StripePaymentAddress = props => {
           </option>
           {countryCodes.map(country => {
             return (
-              <option key={country.code} value={country.code}>
+              <option key={country.code} value={country.code} selected={country.default}>
                 {country.name}
               </option>
             );

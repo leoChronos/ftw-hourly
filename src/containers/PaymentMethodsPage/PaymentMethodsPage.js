@@ -137,7 +137,7 @@ const PaymentMethodsPageComponent = props => {
     ? `${ensuredCurrentUser.attributes.profile.firstName} ${ensuredCurrentUser.attributes.profile.lastName}`
     : null;
 
-  const initalValuesForStripePayment = { name: userName };
+  const initalValuesForStripePayment = { name: userName, country: 'NZ' };
 
   const card = hasDefaultPaymentMethod
     ? ensurePaymentMethodCard(currentUser.stripeCustomer.defaultPaymentMethod).attributes.card
