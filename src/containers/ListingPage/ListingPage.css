@@ -418,14 +418,14 @@
 
 .categoryTag {
   display: block;
-  background: var(--marketplaceColorLight);
+  background: var(--matterColorBlue);
   text-align: center;
   border-radius: 5px;
   /* margin-left: auto;   */
   margin-right: auto;
   margin-bottom: 10px;
   max-width: 150px;
-  padding: 5px 30px;
+  padding: 10px 30px;
 
   @media (--viewportSmall) {    
     display: inline;
@@ -435,14 +435,14 @@
 
 .recommendedTag {
   display: block;
-  background: var(--attentionColor);  
+  background: var(--matterColorBege);  
   text-align: center;
   border-radius: 5px;
   /* margin-left: auto;   */
   margin-right: auto;
   margin-bottom: 10px;
   max-width: 150px;
-  padding: 5px 30px;
+  padding: 10px 30px;
 
   @media (--viewportSmall) {    
     display: inline;    
@@ -459,7 +459,7 @@
   margin-right: auto;
   margin-bottom: 10px;
   max-width: 150px;
-  padding: 5px 30px; 
+  padding: 10px 30px; 
 
   @media (--viewportSmall) {    
     display: inline;    

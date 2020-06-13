@@ -29,9 +29,19 @@
       * Vendor:      Mostardesign
       * License URL: https://www.fontspring.com/licenses/mostardesign/webfont
       *
-      */      
+      */ 
+      
+      /* @font-face {
+        font-family: 'Circular Std';
+        src: url('/static/fonts/Circular Std Font.otf') format("opentype");
+      } */
 
       @font-face {
+        font-family: 'Circular Std';
+        src: url('/static/fonts/CircularStd-Book.ttf') format('truetype');
+      }
+
+      /* @font-face {
           font-family: 'Circular Std';
           src: url('/static/fonts/CircularStd-MediumItalic.eot');
           src: local('Circular Std Medium Italic'), local('CircularStd-MediumItalic'),
@@ -77,7 +87,7 @@
             url('/static/fonts/CircularStd-BoldItalic.ttf') format('truetype');
         font-weight: 700;
         font-style: italic;
-      }
+      } */
     
 
     </style>
@@ -125,14 +135,15 @@
         z(p,function(a){h=a;u()});t(p,L(c,'"'+c.family+'",monospace'))})})};"object"===typeof module?module.exports=A:(window.FontFaceObserver=A,window.FontFaceObserver.prototype.load=A.prototype.load);}());
 
 
-        var circularStdRegular = new FontFaceObserver('Circular Std', { weight: 500 });        
-        var circularStdBold = new FontFaceObserver('Circular Std', { weight: 700 });        
+        var circularStdRegular = new FontFaceObserver('Circular Std');        
+        //var circularStdRegular = new FontFaceObserver('Circular Std', { weight: 500 });        
+        //var circularStdBold = new FontFaceObserver('Circular Std', { weight: 700 });        
 
         var fontLoadingTimeout = 5000;
 
         Promise.all([          
           circularStdRegular.load(null, fontLoadingTimeout),
-          circularStdBold.load(null, fontLoadingTimeout)          
+          //circularStdBold.load(null, fontLoadingTimeout)          
         ])
           .then(function () {
             document.documentElement.classList.add("fontsLoaded");
