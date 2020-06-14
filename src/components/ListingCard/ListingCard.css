@@ -131,7 +131,7 @@
   @apply --marketplaceH5FontStyles;
   color: var(--matterColorLight);
   display: block;
-  background: var(--marketplaceColorLight);
+  background: var(--matterColorBlue);
   text-align: center;
   border-radius: 5px;
   /* margin-left: auto;   */
