@@ -43,6 +43,7 @@ class FieldDateInputComponent extends Component {
       useMobileMargins,
       showErrorMessage,
       onChange,
+      alwaysOpen,
       ...rest
     } = this.props;
 
@@ -66,6 +67,7 @@ class FieldDateInputComponent extends Component {
 
     const { onBlur, onFocus, onChange: finalFormOnChange, type, ...restOfInput } = input;
     const inputProps = {
+      alwaysOpen: alwaysOpen,
       onBlur: input.onBlur,
       onFocus: input.onFocus,
       onChange: this.handleChange,
@@ -108,6 +110,7 @@ FieldDateInputComponent.defaultProps = {
   showLabelAsDisabled: false,
   placeholderText: null,
   onChange: null,
+  alwaysOpen: false,
 };
 
 FieldDateInputComponent.propTypes = {
@@ -122,6 +125,7 @@ FieldDateInputComponent.propTypes = {
   input: object.isRequired,
   meta: object.isRequired,
   onChange: func,
+  alwaysOpen: bool,
 };
 
 const FieldDateInput = props => {

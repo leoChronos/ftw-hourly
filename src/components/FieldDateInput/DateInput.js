@@ -135,6 +135,7 @@ class DateInputComponent extends Component {
   render() {
     /* eslint-disable no-unused-vars */
     const {
+      alwaysOpen,
       className,
       initialDate,
       intl,
@@ -182,7 +183,7 @@ class DateInputComponent extends Component {
       <div className={classes}>
         <SingleDatePicker
           {...datePickerProps}
-          focused={this.state.focused}
+          focused={alwaysOpen || this.state.focused}
           onFocusChange={this.onFocusChange}
           date={date}
           onDateChange={this.onDateChange}
@@ -198,6 +199,7 @@ class DateInputComponent extends Component {
 DateInputComponent.defaultProps = {
   className: null,
   useMobileMargins: false,
+  alwaysOpen: false,
   ...defaultProps,
 };
 
@@ -208,6 +210,7 @@ DateInputComponent.propTypes = {
   initialDate: instanceOf(Date),
   intl: intlShape.isRequired,
   name: string.isRequired,
+  alwaysOpen: bool,
 
   onChange: func.isRequired,
   onBlur: func.isRequired,

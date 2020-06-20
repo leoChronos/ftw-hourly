@@ -525,6 +525,7 @@ class FieldDateAndTimeInput extends Component {
               useMobileMargins
               showErrorMessage={false}
               validate={bookingDateRequired('Required')}
+              alwaysOpen={true}
             />
           </div>
         </div>
@@ -604,7 +605,7 @@ class FieldDateAndTimeInput extends Component {
           </div> */}
         </div>
         <div className={css.formRowAvailableSpots}>
-          {bookingStartDate ? (
+          {bookingStartDate && availableStartTimes.length > 0 ? (
             <div className={css.availableSpotsTitle}>
               <span>{getDailyNumberOfSpots(availableStartTimes)} spots available on {availableStartTimes[0].formatedDate.date2}</span>
             </div>
