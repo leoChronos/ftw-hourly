@@ -407,7 +407,7 @@ export class ListingPageComponent extends Component {
     const businessLogoImage = currentListing.images.find(x => x.id.uuid === businessLogoImageId);
 
     const oneOffExtendedData = publicData && publicData.oneOffExtendedData ? publicData.oneOffExtendedData : [];
-    const reocurringExtendedData = publicData && publicData.reocurringExtendedData ? publicData.reocurringExtendedData : [];
+    const reocurringExtendedData = publicData && publicData.reocurringExtendedData ? publicData.reocurringExtendedData : [];    
 
     const hostLink = (
       <NamedLink
@@ -466,7 +466,7 @@ export class ListingPageComponent extends Component {
                     richTitle={richTitle}                    
                     listingCategory={publicData ? publicData.category : null}
                     categoryConfig={categoryConfig}
-                    address={publicData ? publicData.location.address : null}
+                    address={publicData ? publicData.location.shortAddress : null}
                     reviews={reviews}
                     showContactUser={showContactUser}
                     onContactUser={this.onContactUser}

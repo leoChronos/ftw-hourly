@@ -154,6 +154,9 @@ export class SearchPageComponent extends Component {
       latlngBounds: ['bounds'],
     });
 
+
+    console.log(listings);
+
     const filters = this.filters();
 
     // urlQueryParams doesn't contain page specific url params
@@ -184,7 +187,7 @@ export class SearchPageComponent extends Component {
     // a child component
     const topbarClasses = this.state.isMobileModalOpen
       ? classNames(css.topbarBehindModal, css.topbar)
-      : css.topbar;
+      : css.topbar;    
 
     // N.B. openMobileMap button is sticky.
     // For some reason, stickyness doesn't work on Safari, if the element is <button>

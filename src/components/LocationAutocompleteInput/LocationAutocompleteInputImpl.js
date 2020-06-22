@@ -226,7 +226,7 @@ class LocationAutocompleteInputImpl extends Component {
       e.preventDefault();
       this.changeHighlight(DIRECTION_DOWN);
     } else if (e.keyCode === KEY_CODE_ENTER) {
-      const { selectedPlace } = currentValue(this.props);
+      const { selectedPlace } = currentValue(this.props);      
 
       if (!selectedPlace) {
         // Prevent form submit, try to select value instead.
@@ -306,7 +306,7 @@ class LocationAutocompleteInputImpl extends Component {
 
   // Select the prediction in the given item. This will fetch/read the
   // place details and set it as the selected place.
-  selectPrediction(prediction) {
+  selectPrediction(prediction) {    
     this.props.input.onChange({
       ...this.props.input,
       selectedPlace: null,
@@ -323,7 +323,7 @@ class LocationAutocompleteInputImpl extends Component {
         }
         this.setState({ fetchingPlaceDetails: false });
         this.props.input.onChange({
-          search: place.address,
+          search: place.address,          
           predictions: [],
           selectedPlace: place,
         });
@@ -338,7 +338,7 @@ class LocationAutocompleteInputImpl extends Component {
         });
       });
   }
-  selectItemIfNoneSelected() {
+  selectItemIfNoneSelected() {    
     if (this.state.fetchingPredictions) {
       // No need to select anything since prediction fetch is still going on
       return;
@@ -461,7 +461,7 @@ class LocationAutocompleteInputImpl extends Component {
     const { search } = currentValue(this.props);
     const { touched, valid } = meta || {};
     const isValid = valid && touched;
-    const predictions = this.currentPredictions();
+    const predictions = this.currentPredictions();    
 
     const handleOnFocus = e => {
       this.setState({ inputHasFocus: true });

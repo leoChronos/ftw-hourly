@@ -38,7 +38,7 @@ const initialState = {
 const resultIds = data => data.data.map(l => l.id);
 
 const listingPageReducer = (state = initialState, action = {}) => {
-  const { type, payload } = action;
+  const { type, payload } = action;  
   switch (type) {
     case SEARCH_LISTINGS_REQUEST:
       return {
@@ -231,7 +231,7 @@ export const searchListings = searchParams => (dispatch, getState, sdk) => {
     ...priceMaybe,
     ...availabilityMaybe,
     per_page: perPage,
-  };
+  };  
   
   return sdk.listings
     .query(params)

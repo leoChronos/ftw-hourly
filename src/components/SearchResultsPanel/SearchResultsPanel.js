@@ -12,7 +12,7 @@ const getCategory = (key) => {
 
 const SearchResultsPanel = props => {
   const { className, rootClassName, listings, currentPageListingsTimeSlots, pagination, search, setActiveListing } = props;
-  const classes = classNames(rootClassName || css.root, className);
+  const classes = classNames(rootClassName || css.root, className);  
 
   const paginationLinks =
     pagination && pagination.totalPages > 1 ? (

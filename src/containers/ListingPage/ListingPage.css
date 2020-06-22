@@ -349,6 +349,7 @@
   /* Font */
   @apply --marketplaceH1FontStyles;
   color: var(--matterColor);
+  font-weight: 400;
 
   /* Layout */
   width: 100%;
@@ -523,6 +524,8 @@
   /* Font */
   @apply --marketplaceH2FontStyles;
   color: var(--matterColorDark);
+  font-size: 20px;  
+  font-weight: 400;
 
   margin-top: 0;
   margin-bottom: 13px;
@@ -561,6 +564,9 @@
 
   /* Preserve newlines, but collapse other whitespace */
   white-space: pre-line;
+
+  font-size: 16px;
+  line-height: 26px;
 
   @media (--viewportMedium) {
     margin-top: 0;

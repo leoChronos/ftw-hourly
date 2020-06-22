@@ -128,13 +128,33 @@ class GeocoderMapbox {
   /**
    * Get the address text of the given prediction.
    */
-  getPredictionAddress(prediction) {
+  getPredictionAddress(prediction) {    
     if (prediction.predictionPlace) {
       // default prediction defined above
       return prediction.predictionPlace.address;
     }
     // prediction from Mapbox geocoding API
     return prediction.place_name;
+  }
+
+   /**
+   * Get the short address text of the given prediction.
+   */
+  getPredictionShortAddress(prediction) {
+    if (prediction.predictionPlace) {
+      // default prediction defined above
+      return prediction.predictionPlace.address;
+    }
+    
+    // prediction from Mapbox geocoding API
+    var locality = prediction.context.find(x => x.id.includes('locality'));
+    var place = prediction.context.find(x => x.id.includes('place'));
+    var region = prediction.context.find(x => x.id.includes('region'));
+    var country = prediction.context.find(x => x.id.includes('country'));
+
+    return locality && place ? `${locality.text}, ${place.text}`
+          : place && region ? `${place.text}, ${region.text}`
+          : region ? `${prediction.text}, ${region.text}` : prediction.place_name;
   }
 
   /**
@@ -161,6 +181,7 @@ class GeocoderMapbox {
 
     return Promise.resolve({
       address: this.getPredictionAddress(prediction),
+      shortAddress: this.getPredictionShortAddress(prediction),
       origin: placeOrigin(prediction),
       bounds: placeBounds(prediction),
     });
