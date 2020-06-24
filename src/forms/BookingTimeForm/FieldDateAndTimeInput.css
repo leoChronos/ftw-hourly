@@ -152,8 +152,8 @@
 
 .rootNextMonthIcon,
 .rootPreviousMonthIcon {
-  stroke: var(--matterColorLight);
-  fill: var(--matterColorLight);
+  stroke: var(--matterColor);
+  fill: var(--matterColor);
 }
 
 /**
