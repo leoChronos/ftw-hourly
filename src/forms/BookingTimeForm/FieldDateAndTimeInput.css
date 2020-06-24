@@ -263,9 +263,9 @@ CSS for available spots
 }
 
 .selectedClaim {
-  background-color: var(--matterColorLight) !important;
-  border: solid 1px var(--successColor);
-  color: var(--successColor);
+  background-color: var(--successColor) !important;
+  border: unset;
+  color: var(--matterColorLight);
 }
 
 .availableSpotDetailsTitle {
