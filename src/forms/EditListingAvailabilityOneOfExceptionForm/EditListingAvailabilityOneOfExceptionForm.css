@@ -84,6 +84,21 @@
 
 .fieldDateInput {
   @apply --EditListingDescriptionForm_formMargins;
+
+  flex-grow: 1;
+
+  & :global(.SingleDatePickerInput) {
+    width: 100%;
+    margin: 0;    
+  }
+
+  & :global(.SingleDatePicker_picker__directionLeft) {
+    width: 100vw;
+
+    @media (--viewportMedium) {
+      width: 100%;
+    }
+  }  
 }
 
 .termsLink {

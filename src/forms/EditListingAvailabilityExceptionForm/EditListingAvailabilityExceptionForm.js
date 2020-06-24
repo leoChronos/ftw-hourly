@@ -28,8 +28,7 @@ import {
 } from '../../util/dates';
 import { bookingDateRequired } from '../../util/validators';
 import {
-  FieldDateInput,
-  FieldRadioButton,
+  FieldDateInput,  
   FieldSelect,
   Form,
   IconArrowHead,
@@ -485,11 +484,7 @@ const EditListingAvailabilityExceptionForm = props => {
 
         const { updateListingError } = fetchErrors || {};
 
-        const placeholderTime = localizeAndFormatTime(
-          intl,
-          timeZone,
-          findNextBoundary(timeZone, TODAY)
-        );
+        const placeholderTime = "Choose the time";
 
         const submitInProgress = updateInProgress;
         const hasData =
@@ -588,7 +583,7 @@ const EditListingAvailabilityExceptionForm = props => {
                     {exceptionStartDay ? (
                       availableStartTimes.map(p => (
                         <option key={p.timestamp} value={p.timestamp}>
-                          {p.timeOfDay}
+                          {p.formatedDate.time}
                         </option>
                       ))
                     ) : (
@@ -640,7 +635,7 @@ const EditListingAvailabilityExceptionForm = props => {
                           p.timeOfDay === '00:00' && isLastIndex ? '24:00' : p.timeOfDay;
                         return (
                           <option key={p.timestamp} value={p.timestamp}>
-                            {timeOfDay}
+                            {p.formatedDate.time}
                           </option>
                         );
                       })

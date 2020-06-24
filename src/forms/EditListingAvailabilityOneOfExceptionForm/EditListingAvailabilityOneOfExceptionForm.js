@@ -525,7 +525,7 @@ const EditListingAvailabilityOneOfExceptionForm = props => {
               onNextMonthClick={() => handleMonthClick(nextMonthFn)}
               navNext={<Next currentMonth={currentMonth} timeZone={timeZone} />}
               navPrev={<Prev currentMonth={currentMonth} timeZone={timeZone} />}
-              useMobileMargins
+              useMobileMargins={false}
               showErrorMessage={false}
               validate={bookingDateRequired('Required')}
             />
@@ -535,8 +535,7 @@ const EditListingAvailabilityOneOfExceptionForm = props => {
               id={`${idPrefix}.exceptionStartTime`}
               label={intl.formatMessage({
                 id: 'EditListingAvailabilityOneOfExceptionForm.startTimeLabel',
-              })}              
-              //className={exceptionStartDate ? css.fieldSelect : css.fieldSelectDisabled}
+              })}
               className={css.selectField}
               selectClassName={exceptionStartDate ? css.select : css.selectDisabled}
               disabled={startTimeDisabled}
