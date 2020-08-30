@@ -1,0 +1,81 @@
+@import '../../marketplace.css';
+/* @import 'react-big-calendar/lib/sass/styles'; */
+
+.content {
+    @media (--viewportMedium) {
+      margin: 32px auto 0 auto;
+      width: 100%;
+      max-width: 564px;
+    }
+  
+    @media (--viewportLarge) {
+      margin: 0;
+    }
+  }
+  
+  .desktopTopbar,
+  .mobileTopbar {
+    box-shadow: none;
+  }
+  
+  .createListingLink{
+    /* Font */
+    @apply --marketplaceBodyFontStyles;
+    color: var(--attentionColor);
+    transition: var(--transitionStyleButton);
+    text-decoration-line: underline;
+  
+    margin-top: 0;
+    margin-bottom: 0;
+  
+    &:hover {
+      color: var(--marketplaceColor);
+      text-decoration: none;
+    }
+  
+    @media (--viewportMedium) {
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+  }
+  
+  .title {
+    hyphens: auto;
+    margin-top: 8px;
+    margin-bottom: 19px;
+  
+    @media (--viewportMedium) {
+      margin-bottom: 47px;
+    }
+  }
+  
+  .tabs {
+    display: none;
+  
+    @media (--viewportMedium) {
+      display: flex;
+      justify-content: flex-end;
+      height: 55px;
+      align-items: flex-end;
+      padding: 13px 24px 0 24px;
+    }
+  
+    @media (--viewportLarge) {
+      padding: 0 36px;
+    }
+  }
+  
+  .tab {
+    display: flex;
+    align-items: flex-end;
+    height: 100%;
+    margin-left: 16px;
+  
+    &:first-child {
+      margin-left: 0;
+    }
+  
+    @media (--viewportLarge) {
+      margin-left: 24px;
+    }
+  }

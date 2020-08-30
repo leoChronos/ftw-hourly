@@ -10,6 +10,7 @@ import {
   LandingPage,
   ListingPage,
   ManageListingsPage,
+  ManageYourSpotsPage,
   NotFoundPage,
   PasswordChangePage,
   PasswordRecoveryPage,
@@ -40,7 +41,8 @@ export const ACCOUNT_SETTINGS_PAGES = [
 
 export const LISTING_SETTINGS_PAGES = [
   'ManageListingsPage',
-  'StripePayoutPage',
+  'ManageYourSpotsPage',
+  'StripePayoutPage',  
 ];
 
 // https://en.wikipedia.org/wiki/Universally_unique_identifier#Nil_UUID
@@ -246,6 +248,14 @@ const routeConfiguration = () => {
       authPage: 'LoginPage',      
       component: props => <ManageListingsPage {...props} />,
       loadData: ManageListingsPage.loadData,
+    },
+    {
+      path: '/listings/your-spots',
+      name: 'ManageYourSpotsPage',
+      auth: true,
+      authPage: 'LoginPage',
+      component: props => <ManageYourSpotsPage {...props} />,
+      loadData: ManageYourSpotsPage.loadData,
     },
     {
       path: '/account/profile-settings',

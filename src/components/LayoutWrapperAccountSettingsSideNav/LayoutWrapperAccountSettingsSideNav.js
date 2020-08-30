@@ -104,10 +104,10 @@ const LayoutWrapperAccountSettingsSideNavComponent = props => {
     },
     // {
     //   text: <FormattedMessage id="LayoutWrapperAccountSettingsSideNav.yourSpotsTabTitle" />,
-    //   selected: currentTab === 'ManageListingsPage',
-    //   id: 'ManageListingsPageTab',
+    //   selected: currentTab === 'ManageYourSpotsPage',
+    //   id: 'ManageYourSpotsPageTab',
     //   linkProps: {
-    //     name: 'ManageListingsPage',
+    //     name: 'ManageYourSpotsPage',
     //   },
     // },
     // {

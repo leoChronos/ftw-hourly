@@ -33,7 +33,7 @@ import {
         isBusiness,                         
         scrollingDisabled,     
         intl,   
-      } = this.props;      
+      } = this.props;
 
       if (isBusiness) {
         return <NamedRedirect name="ManageListingsPage"/>;
@@ -93,7 +93,9 @@ import {
     }
 }
 
-ListBusinessPageComponent.defaultProps = {    
+ListBusinessPageComponent.defaultProps = {   
+    isBusiness: false,
+    scrollingDisabled: false, 
     currentUser: null,
 };
 
