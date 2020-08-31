@@ -137,12 +137,12 @@ const TopbarDesktop = props => {
         <span className={css.link}>
           <FormattedMessage id="TopbarDesktop.forBusiness" />
         </span>
-      </ExternalLink>
-      <NamedLink name="SearchPage" className={classNames(css.menuLink, css.lastMenuLink)}>
+      </ExternalLink>      
+      <ExternalLink href={config.linkGoodSpotNeedHelp} className={classNames(css.menuLink, css.lastMenuLink)}>
         <span className={css.link}>
-          <FormattedMessage id="TopbarDesktop.invite" />
+          <FormattedMessage id="TopbarDesktop.needHelp" />
         </span>
-      </NamedLink>
+      </ExternalLink>
     </>
   );
 

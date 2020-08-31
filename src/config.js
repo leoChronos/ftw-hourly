@@ -88,6 +88,9 @@ const canonicalRootURL = process.env.REACT_APP_CANONICAL_ROOT_URL;
 // External link to Good Spot Partners
 const linkGoodSpotPartners = 'https://partners.goodspot.co.nz/partners/';
 
+// External link to Good Spot Need Help
+const linkGoodSpotNeedHelp = 'https://help.goodspot.co.nz/';
+
 // Site title is needed in meta tags (bots and social media sharing reads those)
 const siteTitle = 'Good Spot';
 
@@ -215,6 +218,7 @@ const config = {
     streetAddress,
   },
   linkGoodSpotPartners,
+  linkGoodSpotNeedHelp,
   siteTitle,
   siteFacebookPage,
   siteInstagramPage,

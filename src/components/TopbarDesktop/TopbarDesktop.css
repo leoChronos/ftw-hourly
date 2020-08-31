@@ -105,9 +105,9 @@
   height: 100%;
   min-width: 150px;
   margin-right: 24px;
-  border-left-style: solid;
+  /* border-left-style: solid;
   border-left-width: 1px;
-  border-left-color: var(--matterColorNegative);
+  border-left-color: var(--matterColorNegative); */
 
   @media (--viewportLarge) {
     padding-left: 0;
@@ -285,7 +285,7 @@
 
 .signup {
   color: var(--matterColorLight);
-  background-color: var(--matterColorGoodSpotOrange);  
+  background-color: var(--successColor);  
   text-align: center;  
   /* margin-top: 20px;
   padding: 5px 20px; */
@@ -299,7 +299,7 @@
   top: -10px;
 
   &:hover{
-    background-color: var(--attentionColor);
+    background-color: var(--successColorDark);
   }
 }
 

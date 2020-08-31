@@ -37,9 +37,9 @@
 
   /* ================ Colors ================ */
 
-  --marketplaceColor: #f35a2e;
-  --marketplaceColorLight: #ffaa00;
-  --marketplaceColorDark: #DA5129;
+  --marketplaceColor: #1B1950;
+  --marketplaceColorLight: #00407E;
+  --marketplaceColorDark: #0068A2;
 
   /* Used with inline CSS SVGs */
   --marketplaceColorEncoded: %230095b3;
