@@ -1,4 +1,5 @@
 import React from 'react';
+import classNames from 'classnames';
 import { bool, object } from 'prop-types';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
@@ -45,10 +46,11 @@ export const LandingPageComponent = props => {
 
   const searchPageLink = (
     <NamedLink
+      className={css.findSpotsLink}
       name="SearchPage"
       to={{ search: 'address=New%20Zealand&bounds=-33.8587230028189%2C178.67686298258%2C-47.3898039959898%2C166.326152004449' }}    
     >
-      <span>Find Spots</span>
+      <span>Explore Spots</span>
     </NamedLink>
   );
 
@@ -80,8 +82,11 @@ export const LandingPageComponent = props => {
             <li className={css.section}>
               <div className={css.sectionContent}>                
                 <div className={css.findSpotArea}>
-                  <div className={css.findSpotsTitle}>              
-                    <FormattedMessage id="LandingPage.getDiscountTitle" values={{searchPageLink}}/>
+                  <div>
+                    <div className={css.findSpotsTitle}><FormattedMessage id="LandingPage.getDiscountTitle"/></div>
+                    <div>{searchPageLink}</div>                    
+                  </div>
+                  <div className={css.findSpotImg}>
                   </div>
                 </div>
               </div>
@@ -92,32 +97,36 @@ export const LandingPageComponent = props => {
               </div>
             </li>
             <li className={css.section}>
-              <div className={css.sectionContent}>
-                <div className={css.supportArea}>
-                  <div>
-                    <h1 className={css.supportTittle}>Support your local businesses and get rewarded in return.</h1>
-                    <h2 className={css.supportSubTittle}>Everyday hundreds of businesses upload discounted off-peak spots for you to book</h2>
-                    <NamedLink name="SearchPage" className={css.supportLink}>
-                      <span>Find Spots</span>
-                    </NamedLink>
+              <div className={css.sectionContent}>       
+                <div className={css.howItWorksHeader}>
+                  <h1 className={css.howItWorksTittle}>How you can support local businesses and get rewarded in return.</h1>
+                  <h2 className={css.howItWorksSubTittle}>Everyday hundreds of businesses upload discounted off-peak spots for you to book and enjoy.</h2>
+                </div>
+                <div className={css.howItWorksSteps}>                  
+                  <div className={classNames(css.howItWorksFind, css.howItWorksDetails)}>
+                    <div></div>
+                    <div>
+                      <h1>Find discounted off-peak spots</h1>
+                      <h2>Our partners offer discounted off-peak spots up to 90% off for you to book.</h2>
+                    </div>      
                   </div>
+                  <div className={classNames(css.howItWorksClaim, css.howItWorksDetails)}>
+                    <div></div>
+                    <div>
+                      <h1>Quickly claim to secure your spot</h1>
+                      <h2>Search from thousands of offers then quickly secure your spot with a small deposit.</h2>
+                    </div>      
+                  </div>
+                  <div className={classNames(css.howItWorksReceive, css.howItWorksDetails)}>
+                    <div></div>
+                    <div>
+                      <h1>Receive a discounted booking ref</h1>
+                      <h2>And that's it! The discounted is all yours. We'll send you an email with your booking ref.</h2>
+                    </div>      
+                  </div>                  
                 </div>
               </div>
-            </li>
-            <li className={css.section}>
-              <div className={css.sectionContent}>
-                <div className={css.howItWorksArea}>
-                  <NamedLink name="SearchPage" className={css.howItWorksLink}>
-                    <span>How GoodSpot Works</span>
-                  </NamedLink>
-                </div>                
-              </div>
-            </li>
-            <li className={css.section}>
-              <div className={css.sectionContent}>
-                <SectionGoodSpotForBusiness/>  
-              </div>
-            </li>
+            </li>           
           </ul>
           <SectionOurStory />
         </LayoutWrapperMain>

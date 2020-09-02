@@ -108,31 +108,130 @@
   margin-top: 3vh;
 }
 
-.supportArea {
+.howItWorksHeader {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
 
   @media (--viewportMedium) {
-    height: 450px;
+    margin-top: 150px;
+    height: 250px;
   }
 }
 
-.supportTittle {
-  @apply --marketplaceH1FontStyles;  
+.howItWorksTittle {
+  @apply --marketplaceH1FontStyles;
+  color: var(--marketplaceColor);
   font-size: 35px;
   font-weight: 400;
   letter-spacing: 0px;
   text-align: center;
 }
 
-.supportSubTittle {
+.howItWorksSubTittle {
   @apply --marketplaceH2FontStyles;
   color: var(--matterColorAnti);
   font-size: 20px;
   font-weight: 400;
   letter-spacing: 0px;
   text-align: center;
+  margin-top: 0px;
+}
+
+.howItWorksSteps{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  @media (--viewportMedium) {    
+    flex-direction: row;
+    margin-bottom: 200px;
+  }
+}
+
+.howItWorksDetails:nth-of-type(2) {  
+  @media (--viewportMedium) {    
+    padding: 0 30px;
+  }    
+}
+
+.howItWorksDetails h1{
+  @apply --marketplaceH1FontStyles;
+  font-size: 22px;  
+  letter-spacing: 0px;
+  text-align: center;  
+}
+
+.howItWorksDetails h2{
+  @apply --marketplaceH2FontStyles;
+  font-size: 18px;  
+  letter-spacing: 0px;
+  text-align: center;
+  color: var(--matterColorAnti);  
+}
+
+.howItWorksFind div:first-of-type {
+  background: url('images/GoodSpot-HowItWorks-1.png');
+  background-repeat:no-repeat;
+  background-size: contain;  
+  background-position: center center;
+
+  border-radius: 5px;  
+  width: 100%;
+  height: 100%;  
+
+  min-height: 300px;
+
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  flex: row;
+
+  @media (--viewportMedium) {    
+    min-height: 300px;
+  }    
+}
+
+.howItWorksClaim div:first-of-type {
+  background: url('images/GoodSpot-Home-Image.png');
+  background-repeat:no-repeat;
+  background-size: contain;  
+  background-position: center center;
+
+  border-radius: 5px;  
+  width: 100%;
+  height: 100%;  
+
+  min-height: 300px;
+
+  justify-content: center;
+  align-items: center;
+
+  @media (--viewportMedium) {    
+    min-height: 300px;
+  }    
+}
+
+.howItWorksReceive div:first-of-type {
+  background: url('images/GoodSpot-HowItWorks-3w.png');
+  background-repeat:no-repeat;
+  background-size: contain;  
+  background-position: center center;
+
+  border-radius: 5px;  
+  width: 100%;
+  height: 100%;  
+
+  min-height: 300px;
+
+  justify-content: center;
+  align-items: center;
+
+  @media (--viewportMedium) {    
+    min-height: 300px;
+  }  
 }
 
 .supportLink {
@@ -162,38 +261,66 @@
   }
 }
 
-.howItWorksArea {
-  background: url('images/How-goodspot-works-home-page-image.png');
+.findSpotArea{
+  /* display: flex;
+  align-items: center; */
+
+  @media (--viewportMedium) {
+    display: flex;    
+    flex-wrap: nowrap;
+    align-items: center;
+    height: 750px;
+  }
+}
+
+.findSpotImg {
+  background: url('images/GoodSpot-Hero-Image.png');
   background-repeat:no-repeat;
-  background-size: contain;
+  background-size: contain;  
   background-position: center center;
   
-  border-radius: 5px;
-  display: flex;
-  flex-direction: column;
+  border-radius: 5px;  
   width: 100%;
-  height: 100%;
-  min-height: 350px;    
+  height: 100%;  
+
+  min-height: 300px;
 
   justify-content: center;
   align-items: center;
 
-  @media (--viewportMedium) {
-    min-height: 550px;  
+  @media (--viewportMedium) {    
+    flex-basis: 60%;
+    min-height: 440px;      
   }  
 }
 
-.howItWorksLink {
+.findSpotsTitle {
+  @apply --marketplaceH1FontStyles;  
+  color: var(--marketplaceColor);
+  font-size: 45px;
+  font-weight: 800;
+  line-height: 57px;
+  letter-spacing: 1px;
+
+  margin-top: 0;
+  max-width: 750px;
+
+  @media (--viewportMedium) {    
+    margin-bottom: 50px;
+  }
+}
+
+.findSpotsLink {
   @apply --marketplaceH4FontStyles;
-  color: var(--matterColorLight);  
-  background: var(--matterColorGoodSpotOrange);
+  color: var(--marketplaceColor);  
+  background: var(--matterColorNegative);
   text-align: center;
   border-radius: 8px;
   /* max-width: 250px; */
-  /* padding: 15px 35px; */
+  padding: 20px 50px;
   text-decoration: none;
-  letter-spacing: -1px;
-  font-weight: 500;
+  letter-spacing: 0px;
+  font-weight: 800;
 
   width: 200px;
   height: 50px;
@@ -201,49 +328,6 @@
 
   &:hover {
     text-decoration: none;
-    background: var(--attentionColor);
-  }
-
-  @media (--viewportMedium) {
-    @apply --marketplaceH3FontStyles;
-    letter-spacing: -1px;
-    font-weight: 500;
-    line-height: 70px;
-    /* padding: 20px 45px; */
-    width: 350px;
-    height: 70px;
+    background: var(--matterColorAnti);    
   }  
-}
-
-.findSpotArea{
-  display: flex;
-  align-items: center;
-
-
-  @media (--viewportMedium) {
-    height: 450px;
-  }
-}
-
-.findSpotsTitle {
-  @apply --marketplaceH1FontStyles;  
-  font-size: 45px;
-  font-weight: 500;
-  line-height: 57px;
-  letter-spacing: -1px;
-
-  margin-top: 0;
-  max-width: 750px;
-
-  @media (--viewportMedium) {    
-  }
-}
-
-.findSpotsTitle a {
-  text-decoration: underline;  
-  color: var(--matterColor);
-
-  &:hover {
-    text-decoration: unset;
-  }
 }
