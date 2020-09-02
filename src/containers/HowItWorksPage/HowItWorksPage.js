@@ -6,6 +6,7 @@ import {
   LayoutWrapperTopbar,
   LayoutWrapperMain,
   LayoutWrapperFooter,
+  SectionOurStory,
   Footer,  
 } from '../../components';
 
@@ -28,7 +29,8 @@ const HowItWorksPage = () => {
           <TopbarContainer />
         </LayoutWrapperTopbar>
 
-        <LayoutWrapperMain className={css.staticPageWrapper}>
+        <LayoutWrapperMain>
+        <div className={css.staticPageWrapper}>
           <h1 className={css.pageTitle}>Here's how simple it is to claim discounted off-peak spots.</h1>
           <div className={css.pageSteps}>
             <div className={css.step}>
@@ -60,6 +62,8 @@ const HowItWorksPage = () => {
                 </div>
             </div>
           </div>
+          </div>
+          <SectionOurStory />
         </LayoutWrapperMain>
         <LayoutWrapperFooter>
           <Footer />
