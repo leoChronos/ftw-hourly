@@ -128,7 +128,7 @@ const TopbarDesktop = props => {
           <FormattedMessage id="TopbarDesktop.explore" />
         </span>
       </NamedLink>
-      <NamedLink name="SearchPage" className={css.menuLink}>
+      <NamedLink name="HowItWorksPage" className={css.menuLink}>
         <span className={css.link}>
           <FormattedMessage id="TopbarDesktop.howItWorks" />
         </span>

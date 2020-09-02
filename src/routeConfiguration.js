@@ -1,6 +1,7 @@
 import React from 'react';
 import {
   AboutPage,
+  HowItWorksPage,
   AuthenticationPage,
   CheckoutPage,
   ContactDetailsPage,
@@ -70,6 +71,11 @@ const routeConfiguration = () => {
       path: '/about',
       name: 'AboutPage',
       component: AboutPage,
+    },
+    {
+      path: '/how-it-works',
+      name: 'HowItWorksPage',
+      component: HowItWorksPage,
     },
     {
       path: '/s',

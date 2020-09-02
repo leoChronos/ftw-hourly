@@ -173,7 +173,7 @@
 }
 
 .howItWorksFind div:first-of-type {
-  background: url('images/GoodSpot-HowItWorks-1.png');
+  background: url('../../assets/GoodSpot-HowItWorks-1.png');
   background-repeat:no-repeat;
   background-size: contain;  
   background-position: center center;
@@ -195,7 +195,7 @@
 }
 
 .howItWorksClaim div:first-of-type {
-  background: url('images/GoodSpot-Home-Image.png');
+  background: url('../../assets/GoodSpot-Home-Image.png');
   background-repeat:no-repeat;
   background-size: contain;  
   background-position: center center;
@@ -215,7 +215,7 @@
 }
 
 .howItWorksReceive div:first-of-type {
-  background: url('images/GoodSpot-HowItWorks-3w.png');
+  background: url('../../assets/GoodSpot-HowItWorks-3w.png');
   background-repeat:no-repeat;
   background-size: contain;  
   background-position: center center;
@@ -274,7 +274,7 @@
 }
 
 .findSpotImg {
-  background: url('images/GoodSpot-Hero-Image.png');
+  background: url('../../assets/GoodSpot-Home-Image.png');
   background-repeat:no-repeat;
   background-size: contain;  
   background-position: center center;
