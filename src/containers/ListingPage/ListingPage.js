@@ -180,7 +180,7 @@ export class ListingPageComponent extends Component {
 
       onUpdateUserFavorites(userFavoritesListingsToUpdate)
         .then(response =>{
-          console.log(response);
+          //console.log(response);
         })
         .catch(() =>{
           // Ignore, error handling in duck file
@@ -276,6 +276,7 @@ export class ListingPageComponent extends Component {
       title = '',
       createdAt = null,
       publicData,
+      metadata,
     } = currentListing.attributes;   
 
     const richTitle = (
@@ -409,6 +410,9 @@ export class ListingPageComponent extends Component {
     const oneOffExtendedData = publicData && publicData.oneOffExtendedData ? publicData.oneOffExtendedData : [];
     const reocurringExtendedData = publicData && publicData.reocurringExtendedData ? publicData.reocurringExtendedData : [];    
 
+    // isRecommended
+    const isRecommended = (metadata && metadata.isRecommended);
+
     const hostLink = (
       <NamedLink
         className={css.authorNameLink}
@@ -473,6 +477,7 @@ export class ListingPageComponent extends Component {
                     isFavoriteListing={isFavoriteListing}
                     onSubmitFavorite={this.onSubmitFavorite}
                     userFavoritesListingsInProgress={userFavoritesListingsInProgress}
+                    isRecommended={isRecommended}
                   />
                   <SectionDescriptionMaybe description={description} />
                   <SectionKeyInformationMaybe 

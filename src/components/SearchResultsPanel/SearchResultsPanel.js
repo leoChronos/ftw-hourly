@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import sortBy from 'lodash/sortBy';
 import { propTypes } from '../../util/types';
 import { ListingCard, PaginationLinks, NamedLink } from '../../components';
 import config from '../../config';
@@ -38,7 +39,11 @@ const SearchResultsPanel = props => {
     return l && currentPageListingsTimeSlots ? currentPageListingsTimeSlots[l.id.uuid] || null : null;
   }
 
-  const categoryResultList = [... new Set(listings.map(x => x.attributes.publicData.category))];  
+  const categoryResultList = sortBy([... new Set(listings.map(x => x.attributes.publicData.category))], [function(o) {return o;}]);
+
+  const orderedListings = sortBy(listings, [function(l) { 
+    return !(l.attributes.metadata && l.attributes.metadata.isRecommended);
+  }]);  
 
   return (
     <div className={classes}>
@@ -48,7 +53,7 @@ const SearchResultsPanel = props => {
             <span>{getCategory(c).label}</span>
           </div>
           <div className={css.listingCards}>
-            {listings.filter(x => x.attributes.publicData.category === c).map(l => (
+            {orderedListings.filter(x => x.attributes.publicData.category === c).map(l => (
               <ListingCard
                 className={css.listingCard}
                 key={l.id.uuid}

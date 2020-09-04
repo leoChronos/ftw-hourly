@@ -1,6 +1,5 @@
 import React from 'react';
 import { ReviewRating, InlineTextButton, IconEnquiry, IconSpinner } from '../../components';
-import { FormattedMessage } from '../../util/reactIntl';
 import classNames from 'classnames';
 import meanBy from 'lodash/meanBy';
 import { nightsBetween } from './../../util/dates';
@@ -23,10 +22,10 @@ const SectionHeading = props => {
     onContactUser,    
     onSubmitFavorite,
     isFavoriteListing,
-    userFavoritesListingsInProgress
+    userFavoritesListingsInProgress,
+    isRecommended
   } = props;
-
-  const isRecommended = true;
+  
   const isNew = nightsBetween(createdAt, new Date()) < 7;  
   const category = getcategory(categoryConfig, listingCategory);  
   const showcategory = category && !category.hideFromListingInfo;  

@@ -2,6 +2,10 @@
  * Marketplace specific configuration.
  */
 
+export const isRecommended = [
+  { key: 'true', label: 'Recommended' },
+]
+
 export const categories = [
   { key: '', label: 'None', hideFromFilters: true, hideFromListingInfo: true },
   { key: 'bar_dining', label: 'Bar & Dining' },

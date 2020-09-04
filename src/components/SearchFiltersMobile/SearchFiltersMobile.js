@@ -181,6 +181,7 @@ class SearchFiltersMobileComponent extends Component {
       categoryFilter,
       dateRangeFilter,
       keywordFilter,
+      isRecommendedFilter,
       intl,
     } = this.props;
 
@@ -218,6 +219,20 @@ class SearchFiltersMobileComponent extends Component {
         intl={intl}
       />
     ) : null;    
+
+    const initialIsRecommended = isRecommendedFilter ? this.initialValue(isRecommendedFilter.paramName) : null;
+
+    const isRecommendedFilterElement = isRecommendedFilter ? (
+      <SelectSingleFilter
+        urlParam={isRecommendedFilter.paramName}
+        label="Recommended"
+        onSelect={this.handleSelectSingle}
+        liveEdit
+        options={isRecommendedFilter.options}
+        initialValue={initialIsRecommended}
+        intl={intl}        
+      />
+    ) : null; 
 
     const initialDateRange = this.initialDateRangeValue(dateRangeFilter.paramName);
 
@@ -297,6 +312,7 @@ class SearchFiltersMobileComponent extends Component {
           </div>
           {this.state.isFiltersOpenOnMobile ? (
             <div className={css.filtersWrapper}>
+              {isRecommendedFilterElement}
               {keywordFilterElement}
               {categoryFilterElement}
               {dateRangeFilterElement}
@@ -324,6 +340,7 @@ SearchFiltersMobileComponent.defaultProps = {
   filterParamNames: [],
   categoryFilter: null,    
   dateRangeFilter: null,
+  isRecommendedFilter: null,
 };
 
 SearchFiltersMobileComponent.propTypes = {
@@ -343,6 +360,7 @@ SearchFiltersMobileComponent.propTypes = {
   filterParamNames: array,
   categoriesFilter: propTypes.filterConfig,
   dateRangeFilter: propTypes.filterConfig,
+  isRecommendedFilter: propTypes.filterConfig,
 
   // from injectIntl
   intl: intlShape.isRequired,

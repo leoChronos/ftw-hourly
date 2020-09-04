@@ -53,7 +53,8 @@ export class SearchPageComponent extends Component {
 
   filters() {
     const {
-      categories,            
+      categories,
+      isRecommended,            
       dateRangeFilterConfig,
       keywordFilterConfig,
     } = this.props;
@@ -64,6 +65,10 @@ export class SearchPageComponent extends Component {
     // https://www.sharetribe.com/docs/references/extended-data/#data-schema
 
     return {
+      isRecommendedFilter: {
+        paramName: 'meta_isRecommended',
+        options: isRecommended,
+      },
       categoryFilter: {
         paramName: 'pub_category',
         options: categories.filter(x => !x.hideFromFilters),
@@ -155,8 +160,6 @@ export class SearchPageComponent extends Component {
     });
 
 
-    console.log(listings);
-
     const filters = this.filters();
 
     // urlQueryParams doesn't contain page specific url params
@@ -225,6 +228,7 @@ export class SearchPageComponent extends Component {
               dateRangeFilter: filters.dateRangeFilter,
               keywordFilter: filters.keywordFilter,
               categoryFilter: filters.categoryFilter,
+              isRecommendedFilter: filters.isRecommendedFilter,
             }}
             secondaryFilters={{              
             }}
@@ -271,6 +275,7 @@ SearchPageComponent.defaultProps = {
   searchParams: {},
   tab: 'listings',
   categories: config.custom.categories,    
+  isRecommended: config.custom.isRecommended,
   dateRangeFilterConfig: config.custom.dateRangeFilterConfig,
   keywordFilterConfig: config.custom.keywordFilterConfig,
   activeListingId: null,
@@ -289,6 +294,7 @@ SearchPageComponent.propTypes = {
   searchParams: object,
   tab: oneOf(['filters', 'listings', 'map']).isRequired,
   categories: array,  
+  isRecommended: array,
   dateRangeFilterConfig: shape({ active: bool.isRequired }),
 
   // from withRouter
@@ -368,7 +374,7 @@ SearchPage.loadData = (params, search) => {
     page,
     perPage: RESULT_PAGE_SIZE,
     include: ['author', 'images'],
-    'fields.listing': ['title', 'geolocation', 'publicData.category', 'publicData.location'],
+    'fields.listing': ['title', 'geolocation', 'publicData.category', 'publicData.location', 'metadata.isRecommended'],
     //'fields.user': ['profile.displayName', 'profile.abbreviatedName'],
     'fields.image': ['variants.landscape-crop', 'variants.landscape-crop2x'],
     'limit.images': 1,

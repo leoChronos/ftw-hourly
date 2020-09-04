@@ -49,6 +49,7 @@ const SearchFiltersComponent = props => {
     dateRangeFilter,
     keywordFilter,
     categoryFilter,
+    isRecommendedFilter,
     isSearchFiltersPanelOpen,
     toggleSearchFiltersPanel,
     searchFiltersPanelSelectedCount,
@@ -68,6 +69,8 @@ const SearchFiltersComponent = props => {
   const initialKeyword = keywordFilter ? initialValue(urlQueryParams, keywordFilter.paramName) : null;
 
   const initialCategory = categoryFilter ? initialValue(urlQueryParams, categoryFilter.paramName) : null;
+
+  const initialIsRecommended = isRecommendedFilter ? initialValue(urlQueryParams, isRecommendedFilter.paramName) : null;
 
   const isKeywordFilterActive = !!initialKeyword;
 
@@ -144,7 +147,20 @@ const SearchFiltersComponent = props => {
         intl={intl}
         showAsPopup={true}
       />
-    ) : null;    
+    ) : null;     
+    
+    const isRecommendedFilterElement = isRecommendedFilter ? (
+      <SelectSingleFilter
+        urlParam={isRecommendedFilter.paramName}
+        label="Recommended"
+        onSelect={handleSelectSingle}
+        liveEdit
+        options={isRecommendedFilter.options}
+        initialValue={initialIsRecommended}
+        intl={intl}
+        showAsPopup={true}
+      />
+    ) : null; 
 
   // const toggleSearchFiltersPanelButtonClasses =
   //   isSearchFiltersPanelOpen || searchFiltersPanelSelectedCount > 0
@@ -196,9 +212,10 @@ const SearchFiltersComponent = props => {
       </div>
 
       <div className={css.filters}>        
+        {isRecommendedFilterElement}
         {categoryFilterElement}
         {dateRangeFilterElement}
-        {keywordFilterElement}
+        {keywordFilterElement}        
         {/* {toggleSearchFiltersPanelButton} */}
       </div>
 
@@ -224,6 +241,7 @@ SearchFiltersComponent.defaultProps = {
   searchingInProgress: false,  
   dateRangeFilter: null,
   categoryFilter: null,
+  isRecommendedFilter: null,
   isSearchFiltersPanelOpen: false,
   toggleSearchFiltersPanel: null,
   searchFiltersPanelSelectedCount: 0,
@@ -239,6 +257,7 @@ SearchFiltersComponent.propTypes = {
   onManageDisableScrolling: func.isRequired,  
   dateRangeFilter: propTypes.filterConfig,
   categoryFilter: propTypes.filterConfig,
+  isRecommendedFilter: propTypes.filterConfig,
   isSearchFiltersPanelOpen: bool,
   toggleSearchFiltersPanel: func,
   searchFiltersPanelSelectedCount: number,
