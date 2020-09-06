@@ -1,12 +1,12 @@
 import React from 'react';
-import { FormattedMessage, FormattedDate } from '../../util/reactIntl';
+import { FormattedDate } from '../../util/reactIntl';
 import moment from 'moment';
 import { LINE_ITEM_NIGHT, LINE_ITEM_UNITS, DATE_TYPE_DATE, propTypes } from '../../util/types';
 
 import css from './BookingBreakdown.css';
 
 const BookingPeriod = props => {
-  const { startDate, endDate, dateType, timeZone } = props;
+  const { startDate, dateType, timeZone } = props;
 
   const timeFormatOptions =
     dateType === DATE_TYPE_DATE
@@ -20,11 +20,11 @@ const BookingPeriod = props => {
           day: 'numeric',
         };
 
-  const dateFormatOptions = {
-    weekday: 'long',
-    month: 'long',
-    day: 'numeric',    
-  };
+  // const dateFormatOptions = {
+  //   weekday: 'long',
+  //   month: 'long',
+  //   day: 'numeric',    
+  // };
 
   const timeZoneMaybe = timeZone ? { timeZone } : null;
 

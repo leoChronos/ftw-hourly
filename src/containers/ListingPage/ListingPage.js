@@ -25,15 +25,14 @@ import {
   ensureUser,
   userDisplayNameAsString,
 } from '../../util/data';
-import { timestampToDate, calculateQuantityFromHours } from '../../util/dates';
+import { timestampToDate } from '../../util/dates';
 import { richText } from '../../util/richText';
 import { getMarketplaceEntities } from '../../ducks/marketplaceData.duck';
 import { manageDisableScrolling, isScrollingDisabled } from '../../ducks/UI.duck';
 import { initializeCardPaymentData } from '../../ducks/stripe.duck.js';
 import {
   Page,
-  Modal,
-  NamedLink,
+  Modal,  
   NamedRedirect,
   LayoutSingleColumn,
   LayoutWrapperTopbar,
@@ -413,16 +412,6 @@ export class ListingPageComponent extends Component {
     // isRecommended
     const isRecommended = (metadata && metadata.isRecommended);
 
-    const hostLink = (
-      <NamedLink
-        className={css.authorNameLink}
-        name="ListingPage"
-        params={params}
-        to={{ hash: '#host' }}
-      >
-        {authorDisplayName}
-      </NamedLink>
-    );
     return (
       <Page
         title={schemaTitle}

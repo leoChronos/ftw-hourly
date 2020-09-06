@@ -13,8 +13,7 @@ import {
   timeOfDayFromTimeZoneToLocal,
   dateIsAfter,
   findNextBoundary,
-  timestampToDate,
-  localizeAndFormatTime,
+  timestampToDate,  
   monthIdStringInTimeZone,
   getMonthStartInTimeZone,
   nextMonthFn,
@@ -22,7 +21,7 @@ import {
 } from '../../util/dates';
 import { propTypes } from '../../util/types';
 import { bookingDateRequired } from '../../util/validators';
-import { FieldDateInput, FieldSelect, Button } from '../../components';
+import { FieldDateInput, Button } from '../../components';
 import sumBy from 'lodash/sumBy';
 
 import NextMonthIcon from './NextMonthIcon';
@@ -314,7 +313,7 @@ class FieldDateAndTimeInput extends Component {
     const timeSlots = getMonthlyTimeSlots(monthlyTimeSlots, this.state.currentMonth, timeZone);
     const timeSlotsOnSelectedDate = getTimeSlots(timeSlots, startDate, timeZone);    
 
-    const { startTime, endDate, endTime } = getAllTimeValues(
+    const { endDate } = getAllTimeValues(
       intl,
       timeZone,
       timeSlotsOnSelectedDate,
@@ -419,9 +418,9 @@ class FieldDateAndTimeInput extends Component {
     const bookingEndDate =
       values.bookingEndDate && values.bookingEndDate.date ? values.bookingEndDate.date : null;
 
-    const startTimeDisabled = !bookingStartDate;
+    //const startTimeDisabled = !bookingStartDate;
     const endDateDisabled = !bookingStartDate || !bookingStartTime;
-    const endTimeDisabled = !bookingStartDate || !bookingStartTime || !bookingEndDate;
+    //const endTimeDisabled = !bookingStartDate || !bookingStartTime || !bookingEndDate;
 
     const timeSlotsOnSelectedMonth = getMonthlyTimeSlots(
       monthlyTimeSlots,
@@ -451,7 +450,7 @@ class FieldDateAndTimeInput extends Component {
         ? availableStartTimes[0].timestamp
         : null;
 
-    const { startTime, endDate, selectedTimeSlot } = getAllTimeValues(
+    const { selectedTimeSlot } = getAllTimeValues(
       intl,
       timeZone,
       timeSlotsOnSelectedDate,
@@ -460,13 +459,13 @@ class FieldDateAndTimeInput extends Component {
       bookingEndDate || bookingStartDate
     );
 
-    const availableEndTimes = getAvailableEndTimes(
-      intl,
-      timeZone,
-      bookingStartTime || startTime,
-      bookingEndDate || endDate,
-      selectedTimeSlot
-    );
+    // const availableEndTimes = getAvailableEndTimes(
+    //   intl,
+    //   timeZone,
+    //   bookingStartTime || startTime,
+    //   bookingEndDate || endDate,
+    //   selectedTimeSlot
+    // );
 
     const isDayBlocked = timeSlotsOnSelectedMonth
       ? day =>
@@ -481,14 +480,14 @@ class FieldDateAndTimeInput extends Component {
       : () => false;
     
 
-    const placeholderTime = localizeAndFormatTime(
-      intl,
-      timeZone,
-      findNextBoundary(timeZone, TODAY)
-    );
+    // const placeholderTime = localizeAndFormatTime(
+    //   intl,
+    //   timeZone,
+    //   findNextBoundary(timeZone, TODAY)
+    // );
 
-    const startTimeLabel = intl.formatMessage({ id: 'FieldDateTimeInput.startTime' });
-    const endTimeLabel = intl.formatMessage({ id: 'FieldDateTimeInput.endTime' });
+    //const startTimeLabel = intl.formatMessage({ id: 'FieldDateTimeInput.startTime' });
+    //const endTimeLabel = intl.formatMessage({ id: 'FieldDateTimeInput.endTime' });
     /**
      * NOTE: In this template the field for the end date is hidden by default.
      * If you want to enable longer booking periods, showing the end date in the form requires some code changes:

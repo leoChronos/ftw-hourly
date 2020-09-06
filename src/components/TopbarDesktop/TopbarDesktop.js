@@ -13,11 +13,11 @@ import {
   MenuContent,
   MenuItem,
   NamedLink,
-  ExternalLink,
+  ExternalLink,  
   // ListingLink,
   //OwnListingLink,
 } from '../../components';
-import { TopbarSearchForm } from '../../forms';
+import { TopbarSearchKeyWordForm } from '../../forms';
 import config from '../../config';
 
 import css from './TopbarDesktop.css';
@@ -47,9 +47,8 @@ const TopbarDesktop = props => {
   const classes = classNames(rootClassName || css.root, className);
 
   const search = (
-    <TopbarSearchForm
+    <TopbarSearchKeyWordForm
       className={css.searchLink}
-      desktopInputRoot={css.topbarSearchWithLeftPadding}
       onSubmit={onSearchSubmit}
       initialValues={initialSearchFormValues}
     />
@@ -123,7 +122,7 @@ const TopbarDesktop = props => {
 
   const menuLinks = (
     <>
-      <NamedLink name="SearchPage" className={css.menuLink}>
+      <NamedLink name="SearchPage" className={css.menuLink} to={{ search: 'sort=meta_isRecommended'}} >
         <span className={css.link}>
           <FormattedMessage id="TopbarDesktop.explore" />
         </span>

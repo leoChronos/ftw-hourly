@@ -1,0 +1,109 @@
+@import '../../marketplace.css';
+
+:root {
+  /*
+    These variables are available in global scope through ":root"
+    element (<html> tag). Variables with the same names are going to
+    overwrite each other if CSS Properties' (PostCSS plugin)
+    configuration "preserve: true" is used - meaning that variables
+    are left to CSS bundle. We are planning to enable it in the future
+    since browsers support CSS Properties already.
+ */
+
+  --TopbarSearchForm_inputHeight: 53px;
+  --TopbarSearchForm_topbarMargin: 94px;
+  --TopbarSearchForm_bottomBorder: 3px;
+  --TopbarSearchForm_mobilePredictionTop: calc(
+    var(--TopbarSearchForm_topbarMargin) + var(--TopbarSearchForm_inputHeight) -
+      var(--TopbarSearchForm_bottomBorder)
+  );
+}
+
+.mobileInputRoot {
+  padding-left: 30px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.desktopInputRoot {
+  padding-left: 34px;
+  height: var(--topbarHeightDesktop);
+  display: flex;
+  align-items: center;
+}
+
+.mobileInput {
+  flex-grow: 1;
+
+  /* Font */
+  @apply --marketplaceH1FontStyles;
+
+  /* Layout */
+  margin: 0 24px 0 0;
+  padding: 1px 13px 13px 13px;
+  height: var(--TopbarSearchForm_inputHeight);
+  line-height: unset;
+
+  /* Borders */
+  border-bottom-width: var(--borderRadiusMobileSearch);
+
+  /* Safari bugfix: without this Safari will print placeholder to a wrong place */
+  &::-webkit-input-placeholder {
+    line-height: normal;
+  }
+
+  &:hover,
+  &:focus {
+    border-bottom-color: var(--marketplaceColor);
+    outline: none;
+  }
+}
+
+.desktopInput {
+  flex-grow: 1;
+  /* Font */
+  @apply --marketplaceH4FontStyles;
+  height: var(--topbarHeightDesktop);
+  line-height: unset;
+  border: none;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 10px;
+
+  /* Search text gets ellipsis if it's too wide */
+  text-overflow: ellipsis;
+  overflow-x: hidden;
+
+  /* Safari bugfix: without this Safari will print placeholder to a wrong place */
+  &::-webkit-input-placeholder {
+    line-height: normal;
+  }
+
+  &:hover,
+  &:focus {
+    border-bottom-color: var(--marketplaceColor);
+    outline: none;
+  }
+
+  &:hover::placeholder,
+  &:focus::placeholder {
+    color: var(--matterColor);
+  }
+
+  /* Placeholder text might be too wide */
+  &::placeholder {
+    text-overflow: ellipsis;
+    overflow-x: hidden;
+    font-weight: var(--fontWeightRegular);
+    transition: var(--transitionStyleButton);
+  }
+
+  margin-top: 0;
+  margin-bottom: 0;
+  @media (--viewportMedium) {
+    margin-top: 0;
+    margin-bottom: 0;
+    font-weight: var(--fontWeightSemiBold);
+  }
+}

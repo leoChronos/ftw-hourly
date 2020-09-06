@@ -3,7 +3,7 @@
  */
 
 export const isRecommended = [
-  { key: 'true', label: 'Recommended' },
+  { key: '1', label: 'Recommended' },
 ]
 
 export const categories = [
@@ -68,8 +68,9 @@ export const sortConfig = {
   relevanceKey: 'relevance',
 
   options: [
-    { key: 'createdAt', label: 'Newest' },
-    { key: '-createdAt', label: 'Oldest' },
+    { key: 'meta_isRecommended', label: 'Recommended' },
+    { key: 'meta_isRecommended,createdAt', label: 'Newest' },
+    { key: 'meta_isRecommended,-createdAt', label: 'Oldest' },
     // { key: '-price', label: 'Lowest price' },
     // { key: 'price', label: 'Highest price' },
 

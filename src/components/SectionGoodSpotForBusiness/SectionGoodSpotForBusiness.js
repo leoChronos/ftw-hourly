@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
 import config from '../../config';
 import { ExternalLink } from '../../components';
 
@@ -8,10 +7,6 @@ import css from './SectionGoodSpotForBusiness.css';
 
 
 const SectionGoodSpotForBusiness = props => {
-  const { rootClassName, className } = props;
-
-  const classes = classNames(rootClassName || css.root, className);
-
   return (
     <div className={css.container}>
         <div className={css.board}>

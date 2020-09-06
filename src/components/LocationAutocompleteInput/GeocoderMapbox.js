@@ -149,8 +149,7 @@ class GeocoderMapbox {
     // prediction from Mapbox geocoding API
     var locality = prediction.context.find(x => x.id.includes('locality'));
     var place = prediction.context.find(x => x.id.includes('place'));
-    var region = prediction.context.find(x => x.id.includes('region'));
-    var country = prediction.context.find(x => x.id.includes('country'));
+    var region = prediction.context.find(x => x.id.includes('region'));    
 
     return locality && place ? `${locality.text}, ${place.text}`
           : place && region ? `${place.text}, ${region.text}`

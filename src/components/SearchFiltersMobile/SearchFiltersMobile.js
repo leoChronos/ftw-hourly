@@ -21,7 +21,7 @@ import {
 import { propTypes } from '../../util/types';
 import css from './SearchFiltersMobile.css';
 
-const RADIX = 10;
+//const RADIX = 10;
 
 class SearchFiltersMobileComponent extends Component {
   constructor(props) {
@@ -175,7 +175,7 @@ class SearchFiltersMobileComponent extends Component {
       resultsCount,
       searchInProgress,
       showAsModalMaxWidth,
-      onMapIconClick,
+      //onMapIconClick,
       onManageDisableScrolling,
       selectedFiltersCount,
       categoryFilter,

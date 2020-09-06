@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { array, bool, func, number, oneOf, object, shape, string } from 'prop-types';
+import { array, bool, func, oneOf, object, shape, string } from 'prop-types';
 import { injectIntl, intlShape } from '../../util/reactIntl';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
@@ -14,7 +14,7 @@ import { parse, stringify } from '../../util/urlHelpers';
 import { propTypes } from '../../util/types';
 import { getListingsById } from '../../ducks/marketplaceData.duck';
 import { manageDisableScrolling, isScrollingDisabled } from '../../ducks/UI.duck';
-import { SearchMap, ModalInMobile, Page } from '../../components';
+import { Page } from '../../components';
 import { TopbarContainer } from '../../containers';
 
 import { searchListings, searchMapListings, setActiveListing } from './SearchPage.duck';
@@ -141,16 +141,14 @@ export class SearchPageComponent extends Component {
     const {
       intl,
       listings,
-      location,
-      mapListings,
+      location,      
       currentPageListingsTimeSlots,
       onManageDisableScrolling,
       pagination,
       scrollingDisabled,
       searchInProgress,
       searchListingsError,
-      searchParams,
-      activeListingId,
+      searchParams,      
       onActivateListing,      
     } = this.props;
     // eslint-disable-next-line no-unused-vars
@@ -173,17 +171,18 @@ export class SearchPageComponent extends Component {
 
     const validQueryParams = validURLParamsForExtendedData(searchInURL, filters);
 
-    const isWindowDefined = typeof window !== 'undefined';
-    const isMobileLayout = isWindowDefined && window.innerWidth < MODAL_BREAKPOINT;
-    const shouldShowSearchMap =
-      !isMobileLayout || (isMobileLayout && this.state.isSearchMapOpenOnMobile);
+    // const isWindowDefined = typeof window !== 'undefined';
+    // const isMobileLayout = isWindowDefined && window.innerWidth < MODAL_BREAKPOINT;
+    // const shouldShowSearchMap =
+    //   !isMobileLayout || (isMobileLayout && this.state.isSearchMapOpenOnMobile);
 
     const onMapIconClick = () => {
       this.useLocationSearchBounds = true;
       this.setState({ isSearchMapOpenOnMobile: true });
     };
 
-    const { address, bounds, origin } = searchInURL || {};
+    // const { address, bounds, origin } = searchInURL || {};
+    const { address } = searchInURL || {};
     const { title, description, schema } = createSearchResultSchema(listings, address, intl);
 
     // Set topbar class based on if a modal is open in
@@ -269,7 +268,7 @@ export class SearchPageComponent extends Component {
 
 SearchPageComponent.defaultProps = {
   listings: [],
-  mapListings: [],
+  //mapListings: [],
   pagination: null,
   searchListingsError: null,
   searchParams: {},
@@ -283,7 +282,7 @@ SearchPageComponent.defaultProps = {
 
 SearchPageComponent.propTypes = {
   listings: array,
-  mapListings: array,
+  //mapListings: array,
   onActivateListing: func.isRequired,
   onManageDisableScrolling: func.isRequired,
   onSearchMapListings: func.isRequired,

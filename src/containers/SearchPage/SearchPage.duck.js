@@ -2,7 +2,7 @@ import unionWith from 'lodash/unionWith';
 import { storableError } from '../../util/errors';
 import { addMarketplaceEntities } from '../../ducks/marketplaceData.duck';
 import { convertUnitToSubUnit, unitDivisor } from '../../util/currency';
-import { formatDateStringToTz, getExclusiveEndDateWithTz, monthIdStringInTimeZone } from '../../util/dates';
+import { formatDateStringToTz, getExclusiveEndDateWithTz } from '../../util/dates';
 import { denormalisedResponseEntities } from '../../util/data';
 import config from '../../config';
 

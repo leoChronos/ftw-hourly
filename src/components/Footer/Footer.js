@@ -79,14 +79,17 @@ const Footer = props => {
             <div className={classNames(css.linkAreas, css.expoloreLinks)}>
               <ul className={css.list}>
                 <li className={css.listItem}>
-                  <NamedLink name="SearchPage" className={classNames(css.link, css.firstLink)}>
+                  <NamedLink name="SearchPage" 
+                    className={classNames(css.link, css.firstLink)}
+                    to={{ search: `?sort=meta_isRecommended`}}
+                    >
                     <FormattedMessage id="Footer.explore" />
                   </NamedLink>
                 </li>
                 {config.custom.categories.filter(x => !x.hideFromFilters).map((category, i) => {
                   return (
                     <li key={`footer_link_${category.key}`} className={css.listItem}>
-                      <NamedLink name="SearchPage" className={css.link} to={{ search: `?pub_category=${category.key}` }}>
+                      <NamedLink name="SearchPage" className={css.link} to={{ search: `?pub_category=${category.key}&sort=meta_isRecommended` }}>
                         {category.label}
                       </NamedLink>
                     </li>
@@ -227,7 +230,7 @@ const Footer = props => {
                     <FormattedMessage id="Footer.copyright" />
                   </NamedLink> */}                  
                   <span>Made with Love in</span>
-                  <img src={flagImage} className={css.flag}></img>
+                  <img src={flagImage} className={css.flag} alt="NZ"></img>
                 </p>
               </div>
             </div>

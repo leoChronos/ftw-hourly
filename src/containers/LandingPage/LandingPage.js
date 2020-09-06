@@ -11,8 +11,7 @@ import config from '../../config';
 import {
   Page,
   SectionOurStory,  
-  SectionCategories,
-  SectionGoodSpotForBusiness,
+  SectionCategories,  
   LayoutSingleColumn,
   LayoutWrapperTopbar,
   LayoutWrapperMain,
@@ -27,13 +26,9 @@ import twitterImage from '../../assets/yogatimeTwitter-600x314.jpg';
 import css from './LandingPage.css';
 
 export const LandingPageComponent = props => {
-  const {
-    history,
-    intl,
-    location,
-    scrollingDisabled,
-    currentUserListing,
-    currentUserListingFetched,
+  const {    
+    intl,    
+    scrollingDisabled,    
   } = props;
 
   // Schema for search engines (helps them to understand what this page is about)
@@ -48,7 +43,7 @@ export const LandingPageComponent = props => {
     <NamedLink
       className={css.findSpotsLink}
       name="SearchPage"
-      to={{ search: 'address=New%20Zealand&bounds=-33.8587230028189%2C178.67686298258%2C-47.3898039959898%2C166.326152004449' }}    
+      to={{ search: 'sort=meta_isRecommended' }}
     >
       <span>Explore Spots</span>
     </NamedLink>

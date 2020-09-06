@@ -14,7 +14,7 @@ import {
   txIsRequested,
   txHasBeenDelivered,
 } from '../../util/transaction';
-import { LINE_ITEM_NIGHT, LINE_ITEM_DAY, propTypes } from '../../util/types';
+import { propTypes } from '../../util/types';
 import {
   ensureListing,
   ensureTransaction,
@@ -22,7 +22,6 @@ import {
   userDisplayNameAsString,
 } from '../../util/data';
 import { isMobileSafari } from '../../util/userAgent';
-import { formatMoney } from '../../util/currency';
 import {
   AvatarLarge,  
   BookingPanel,
@@ -31,7 +30,6 @@ import {
   UserDisplayName,
 } from '../../components';
 import { SendMessageForm } from '../../forms';
-import config from '../../config';
 
 // These are internal components that make this file more readable.
 import AddressLinkMaybe from './AddressLinkMaybe';
@@ -285,15 +283,15 @@ export class TransactionPanelComponent extends Component {
       ? deletedListingTitle
       : currentListing.attributes.title;
 
-    const unitType = config.bookingUnitType;
-    const isNightly = unitType === LINE_ITEM_NIGHT;
-    const isDaily = unitType === LINE_ITEM_DAY;
+    // const unitType = config.bookingUnitType;
+    // const isNightly = unitType === LINE_ITEM_NIGHT;
+    // const isDaily = unitType === LINE_ITEM_DAY;
 
-    const unitTranslationKey = isNightly
-      ? 'TransactionPanel.perNight'
-      : isDaily
-      ? 'TransactionPanel.perDay'
-      : 'TransactionPanel.perUnit';
+    // const unitTranslationKey = isNightly
+    //   ? 'TransactionPanel.perNight'
+    //   : isDaily
+    //   ? 'TransactionPanel.perDay'
+    //   : 'TransactionPanel.perUnit';
 
     //const price = currentListing.attributes.price;    
     // const bookingSubTitle = price

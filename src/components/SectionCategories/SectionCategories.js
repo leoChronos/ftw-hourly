@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from '../../util/reactIntl';
 import classNames from 'classnames';
 import { lazyLoadWithDimensions } from '../../util/contextHelpers';
 import config from '../../config';
@@ -36,6 +35,7 @@ const getCategoryImage = (category) => {
     case "business_services" : return businessImage;
     case "house_garden" : return houseImage;
     case "activities" : return activitiesImage;
+    default: return "";
   }
 };
 
@@ -68,7 +68,7 @@ const SectionCategories = props => {
                     categoryLink(
                         category.key,
                         category.label,                         
-                        `?pub_category=${category.key}`
+                        `?pub_category=${category.key}&sort=meta_isRecommended`
                       )
                 );
             })

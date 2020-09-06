@@ -1,7 +1,7 @@
 import React from 'react';
 import { FormattedMessage } from '../../util/reactIntl';
 import { ExternalLink, IconSocialMediaFacebook, IconSocialMediaInstagram, AvatarMedium } from '../../components';
-import { twitterPageURL, instagramPageURL } from '../../util/urlHelpers';
+import { instagramPageURL } from '../../util/urlHelpers';
 
 import css from './ListingPage.css';
 

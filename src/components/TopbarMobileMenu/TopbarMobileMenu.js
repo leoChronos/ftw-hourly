@@ -13,8 +13,7 @@ import {
   AvatarLarge,
   InlineTextButton,
   NamedLink,  
-  NotificationBadge,
-  OwnListingLink,
+  NotificationBadge,  
 } from '../../components';
 
 import css from './TopbarMobileMenu.css';
@@ -24,9 +23,7 @@ const TopbarMobileMenu = props => {
     isBusiness,
     isAuthenticated,
     currentPage,
-    currentUserHasListings,
-    currentUserListing,
-    currentUserListingFetched,
+    currentUserHasListings,    
     currentUser,
     notificationCount,
     onLogout,

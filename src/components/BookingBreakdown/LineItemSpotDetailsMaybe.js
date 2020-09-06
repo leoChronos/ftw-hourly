@@ -10,13 +10,13 @@
  * component for them that can be used in the `BookingBreakdown` component.
  */
 import React from 'react';
-import { FormattedMessage, intlShape } from '../../util/reactIntl';
+import { intlShape } from '../../util/reactIntl';
 import { propTypes } from '../../util/types';
 
 import css from './BookingBreakdown.css';
 
 const LineItemSpotDetailsMaybe = props => {
-  const { transaction, intl } = props;
+  const { transaction } = props;
 
   const {discount, spotDetails} = transaction.attributes.protectedData.discountData ? transaction.attributes.protectedData.discountData : {};
 

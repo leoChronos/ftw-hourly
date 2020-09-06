@@ -39,21 +39,24 @@ const SearchResultsPanel = props => {
     return l && currentPageListingsTimeSlots ? currentPageListingsTimeSlots[l.id.uuid] || null : null;
   }
 
-  const categoryResultList = sortBy([... new Set(listings.map(x => x.attributes.publicData.category))], [function(o) {return o;}]);
+  const categoryResultList = sortBy([... new Set(listings.map(x => x.attributes.publicData.category))],[function(o) {return o;}]);
 
   const orderedListings = sortBy(listings, [function(l) { 
     return !(l.attributes.metadata && l.attributes.metadata.isRecommended);
   }]);  
 
-  return (
-    <div className={classes}>
-      {categoryResultList.map(c => (
-        <React.Fragment key={`category_block_${c}`}>
+  const recommendedListings = listings.filter(x => x.attributes.metadata && x.attributes.metadata.isRecommended);
+
+  console.log(recommendedListings);
+
+  const recommendedListingsBlock = 
+    recommendedListings.length > 0 ? (
+      <React.Fragment>
           <div className={css.listingCardsTitle}>
-            <span>{getCategory(c).label}</span>
+            <span>Our top spots</span>
           </div>
           <div className={css.listingCards}>
-            {orderedListings.filter(x => x.attributes.publicData.category === c).map(l => (
+            {recommendedListings.map(l => (
               <ListingCard
                 className={css.listingCard}
                 key={l.id.uuid}
@@ -66,7 +69,36 @@ const SearchResultsPanel = props => {
             {props.children}
           </div>
           <div className={css.listingCardsShowAllLink}>            
-            <NamedLink name="SearchPage" to={{ search: `?pub_category=${c}` }}>
+            <NamedLink name="SearchPage" to={{ search: `?meta_isRecommended=1` }}>
+              <span>Show all top spots</span>
+            </NamedLink>
+          </div>
+      </React.Fragment>
+    ) : null;
+
+  return (
+    <div className={classes}>
+      {recommendedListingsBlock}
+      {categoryResultList.map(c => (
+        <React.Fragment key={`category_block_${c}`}>
+          <div className={css.listingCardsTitle}>
+            <span>{getCategory(c).label}</span>
+          </div>
+          <div className={css.listingCards}>
+            {orderedListings.filter(x => x.attributes.publicData.category === c).map(l => (            
+              <ListingCard
+                className={css.listingCard}
+                key={l.id.uuid}
+                listing={l}
+                timeSlots={getListingTimeSlots(l)}
+                renderSizes={cardRenderSizes}
+                setActiveListing={setActiveListing}            
+              />
+            ))}
+            {props.children}
+          </div>
+          <div className={css.listingCardsShowAllLink}>            
+            <NamedLink name="SearchPage" to={{ search: `?pub_category=${c}&sort=meta_isRecommended` }}>
               <span>Show all {getCategory(c).label}</span>
             </NamedLink>
           </div>

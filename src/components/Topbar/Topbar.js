@@ -20,7 +20,7 @@ import {
   TopbarDesktop,
   TopbarMobileMenu,
 } from '../../components';
-import { TopbarSearchForm } from '../../forms';
+import { TopbarSearchKeyWordForm } from '../../forms';
 
 import MenuIcon from './MenuIcon';
 import SearchIcon from './SearchIcon';
@@ -93,18 +93,19 @@ class TopbarComponent extends Component {
     redirectToURLWithoutModalState(this.props, 'mobilesearch');
   }
 
-  handleSubmit(values) {
+  handleSubmit(values) {    
     const { currentSearchParams } = this.props;
-    const { search, selectedPlace } = values.location;
+    //const { search, selectedPlace } = values.location;
     const { history } = this.props;
-    const { origin, bounds } = selectedPlace;
-    const originMaybe = config.sortSearchByDistance ? { origin } : {};
+    //const { origin, bounds } = selectedPlace;
+    //const originMaybe = config.sortSearchByDistance ? { origin } : {};
     const searchParams = {
       ...currentSearchParams,
-      ...originMaybe,
-      address: search,
-      bounds,
-    };
+      //...originMaybe,
+      //address: search,
+      //bounds,
+      ...values
+    };    
     history.push(createResourceLocatorString('SearchPage', routeConfiguration(), {}, searchParams));
   }
 
@@ -153,7 +154,7 @@ class TopbarComponent extends Component {
       showGenericError,
     } = this.props;
 
-    const { mobilemenu, mobilesearch, address, origin, bounds } = parse(location.search, {
+    const { mobilemenu, mobilesearch } = parse(location.search, {
       latlng: ['origin'],
       latlngBounds: ['bounds'],
     });
@@ -179,17 +180,19 @@ class TopbarComponent extends Component {
     );
 
     // Only render current search if full place object is available in the URL params
-    const locationFieldsPresent = config.sortSearchByDistance
-      ? address && origin && bounds
-      : address && bounds;
-    const initialSearchFormValues = {
-      location: locationFieldsPresent
-        ? {
-            search: address,
-            selectedPlace: { address, origin, bounds },
-          }
-        : null,
-    };
+    // const locationFieldsPresent = config.sortSearchByDistance
+    //   ? address && origin && bounds
+    //   : address && bounds;
+    // const initialSearchFormValues = {
+    //   location: locationFieldsPresent
+    //     ? {
+    //         search: address,
+    //         selectedPlace: { address, origin, bounds },
+    //       }
+    //     : null,
+    // };
+
+    const initialSearchFormValues = { keywords : '' };
 
     const classes = classNames(rootClassName || css.root, className);
 
@@ -256,8 +259,8 @@ class TopbarComponent extends Component {
           usePortal
           onManageDisableScrolling={onManageDisableScrolling}
         >
-          <div className={css.searchContainer}>
-            <TopbarSearchForm
+          <div className={css.searchContainer}>            
+            <TopbarSearchKeyWordForm              
               onSubmit={this.handleSubmit}
               initialValues={initialSearchFormValues}
               isMobile

@@ -19,8 +19,7 @@ import {
   timeOfDayFromTimeZoneToLocal,
   dateIsAfter,
   findNextBoundary,
-  timestampToDate,
-  localizeAndFormatTime,
+  timestampToDate,  
   monthIdStringInTimeZone,
   getMonthStartInTimeZone,
   nextMonthFn,
@@ -412,8 +411,7 @@ const EditListingAvailabilityExceptionForm = props => {
           handleSubmit,
           intl,
           invalid,
-          onMonthChanged,
-          pristine,
+          onMonthChanged,          
           availabilityExceptions,
           timeZone,
           updateInProgress,
@@ -422,8 +420,7 @@ const EditListingAvailabilityExceptionForm = props => {
         } = formRenderProps;
 
         const idPrefix = `${formId}` || 'EditListingAvailabilityExceptionForm';
-        const {
-          availability,
+        const {          
           exceptionStartDate,
           exceptionStartTime = null,
           exceptionEndDate,
@@ -629,10 +626,7 @@ const EditListingAvailabilityExceptionForm = props => {
                     disabled={endTimeDisabled}
                   >
                     {exceptionStartDay && exceptionStartTime && endDate ? (
-                      availableEndTimes.map((p, i) => {
-                        const isLastIndex = i === availableEndTimes.length - 1;
-                        const timeOfDay =
-                          p.timeOfDay === '00:00' && isLastIndex ? '24:00' : p.timeOfDay;
+                      availableEndTimes.map(p => {                                                
                         return (
                           <option key={p.timestamp} value={p.timestamp}>
                             {p.formatedDate.time}

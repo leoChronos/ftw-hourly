@@ -4,7 +4,7 @@ import { compose } from 'redux';
 import { Form as FinalForm } from 'react-final-form';
 import { FormattedMessage, intlShape, injectIntl } from '../../util/reactIntl';
 import classNames from 'classnames';
-import { calculateQuantityFromHours, timestampToDate, formatDateToText } from '../../util/dates';
+import { timestampToDate, formatDateToText } from '../../util/dates';
 import { propTypes } from '../../util/types';
 import config from '../../config';
 import { Form, PrimaryButton, FieldCheckbox } from '../../components';
@@ -67,8 +67,7 @@ export class BookingTimeFormComponent extends Component {
             form,
             pristine,
             handleSubmit,
-            intl,
-            isOwnListing,
+            intl,            
             listingId,
             submitButtonWrapperClassName,
             unitPrice,

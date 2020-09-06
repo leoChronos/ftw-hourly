@@ -16,7 +16,7 @@ import css from './SearchFilters.css';
 
 // Dropdown container can have a positional offset (in pixels)
 const FILTER_DROPDOWN_OFFSET = -14;
-const RADIX = 10;
+//const RADIX = 10;
 
 // resolve initial value for a single value filter
 const initialValue = (queryParams, paramName) => {
@@ -49,10 +49,7 @@ const SearchFiltersComponent = props => {
     dateRangeFilter,
     keywordFilter,
     categoryFilter,
-    isRecommendedFilter,
-    isSearchFiltersPanelOpen,
-    toggleSearchFiltersPanel,
-    searchFiltersPanelSelectedCount,
+    isRecommendedFilter,    
     history,
     intl,
   } = props;
