@@ -14,8 +14,7 @@ class TopbarSearchKeyWordFormComponent extends Component {
   }
 
   onChange(keywords) {
-    if (keywords) {      
-      console.log(keywords);
+    if (keywords) {
       this.props.onSubmit({ keywords: keywords });      
     }
   }

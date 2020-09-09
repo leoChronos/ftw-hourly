@@ -26,6 +26,7 @@ import {
 } from './SearchPage.helpers';
 import MainPanel from './MainPanel';
 import css from './SearchPage.css';
+import { filter } from 'lodash';
 
 // Pagination page size might need to be dynamic on responsive page layouts
 // Current design has max 3 columns 12 is divisible by 2 and 3
@@ -57,6 +58,7 @@ export class SearchPageComponent extends Component {
       isRecommended,            
       dateRangeFilterConfig,
       keywordFilterConfig,
+      locations,
     } = this.props;
 
     // Note: "category" and "amenities" filters are not actually filtering anything by default.
@@ -73,6 +75,10 @@ export class SearchPageComponent extends Component {
         paramName: 'pub_category',
         options: categories.filter(x => !x.hideFromFilters),
       },
+      locationFilter: {
+        paramName: 'address',
+        options: locations
+      },
       dateRangeFilter: {
         paramName: 'dates',
         config: dateRangeFilterConfig,
@@ -80,7 +86,7 @@ export class SearchPageComponent extends Component {
       keywordFilter: {
         paramName: 'keywords',
         config: keywordFilterConfig,
-      },
+      },      
     };
   }
 
@@ -228,6 +234,8 @@ export class SearchPageComponent extends Component {
               keywordFilter: filters.keywordFilter,
               categoryFilter: filters.categoryFilter,
               isRecommendedFilter: filters.isRecommendedFilter,
+              locationFilter: filters.locationFilter,
+              //locationFilter: filters.locationFilter,
             }}
             secondaryFilters={{              
             }}
@@ -277,6 +285,7 @@ SearchPageComponent.defaultProps = {
   isRecommended: config.custom.isRecommended,
   dateRangeFilterConfig: config.custom.dateRangeFilterConfig,
   keywordFilterConfig: config.custom.keywordFilterConfig,
+  locations : config.custom.locations,
   activeListingId: null,
 };
 
@@ -294,6 +303,7 @@ SearchPageComponent.propTypes = {
   tab: oneOf(['filters', 'listings', 'map']).isRequired,
   categories: array,  
   isRecommended: array,
+  locations: array,
   dateRangeFilterConfig: shape({ active: bool.isRequired }),
 
   // from withRouter

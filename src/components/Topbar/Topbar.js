@@ -103,7 +103,7 @@ class TopbarComponent extends Component {
       ...currentSearchParams,
       //...originMaybe,
       //address: search,
-      //bounds,
+      //bounds, 
       ...values
     };    
     history.push(createResourceLocatorString('SearchPage', routeConfiguration(), {}, searchParams));

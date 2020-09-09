@@ -16,6 +16,30 @@ export const categories = [
   { key: 'activities', label: 'Activities' },
 ]
 
+export const locations = [
+  { key : 'Auckland', label: 'Auckland' },
+  { key: 'Christchurch', label: 'Christchurch' },
+  { key: 'Coromandel', label: 'Coromandel' },
+  { key: 'Dunedin', label: 'Dunedin' },
+  { key: 'Gisborne', label: 'Gisborne' },
+  { key: 'Hamilton', label: 'Hamilton' },
+  { key: 'Hastings', label: 'Hastings' },
+  { key: 'Hibiscus Coast', label: 'Hibiscus Coast' },
+  { key: 'Invercargill', label: 'Invercargill' },
+  { key: 'Lower Hutt', label: 'Lower Hutt' },
+  { key: 'Napier', label: 'Napier' },
+  { key: 'Nelson', label: 'Nelson' },
+  { key: 'New Plymouth', label: 'New Plymouth' },
+  { key: 'Palmerston North', label: 'Palmerston North' }, 
+  { key: 'Queenstown', label: 'Queenstown' },
+  { key: 'Rotorua', label: 'Rotorua' },
+  { key: 'Tauranga', label: 'Tauranga' },
+  { key: 'Upper Hutt', label: 'Upper Hutt' },
+  { key: 'Wellington', label: 'Wellington' },
+  { key: 'Whanganui', label: 'Whanganui' }, 
+  { key: 'Whangarei', label: 'Whangarei' }
+]
+
 // Price filter configuration
 // Note: unlike most prices this is not handled in subunits
 // export const priceFilterConfig = {

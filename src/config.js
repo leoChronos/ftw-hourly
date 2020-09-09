@@ -228,6 +228,7 @@ const config = {
   usingSSL,
   maps,
   custom,
+  defaultLocationSearches,
 };
 
 export default config;

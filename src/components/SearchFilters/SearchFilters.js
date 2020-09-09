@@ -49,6 +49,7 @@ const SearchFiltersComponent = props => {
     dateRangeFilter,
     keywordFilter,
     categoryFilter,
+    locationFilter,
     isRecommendedFilter,    
     history,
     intl,
@@ -69,6 +70,8 @@ const SearchFiltersComponent = props => {
 
   const initialIsRecommended = isRecommendedFilter ? initialValue(urlQueryParams, isRecommendedFilter.paramName) : null;
 
+  const initialLocation = locationFilter ? initialValue(urlQueryParams, locationFilter.paramName) : null;
+
   const isKeywordFilterActive = !!initialKeyword;
 
   const handleDateRange = (urlParam, dateRange) => {
@@ -82,6 +85,9 @@ const SearchFiltersComponent = props => {
       start != null && end != null
         ? { ...urlQueryParams, [urlParam]: `${start},${end}` }
         : omit(urlQueryParams, urlParam);
+
+    queryParams.sort = queryParams.sort ? queryParams.sort : "meta_isRecommended"; 
+     
     history.push(createResourceLocatorString('SearchPage', routeConfiguration(), {}, queryParams));
   };
 
@@ -99,6 +105,24 @@ const SearchFiltersComponent = props => {
     const queryParams = option
       ? { ...urlQueryParams, [urlParam]: option }
       : omit(urlQueryParams, urlParam);
+
+    queryParams.sort = queryParams.sort ? queryParams.sort : "meta_isRecommended";
+
+    history.push(createResourceLocatorString('SearchPage', routeConfiguration(), {}, queryParams));
+  }
+
+  const handleLocationSelectSingle = (urlParam, option) => {
+    // query parameters after selecting the option
+    // if no option is passed, clear the selection for the filter
+    const queryParams = option
+      ? { ...urlQueryParams, [urlParam]: option }
+      : omit(urlQueryParams, urlParam);
+
+    let location = config.defaultLocationSearches.find(x => x.key === queryParams.address);
+
+    queryParams.bounds = location ? location.predictionPlace.bounds : null;
+
+    queryParams.sort = queryParams.sort ? queryParams.sort : "meta_isRecommended";
 
     history.push(createResourceLocatorString('SearchPage', routeConfiguration(), {}, queryParams));
   }
@@ -157,7 +181,20 @@ const SearchFiltersComponent = props => {
         intl={intl}
         showAsPopup={true}
       />
-    ) : null; 
+    ) : null;
+
+    const locationFilterElement = locationFilter ? (
+      <SelectSingleFilter
+        urlParam={locationFilter.paramName}
+        label="Location"
+        onSelect={handleLocationSelectSingle}
+        liveEdit
+        options={locationFilter.options}
+        initialValue={initialLocation}
+        intl={intl}
+        showAsPopup={true}
+      />
+    ) : null;
 
   // const toggleSearchFiltersPanelButtonClasses =
   //   isSearchFiltersPanelOpen || searchFiltersPanelSelectedCount > 0
@@ -211,6 +248,7 @@ const SearchFiltersComponent = props => {
       <div className={css.filters}>        
         {isRecommendedFilterElement}
         {categoryFilterElement}
+        {locationFilterElement}
         {dateRangeFilterElement}
         {keywordFilterElement}        
         {/* {toggleSearchFiltersPanelButton} */}
@@ -239,6 +277,7 @@ SearchFiltersComponent.defaultProps = {
   dateRangeFilter: null,
   categoryFilter: null,
   isRecommendedFilter: null,
+  //locationFilter: null,
   isSearchFiltersPanelOpen: false,
   toggleSearchFiltersPanel: null,
   searchFiltersPanelSelectedCount: 0,
@@ -255,6 +294,7 @@ SearchFiltersComponent.propTypes = {
   dateRangeFilter: propTypes.filterConfig,
   categoryFilter: propTypes.filterConfig,
   isRecommendedFilter: propTypes.filterConfig,
+  //locationFilter: propTypes.filterConfig,
   isSearchFiltersPanelOpen: bool,
   toggleSearchFiltersPanel: func,
   searchFiltersPanelSelectedCount: number,

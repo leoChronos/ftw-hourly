@@ -47,8 +47,6 @@ const SearchResultsPanel = props => {
 
   const recommendedListings = listings.filter(x => x.attributes.metadata && x.attributes.metadata.isRecommended);
 
-  console.log(recommendedListings);
-
   const recommendedListingsBlock = 
     recommendedListings.length > 0 ? (
       <React.Fragment>
