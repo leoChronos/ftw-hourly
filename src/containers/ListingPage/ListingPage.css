@@ -661,6 +661,15 @@
 .socialIcon {
   display: flex;
   margin-bottom: 10px;
+
+  
+}
+
+.socialWebsite {
+  padding-left: 12px;
+  font-size: 20px;
+  position: relative;
+  top: -6px;
 }
 
 .socialFacebook {
@@ -671,6 +680,13 @@
 }
 
 .socialInstagram {
+  padding-left: 15px;
+  font-size: 20px;
+  position: relative;
+  top: -8px;
+}
+
+.socialTwitter {
   padding-left: 15px;
   font-size: 20px;
   position: relative;

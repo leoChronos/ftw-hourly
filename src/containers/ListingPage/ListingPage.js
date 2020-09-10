@@ -51,7 +51,7 @@ import SectionAvatar from './SectionAvatar';
 import SectionHeading from './SectionHeading';
 import SectionDescriptionMaybe from './SectionDescriptionMaybe';
 import SectionKeyInformationMaybe from './SectionKeyInformationMaybe';
-import SectionManagedBy from './SectionManagedBy';
+import SectionContactBusiness from './SectionContactBusiness';
 import SectionReviews from './SectionReviews';
 import SectionMapMaybe from './SectionMapMaybe';
 import css from './ListingPage.css';
@@ -412,6 +412,9 @@ export class ListingPageComponent extends Component {
     // isRecommended
     const isRecommended = (metadata && metadata.isRecommended);
 
+    // social
+    const { social } = publicData || {};
+
     return (
       <Page
         title={schemaTitle}
@@ -478,7 +481,7 @@ export class ListingPageComponent extends Component {
                     publicData={publicData}
                     listingId={currentListing.id}
                   />
-                  <SectionManagedBy user={currentAuthor}/>
+                  {social ? (<SectionContactBusiness social={social}/>) : null} 
                   <SectionReviews reviews={reviews} fetchReviewsError={fetchReviewsError} />
                 </div>
                 <BookingPanel
