@@ -486,11 +486,7 @@
 }
 
 .contactWrapper {
-  display: none;
-
-  @media (--viewportMedium) {
-    display: inline;
-  }
+  display: flex;  
 }
 
 .contactWrapper button:not(:last-child){
@@ -502,13 +498,26 @@
 }
 
 .contactLink {
-  @apply --marketplaceLinkStyles;
-  @apply --marketplaceH4FontStyles;
+  @apply --marketplaceLinkStyles;   
   margin: 0;
 }
 
-.favorite {
-  
+.contactLink label {
+  font-size: 14px;
+
+  @media (--viewportMedium) {
+    font-size: 16px;
+  }
+}
+
+.mobileIcon {
+  width: 30px !important;
+  height: 30px !important;
+
+  @media (--viewportMedium) {
+    width: 47px !important;
+    height: 46px !important;
+  }
 }
 
 .sectionDescription {
@@ -806,4 +815,9 @@
   /* use break-word if available */
   word-break: break-word;
   hyphens: auto;
+}
+
+.popoverSocialShare{
+  background: transparent !important;
+  box-shadow: transparent !important;
 }

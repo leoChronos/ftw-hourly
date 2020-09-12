@@ -18,7 +18,8 @@ import css from './BookingBreakdown.css';
 const LineItemSpotDetailsMaybe = props => {
   const { transaction } = props;
 
-  const {discount, spotDetails} = transaction.attributes.protectedData.discountData ? transaction.attributes.protectedData.discountData : {};
+  const {discount, spotDetails} = transaction.attributes.protectedData && transaction.attributes.protectedData.discountData 
+      ? transaction.attributes.protectedData.discountData : {};
 
   return discount ? (
       <>

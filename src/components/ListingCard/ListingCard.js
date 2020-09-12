@@ -70,10 +70,10 @@ export const ListingCardComponent = props => {
             })}
           </div>
           <div className={css.title}>
-            <span className={css.address}>{location.shortAddress || location.address }</span>
+            { location ? (<span className={css.address}>{location.shortAddress || location.address }</span>) : null }
           </div>
           <div className={css.title}>            
-            <span className={css.categoryTag}>{category.label}</span>
+            { category ? (<span className={css.categoryTag}>{category.label}</span>) : null }
           </div>
         </div>
         <div className={classNames(css.mainInfo, css.spotsArea)}>

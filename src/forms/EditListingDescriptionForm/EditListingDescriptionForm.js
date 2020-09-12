@@ -233,7 +233,8 @@ const EditListingDescriptionFormComponent = props => (
 
 EditListingDescriptionFormComponent.defaultProps = { 
   className: null, 
-  fetchErrors: null,  
+  fetchErrors: null,
+  category: []  
 };
 
 EditListingDescriptionFormComponent.propTypes = {

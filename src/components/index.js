@@ -55,6 +55,9 @@ export { default as TimeRange } from './TimeRange/TimeRange';
 export { default as UserDisplayName } from './UserDisplayName/UserDisplayName';
 export { default as ValidationError } from './ValidationError/ValidationError';
 
+// Social Share components
+export { default as SocialShare } from './SocialShare/SocialShare';
+
 /**
  * Composite components
  * These components include other components

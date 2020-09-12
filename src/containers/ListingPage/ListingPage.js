@@ -469,7 +469,7 @@ export class ListingPageComponent extends Component {
                     isFavoriteListing={isFavoriteListing}
                     onSubmitFavorite={this.onSubmitFavorite}
                     userFavoritesListingsInProgress={userFavoritesListingsInProgress}
-                    isRecommended={isRecommended}
+                    isRecommended={isRecommended}                    
                   />
                   <SectionDescriptionMaybe description={description} />
                   <SectionKeyInformationMaybe 

@@ -6,6 +6,7 @@
   "dependencies": {
     "@formatjs/intl-relativetimeformat": "^4.2.1",
     "@mapbox/polyline": "^1.0.0",
+    "@material-ui/core": "^4.11.0",
     "@sentry/browser": "5.7.1",
     "@sentry/node": "5.7.1",
     "array-includes": "^3.0.3",
@@ -51,6 +52,7 @@
     "react-moment-proptypes": "^1.6.0",
     "react-redux": "^7.1.1",
     "react-router-dom": "^5.0.1",
+    "react-share": "^4.2.1",
     "redux": "^4.0.1",
     "redux-thunk": "^2.3.0",
     "seedrandom": "^3.0.3",

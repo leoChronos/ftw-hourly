@@ -1,0 +1,12 @@
+@import '../../marketplace.css';
+
+.container {
+    display: flex;
+    flex-direction: column;
+
+    padding: 10px;
+}
+
+.socialArea:not(:first-child) {
+    margin-top: 10px;
+}

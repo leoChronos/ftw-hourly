@@ -1,5 +1,6 @@
-import React from 'react';
-import { ReviewRating, InlineTextButton, IconFavorite, IconSpinner, IconShare, IconMail } from '../../components';
+import React, { useState } from 'react';
+import { ReviewRating, InlineTextButton, IconFavorite, IconSpinner, IconShare, IconMail, SocialShare, Modal } from '../../components';
+import Popover from '@material-ui/core/Popover';
 import classNames from 'classnames';
 import meanBy from 'lodash/meanBy';
 import { nightsBetween } from './../../util/dates';
@@ -23,7 +24,7 @@ const SectionHeading = props => {
     onSubmitFavorite,
     isFavoriteListing,
     userFavoritesListingsInProgress,
-    isRecommended
+    isRecommended,    
   } = props;
   
   const isNew = nightsBetween(createdAt, new Date()) < 7;  
@@ -31,7 +32,20 @@ const SectionHeading = props => {
   const showcategory = category && !category.hideFromListingInfo;  
   const rating = reviews ? reviews : [];
   const reviewCount = reviews ? reviews.length : 0;
-  const ratingAvg = rating.length > 0 ? meanBy(rating, function(o) { return o.attributes.rating; }) : 0;    
+  const ratingAvg = rating.length > 0 ? meanBy(rating, function(o) { return o.attributes.rating; }) : 0;
+  const urlShare = document.location.href;    
+
+  const [anchorEl, setAnchorEl] = useState(null);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const open = Boolean(anchorEl);
 
   return (
     <div className={css.sectionHeading}>
@@ -62,21 +76,38 @@ const SectionHeading = props => {
                     onSubmitFavorite();
                   }}
                 >
-                  <IconFavorite isFavorite={isFavoriteListing} />
+                  <IconFavorite isFavorite={isFavoriteListing} rootClassName={css.mobileIcon} />
                     {isFavoriteListing ? (<label>Remove from favorites</label>) : (<label>Add to favorites</label>)}                    
                   </InlineTextButton>
               )}              
-              <InlineTextButton rootClassName={css.contactLink}>
-                <IconShare />
+              <InlineTextButton rootClassName={css.contactLink} onClick={handleClick}>
+                <IconShare rootClassName={css.mobileIcon}/>
                 <label>Share the love</label>
               </InlineTextButton>
               <InlineTextButton rootClassName={css.contactLink} onClick={onContactUser}>
-                <IconMail />
+                <IconMail rootClassName={css.mobileIcon}/>
                 <label>Ask a question</label>
               </InlineTextButton>
             </span>
           ) : null}
         </div>
+       
+        <Popover
+          classNames={css.popoverSocialShare}
+          open={open}
+          anchorEl={anchorEl}
+          onClose={handleClose}
+          anchorOrigin={{
+            vertical: 'center',
+            horizontal: 'right',
+          }}
+          transformOrigin={{
+            vertical: 'center',
+            horizontal: 'left',
+          }}
+        >
+          <SocialShare url={urlShare}/>
+        </Popover>
       </div>
     </div>
   );
