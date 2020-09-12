@@ -11,6 +11,7 @@ const UserDisplayName = props => {
     intl,
     deletedUserDisplayName,
     bannedUserDisplayName,
+    listingTitle,
   } = props;
   const hasAttributes = user && user.attributes;
   const userIsDeleted = hasAttributes && user.attributes.deleted;
@@ -39,7 +40,7 @@ const UserDisplayName = props => {
     : null;
 
   const classes = classNames(rootClassName, className);
-  return <span className={classes}>{displayName}</span>;
+  return <span className={classes}>{listingTitle || displayName}</span>;
 };
 
 UserDisplayName.defaultProps = {
@@ -49,6 +50,7 @@ UserDisplayName.defaultProps = {
   user: null,
   deletedUserDisplayName: null,
   bannedUserDisplayName: null,
+  listingTitle: null,
 };
 
 UserDisplayName.propTypes = {
@@ -58,6 +60,7 @@ UserDisplayName.propTypes = {
   user: oneOfType([propTypes.user, propTypes.currentUser]),
   deletedUserDisplayName: string,
   bannedUserDisplayName: string,
+  listingTitle: string,
 };
 
 export default UserDisplayName;

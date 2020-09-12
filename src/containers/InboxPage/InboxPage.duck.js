@@ -100,6 +100,7 @@ export const loadData = (params, search) => (dispatch, getState, sdk) => {
       'customer.profileImage',
       'booking',
       'listing',
+      'listing.images',
     ],
     'fields.transaction': [
       'lastTransition',
@@ -119,6 +120,7 @@ export const loadData = (params, search) => (dispatch, getState, sdk) => {
     .then(response => {
       dispatch(addMarketplaceEntities(response));
       dispatch(fetchOrdersOrSalesSuccess(response));
+      //console.log(response);
       return response;
     })
     .catch(e => {

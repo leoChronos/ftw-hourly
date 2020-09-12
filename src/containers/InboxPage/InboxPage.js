@@ -21,6 +21,7 @@ import { getMarketplaceEntities } from '../../ducks/marketplaceData.duck';
 import { isScrollingDisabled } from '../../ducks/UI.duck';
 import {
   Avatar,
+  AvatarBusiness,
   BookingTimeInfo,
   NamedLink,
   NotificationBadge,
@@ -39,6 +40,7 @@ import {
   NamedRedirect,
 } from '../../components';
 import { TopbarContainer, NotFoundPage } from '../../containers';
+import { getImage } from '../../util/images';
 import config from '../../config';
 
 import { loadData } from './InboxPage.duck';
@@ -206,12 +208,21 @@ const createListingLink = (listing, otherUser, searchParams = {}, className = ''
   const label = listing.attributes.title;
   const listingDeleted = listing.attributes.deleted;
 
+  const { publicData } = listing.attributes;
+  const businessLogoImageId = publicData && publicData.businessLogoImageId ? publicData.businessLogoImageId : null;
+
+  const businessLogoImage = businessLogoImageId ? getImage(listing, businessLogoImageId) : null;
+
   if (!listingDeleted) {
     const params = { id: listingId, slug: createSlug(label) };
     const to = { search: stringify(searchParams) };
     return (
       <NamedLink className={className} name="ListingPage" params={params} to={to}>
-        <Avatar user={otherUser} disableProfileLink />
+        <AvatarBusiness 
+          user={otherUser} 
+          businessLogoImage={businessLogoImage}
+          businessName={label}
+          disableProfileLink />
       </NamedLink>
     );
   } else {
@@ -225,7 +236,9 @@ export const InboxItem = props => {
   const isOrder = type === 'order';
 
   const otherUser = isOrder ? provider : customer;
-  const otherUserDisplayName = <UserDisplayName user={otherUser} intl={intl} />;
+  const otherUserDisplayName = isOrder 
+    ? <UserDisplayName user={otherUser} intl={intl} listingTitle={listing.attributes.title} />
+    : <UserDisplayName user={otherUser} intl={intl} />;
   const isOtherUserBanned = otherUser.attributes.banned;
 
   const isSaleNotification = !isOrder && txIsRequested(tx);

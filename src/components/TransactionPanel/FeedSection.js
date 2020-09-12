@@ -20,6 +20,8 @@ const FeedSection = props => {
     onShowMoreMessages,
     onOpenReviewModal,
     totalMessagePages,
+    businessLogoImage,
+    listingTitle
   } = props;
 
   const txTransitions = currentTransaction.attributes.transitions
@@ -56,6 +58,8 @@ const FeedSection = props => {
         onOpenReviewModal={onOpenReviewModal}
         onShowOlderMessages={onShowMoreMessages}
         fetchMessagesInProgress={fetchMessagesInProgress}
+        businessLogoImage={businessLogoImage}
+        listingTitle={listingTitle}
       />
     </div>
   ) : null;

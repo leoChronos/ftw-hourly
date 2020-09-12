@@ -42,7 +42,7 @@ const SectionHostMaybe = props => {
           className={css.enquiryForm}
           submitButtonWrapperClassName={css.enquirySubmitButtonWrapper}
           listingTitle={title}
-          authorDisplayName={authorDisplayName}
+          authorDisplayName={title}
           sendEnquiryError={sendEnquiryError}
           onSubmit={onSubmitEnquiry}
           inProgress={sendEnquiryInProgress}

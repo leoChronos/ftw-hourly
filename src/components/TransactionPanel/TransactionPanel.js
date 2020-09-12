@@ -52,7 +52,7 @@ import PanelHeading, {
 import css from './TransactionPanel.css';
 
 // Helper function to get display names for different roles
-const displayNames = (currentUser, currentProvider, currentCustomer, intl) => {
+const displayNames = (listingTitle, currentUser, currentProvider, currentCustomer, intl) => {
   const authorDisplayName = <UserDisplayName user={currentProvider} intl={intl} />;
   const customerDisplayName = <UserDisplayName user={currentCustomer} intl={intl} />;
 
@@ -65,7 +65,8 @@ const displayNames = (currentUser, currentProvider, currentCustomer, intl) => {
 
   if (currentUserIsCustomer) {
     otherUserDisplayName = authorDisplayName;
-    otherUserDisplayNameString = userDisplayNameAsString(currentProvider, '');
+    //otherUserDisplayNameString = userDisplayNameAsString(currentProvider, '');
+    otherUserDisplayNameString = listingTitle;
   } else if (currentUserIsProvider) {
     otherUserDisplayName = customerDisplayName;
     otherUserDisplayNameString = userDisplayNameAsString(currentCustomer, '');
@@ -267,14 +268,7 @@ export class TransactionPanelComponent extends Component {
 
     const deletedListingTitle = intl.formatMessage({
       id: 'TransactionPanel.deletedListingTitle',
-    });
-
-    const {
-      authorDisplayName,
-      customerDisplayName,
-      otherUserDisplayName,
-      otherUserDisplayNameString,
-    } = displayNames(currentUser, currentProvider, currentCustomer, intl);
+    });    
 
     const { publicData, geolocation } = currentListing.attributes;
     const location = publicData && publicData.location ? publicData.location : {};
@@ -282,6 +276,14 @@ export class TransactionPanelComponent extends Component {
     const listingTitle = currentListing.attributes.deleted
       ? deletedListingTitle
       : currentListing.attributes.title;
+
+
+    const {
+        authorDisplayName,
+        customerDisplayName,
+        otherUserDisplayName,
+        otherUserDisplayNameString,
+      } = displayNames(listingTitle, currentUser, currentProvider, currentCustomer, intl);
 
     // const unitType = config.bookingUnitType;
     // const isNightly = unitType === LINE_ITEM_NIGHT;
@@ -358,7 +360,7 @@ export class TransactionPanelComponent extends Component {
             <PanelHeading
               panelHeadingState={stateData.headingState}
               transactionRole={transactionRole}
-              providerName={authorDisplayName}
+              providerName={listingTitle}
               customerName={customerDisplayName}
               isCustomerBanned={isCustomerBanned}
               listingId={currentListing.id && currentListing.id.uuid}
@@ -396,6 +398,8 @@ export class TransactionPanelComponent extends Component {
               onOpenReviewModal={this.onOpenReviewModal}
               onShowMoreMessages={() => onShowMoreMessages(currentTransaction.id)}
               totalMessagePages={totalMessagePages}
+              businessLogoImage={businessLogoImage}
+              listingTitle={listingTitle}
             />
             {showSendMessageForm ? (
               <SendMessageForm

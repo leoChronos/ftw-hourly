@@ -787,7 +787,7 @@ export class CheckoutPageComponent extends Component {
                   inProgress={this.state.submitting}
                   formId="CheckoutPagePaymentForm"
                   paymentInfo={intl.formatMessage({ id: 'CheckoutPage.paymentInfo' })}
-                  authorDisplayName={currentAuthor.attributes.profile.displayName}
+                  authorDisplayName={listingTitle}
                   showInitialMessageInput={showInitialMessageInput}
                   initialValues={initalValuesForStripePayment}
                   initiateOrderError={initiateOrderError}

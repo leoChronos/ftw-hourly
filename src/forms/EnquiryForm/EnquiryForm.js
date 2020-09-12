@@ -27,6 +27,8 @@ const EnquiryFormComponent = props => (
         sendEnquiryError,
       } = fieldRenderProps;
 
+      debugger;
+
       const messageLabel = intl.formatMessage(
         {
           id: 'EnquiryForm.messageLabel',

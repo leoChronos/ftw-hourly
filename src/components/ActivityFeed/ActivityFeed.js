@@ -3,7 +3,7 @@ import { string, arrayOf, bool, func, number } from 'prop-types';
 import { FormattedMessage, injectIntl, intlShape } from '../../util/reactIntl';
 import dropWhile from 'lodash/dropWhile';
 import classNames from 'classnames';
-import { Avatar, InlineTextButton, ReviewRating, UserDisplayName } from '../../components';
+import { AvatarBusiness, InlineTextButton, ReviewRating, UserDisplayName } from '../../components';
 import { formatDate } from '../../util/dates';
 import { ensureTransaction, ensureUser, ensureListing } from '../../util/data';
 import {
@@ -34,11 +34,16 @@ import * as log from '../../util/log';
 import css from './ActivityFeed.css';
 
 const Message = props => {
-  const { message, intl } = props;
+  const { message, intl, businessLogoImage, listingTitle } = props;
   const todayString = intl.formatMessage({ id: 'ActivityFeed.today' });
   return (
     <div className={css.message}>
-      <Avatar className={css.avatar} user={message.sender} disableProfileLink />
+      <AvatarBusiness 
+        className={css.avatar} 
+        user={message.sender} 
+        businessLogoImage={businessLogoImage}
+        businessName={listingTitle}
+        disableProfileLink />
       <div>
         <p className={css.messageContent}>{message.attributes.content}</p>
         <p className={css.messageDate}>
@@ -52,6 +57,8 @@ const Message = props => {
 Message.propTypes = {
   message: propTypes.message.isRequired,
   intl: intlShape.isRequired,
+  businessLogoImage: propTypes.image,
+  businessName: string,
 };
 
 const OwnMessage = props => {
@@ -113,7 +120,7 @@ const resolveTransitionMessage = (
 ) => {
   const isOwnTransition = transition.by === ownRole;
   const currentTransition = transition.transition;
-  const displayName = otherUsersName;
+  const displayName = listingTitle;
 
   switch (currentTransition) {
     case TRANSITION_CONFIRM_PAYMENT:
@@ -335,6 +342,8 @@ export const ActivityFeedComponent = props => {
     onShowOlderMessages,
     fetchMessagesInProgress,
     intl,
+    businessLogoImage,
+    listingTitle,
   } = props;
   const classes = classNames(rootClassName || css.root, className);
 
@@ -344,7 +353,9 @@ export const ActivityFeedComponent = props => {
     : [];
   const currentCustomer = ensureUser(currentTransaction.customer);
   const currentProvider = ensureUser(currentTransaction.provider);
-  const currentListing = ensureListing(currentTransaction.listing);
+  const currentListing = ensureListing(currentTransaction.listing);  
+
+  console.log(currentProvider);
 
   const transitionsAvailable = !!(
     currentUser &&
@@ -373,15 +384,25 @@ export const ActivityFeedComponent = props => {
     }
   };
 
-  const messageComponent = message => {
+  const messageComponent = message => {    
     const isOwnMessage =
       message.sender &&
       message.sender.id &&
       currentUser &&
       currentUser.id &&
       message.sender.id.uuid === currentUser.id.uuid;
+
+    const isOwnBusiness = 
+      currentProvider &&
+      currentProvider.id &&
+      currentProvider.id.uuid === message.sender.id.uuid;
+
     if (isOwnMessage) {
       return <OwnMessage message={message} intl={intl} />;
+    }
+
+    if (isOwnBusiness){
+      return <Message message={message} intl={intl} businessLogoImage={businessLogoImage} listingTitle={listingTitle}/>;  
     }
     return <Message message={message} intl={intl} />;
   };
@@ -429,6 +450,8 @@ export const ActivityFeedComponent = props => {
 ActivityFeedComponent.defaultProps = {
   rootClassName: null,
   className: null,
+  businessLogoImage: null,
+  listingTitle: null,
 };
 
 ActivityFeedComponent.propTypes = {
@@ -443,8 +466,11 @@ ActivityFeedComponent.propTypes = {
   onShowOlderMessages: func.isRequired,
   fetchMessagesInProgress: bool.isRequired,
 
+  businessLogoImage: propTypes.image,
+  listingTitle: string,
+
   // from injectIntl
-  intl: intlShape.isRequired,
+  intl: intlShape.isRequired,  
 };
 
 const ActivityFeed = injectIntl(ActivityFeedComponent);

@@ -490,8 +490,7 @@ export class ListingPageComponent extends Component {
                   isOwnListing={isOwnListing}
                   unitType={unitType}
                   onSubmit={handleBookingSubmit}
-                  title={bookingTitle}
-                  authorDisplayName={authorDisplayName}
+                  title={bookingTitle}                  
                   onManageDisableScrolling={onManageDisableScrolling}
                   monthlyTimeSlots={monthlyTimeSlots}
                   onFetchTimeSlots={onFetchTimeSlots}
@@ -511,7 +510,7 @@ export class ListingPageComponent extends Component {
                 className={css.enquiryForm}
                 submitButtonWrapperClassName={css.enquirySubmitButtonWrapper}
                 listingTitle={title}
-                authorDisplayName={authorDisplayName}
+                authorDisplayName={title}
                 sendEnquiryError={sendEnquiryError}
                 onSubmit={this.onSubmitEnquiry}
                 inProgress={sendEnquiryInProgress}
