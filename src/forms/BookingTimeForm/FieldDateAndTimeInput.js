@@ -36,13 +36,13 @@ const endOfRange = (date, timeZone) => {
   return resetToStartOfDay(date, timeZone, MAX_TIME_SLOTS_RANGE - 1);
 };
 
-const getDiscountData = (startDate, oneOffExtendedData, reocurringExtendedData) => {
+const getDiscountData = (startDate, oneOffExtendedData, reocurringExtendedData) => {  
   return oneOffExtendedData.find(x => x.key === startDate.timestamp) 
     || reocurringExtendedData.find(x => x.key === `${startDate.formatedDate.weekday.toLowerCase()}_${startDate.formatedDate.time24}`);
 
 };
 
-const setDiscountData = (availableStartTimes, oneOffExtendedData, reocurringExtendedData) => {
+const setDiscountData = (availableStartTimes, oneOffExtendedData, reocurringExtendedData) => {  
   availableStartTimes.forEach(element => {
     element.discountData = getDiscountData(element, oneOffExtendedData, reocurringExtendedData);
   });

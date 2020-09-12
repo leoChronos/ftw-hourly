@@ -304,6 +304,9 @@ export class TransactionPanelComponent extends Component {
     const firstImage = noSpecialImages && noSpecialImages.length > 0 ? noSpecialImages[0] : null;
     const businessLogoImage = businessLogoImageId ? getImage(currentListing, businessLogoImageId) : null;
 
+    const oneOffExtendedData = publicData && publicData.oneOffExtendedData ? publicData.oneOffExtendedData : [];
+    const reocurringExtendedData = publicData && publicData.reocurringExtendedData ? publicData.reocurringExtendedData : [];    
+
     const saleButtons = (
       <SaleActionButtonsMaybe
         showButtons={stateData.showSaleButtons}
@@ -455,6 +458,8 @@ export class TransactionPanelComponent extends Component {
                   onManageDisableScrolling={onManageDisableScrolling}
                   monthlyTimeSlots={monthlyTimeSlots}
                   onFetchTimeSlots={onFetchTimeSlots}
+                  oneOffExtendedData={oneOffExtendedData}
+                  reocurringExtendedData={reocurringExtendedData}
                 />
               ) : null}
               <BreakdownMaybe

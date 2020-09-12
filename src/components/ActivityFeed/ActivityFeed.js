@@ -355,8 +355,6 @@ export const ActivityFeedComponent = props => {
   const currentProvider = ensureUser(currentTransaction.provider);
   const currentListing = ensureListing(currentTransaction.listing);  
 
-  console.log(currentProvider);
-
   const transitionsAvailable = !!(
     currentUser &&
     currentUser.id &&
