@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ReviewRating, InlineTextButton, IconFavorite, IconSpinner, IconShare, IconMail, SocialShare, Modal } from '../../components';
+import { ReviewRating, InlineTextButton, IconFavorite, IconSpinner, IconShare, IconMail, SocialShare } from '../../components';
 import Popover from '@material-ui/core/Popover';
 import classNames from 'classnames';
 import meanBy from 'lodash/meanBy';

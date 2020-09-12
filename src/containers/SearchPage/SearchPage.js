@@ -26,7 +26,6 @@ import {
 } from './SearchPage.helpers';
 import MainPanel from './MainPanel';
 import css from './SearchPage.css';
-import { filter } from 'lodash';
 
 // Pagination page size might need to be dynamic on responsive page layouts
 // Current design has max 3 columns 12 is divisible by 2 and 3
