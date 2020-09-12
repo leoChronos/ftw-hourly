@@ -1,0 +1,14 @@
+@import '../../marketplace.css';
+
+.root {
+}
+
+.marketplaceColorStroke {
+  stroke: var(--marketplaceColor);
+  fill: var(--marketplaceColor);
+}
+
+.marketplaceColorStrokeFav {
+  stroke: var(--marketplaceColor);
+  fill: red;
+}

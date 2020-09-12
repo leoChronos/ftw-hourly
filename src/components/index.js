@@ -33,6 +33,9 @@ export { default as IconSocialMediaTwitter } from './IconSocialMediaTwitter/Icon
 export { default as IconSpinner } from './IconSpinner/IconSpinner';
 export { default as IconSuccess } from './IconSuccess/IconSuccess';
 export { default as IconSocialWebsite } from './IconSocialWebsite/IconSocialWebsite';
+export { default as IconShare } from './IconShare/IconShare';
+export { default as IconMail } from './IconMail/IconMail';
+export { default as IconFavorite } from './IconFavorite/IconFavorite';
 
 // Other independent components
 export { default as ExternalLink } from './ExternalLink/ExternalLink';

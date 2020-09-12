@@ -1,5 +1,5 @@
 import React from 'react';
-import { ReviewRating, InlineTextButton, IconEnquiry, IconSpinner } from '../../components';
+import { ReviewRating, InlineTextButton, IconFavorite, IconSpinner, IconShare, IconMail } from '../../components';
 import classNames from 'classnames';
 import meanBy from 'lodash/meanBy';
 import { nightsBetween } from './../../util/dates';
@@ -62,16 +62,16 @@ const SectionHeading = props => {
                     onSubmitFavorite();
                   }}
                 >
-                  <IconEnquiry />
+                  <IconFavorite isFavorite={isFavoriteListing} />
                     {isFavoriteListing ? (<label>Remove from favorites</label>) : (<label>Add to favorites</label>)}                    
                   </InlineTextButton>
               )}              
               <InlineTextButton rootClassName={css.contactLink}>
-                <IconEnquiry />
-                <label>Get spot alerts</label>
+                <IconShare />
+                <label>Share the love</label>
               </InlineTextButton>
               <InlineTextButton rootClassName={css.contactLink} onClick={onContactUser}>
-                <IconEnquiry />
+                <IconMail />
                 <label>Ask a question</label>
               </InlineTextButton>
             </span>
