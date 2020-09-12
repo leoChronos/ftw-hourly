@@ -1,1 +1,1 @@
-{{transaction.provider.display-name}} accepted your booking request!
+{{listing.title}} accepted your booking request!
